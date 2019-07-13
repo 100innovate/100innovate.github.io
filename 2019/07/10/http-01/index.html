@@ -8,7 +8,7 @@
 
 
     <meta name="description" content="&amp;emsp;在学校里学习计算机网络的过程中，由于《计算机网络》课本内容较为底层基础，许多人在学习完这本书后都会产生一定的困惑。譬如，现在互联网有哪些地方运用到了哪些协议，这些协议最新的标准是什么样子的等等。为了解决心中的困惑，我决定先对日常中最常用的http-web中所采用的协议进行更深一步的了解，为此我在图灵社区中购置了《图解http》一书。接下来将按照自己的思路从书中获取一些问题的答案。 &amp;e">
-<meta name="keywords" content="图解http">
+<meta name="keywords" content="http,TCP&#x2F;IP,图解http">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初窥http（1）——浏览器中输入url后到底发生了什么">
 <meta property="og:url" content="http://blog.100innovate.com/2019/07/10/http-01/index.html">
@@ -16,7 +16,7 @@
 <meta property="og:description" content="&amp;emsp;在学校里学习计算机网络的过程中，由于《计算机网络》课本内容较为底层基础，许多人在学习完这本书后都会产生一定的困惑。譬如，现在互联网有哪些地方运用到了哪些协议，这些协议最新的标准是什么样子的等等。为了解决心中的困惑，我决定先对日常中最常用的http-web中所采用的协议进行更深一步的了解，为此我在图灵社区中购置了《图解http》一书。接下来将按照自己的思路从书中获取一些问题的答案。 &amp;e">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-07-10T12:06:36.895Z">
+<meta property="og:updated_time" content="2019-07-13T08:50:17.790Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初窥http（1）——浏览器中输入url后到底发生了什么">
 <meta name="twitter:description" content="&amp;emsp;在学校里学习计算机网络的过程中，由于《计算机网络》课本内容较为底层基础，许多人在学习完这本书后都会产生一定的困惑。譬如，现在互联网有哪些地方运用到了哪些协议，这些协议最新的标准是什么样子的等等。为了解决心中的困惑，我决定先对日常中最常用的http-web中所采用的协议进行更深一步的了解，为此我在图灵社区中购置了《图解http》一书。接下来将按照自己的思路从书中获取一些问题的答案。 &amp;e">
@@ -224,7 +224,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/图解http/">图解http</a>
+                    <a class="has-link-grey -link" href="/tags/TCP-IP/">TCP/IP</a>, <a class="has-link-grey -link" href="/tags/http/">http</a>, <a class="has-link-grey -link" href="/tags/图解http/">图解http</a>
                 </div>
             </div>
         </div>
@@ -325,7 +325,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        3
+                        4
                     </p>
                 </div>
             </div>
@@ -345,7 +345,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        11
+                        16
                     </p>
                 </div>
             </div>
@@ -454,7 +454,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/今日头条/" style="font-size: 10px;">今日头条</a> <a href="/tags/图解http/" style="font-size: 10px;">图解http</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
+        <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/http/" style="font-size: 20px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 10px;">今日头条</a> <a href="/tags/图解http/" style="font-size: 20px;">图解http</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
     </div>
 </div>
 
@@ -481,6 +481,25 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-12T03:57:16.000Z">2019-07-12</time></div>
                     <a href="/2019/07/12/data-structure/" class="has-link-black-ter is-size-6">数据结构基础总结</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/07/12/http-02/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="初窥http（2）——加密版本的http协议https协议">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-12T03:57:16.000Z">2019-07-12</time></div>
+                    <a href="/2019/07/12/http-02/" class="has-link-black-ter is-size-6">初窥http（2）——加密版本的http协议https协议</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -544,7 +563,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -563,6 +582,34 @@
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/TCP-IP/">
+                        <span class="tag">TCP/IP</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/http/">
+                        <span class="tag">http</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/https/">
+                        <span class="tag">https</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ssl/">
+                        <span class="tag">ssl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/今日头条/">
                         <span class="tag">今日头条</span>
                         <span class="tag is-grey">1</span>
@@ -572,7 +619,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/图解http/">
                         <span class="tag">图解http</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -628,6 +675,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/进程/">
                         <span class="tag">进程</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/非对称加密/">
+                        <span class="tag">非对称加密</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -683,6 +737,25 @@
         
         <article class="media">
             
+            <a href="/2019/07/12/http-02/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="初窥http（2）——加密版本的http协议https协议">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-12T03:57:16.000Z">2019-07-12</time></div>
+                    <a href="/2019/07/12/http-02/" class="has-link-black-ter is-size-6">初窥http（2）——加密版本的http协议https协议</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/07/11/process-thread/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="后端面试基础——进程与线程">
@@ -737,7 +810,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -756,6 +829,34 @@
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/TCP-IP/">
+                        <span class="tag">TCP/IP</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/http/">
+                        <span class="tag">http</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/https/">
+                        <span class="tag">https</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ssl/">
+                        <span class="tag">ssl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/今日头条/">
                         <span class="tag">今日头条</span>
                         <span class="tag is-grey">1</span>
@@ -765,7 +866,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/图解http/">
                         <span class="tag">图解http</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -821,6 +922,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/进程/">
                         <span class="tag">进程</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/非对称加密/">
+                        <span class="tag">非对称加密</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>

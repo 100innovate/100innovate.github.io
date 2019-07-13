@@ -2,14 +2,14 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>标签: 图解http - 100innovate&#39;blog</title>
+<title>标签: TCP/IP - 100innovate&#39;blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="100innovate&#39;blog">
-<meta property="og:url" content="http://blog.100innovate.com/tags/图解http/index.html">
+<meta property="og:url" content="http://blog.100innovate.com/tags/TCP-IP/index.html">
 <meta property="og:site_name" content="100innovate&#39;blog">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
@@ -139,78 +139,11 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
             <li><a href="/tags">标签</a></li>
-            <li class="is-active"><a href="#" aria-current="page">图解http</a></li>
+            <li class="is-active"><a href="#" aria-current="page">TCP/IP</a></li>
         </ul>
         </nav>
     </div>
 </div>
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-12T03:57:16.000Z">2019-07-12</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    8 分钟 读完 (大约 1161 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/07/12/http-02/">初窥http（2）——加密版本的http协议https协议</a>
-            
-        </h1>
-        <div class="content">
-            <p>&emsp;紧随初窥http（1），这次探索的是现代网站常用的加密协议https。https的主要功能是确保web安全。它主要弥补了http下面的几个不足：</p>
-<blockquote>
-<p>使用明文通信，内容可能会被窃听<br><br>无法验证通信方的身份，可能存在伪装的情况<br><br>无法验证报文的完整性，报文可能遭到修改。</p>
-</blockquote>
-<p>&emsp;这些问题通常会出现在所有非加密的信息传输协议中。为了解决上述的三个问题https应运而生。</p>
-<h1 id="一-什么是https"><a href="#一-什么是https" class="headerlink" title="一 什么是https"></a>一 什么是https</h1><p>&emsp;利用SSL或者TLS的组合使用，加密HTTP的通信内容。通过SSL建立安全通信线路之后，就可以在这条线路上进行HTTP通信。与SSL组合使用的HTTP被称为HTTPS或者HTTP over SSL。</p>
-<h1 id="二-对称加密非对称加密"><a href="#二-对称加密非对称加密" class="headerlink" title="二 对称加密非对称加密"></a>二 对称加密非对称加密</h1><p>&emsp;对称加密和非对称加密是我们常常使用的加密算法，对称加密时通信双方使用同一个密钥，此时如何保障该密钥的传输成为一个重大难题，通常来说在一些必要的情况下设备厂商会在设备内预置一些密钥对，这样在一定程度上保证通信安全。而非对称加密，一对密钥由公钥和私钥组成，私钥解密公钥加密数据，公钥解密私钥加密数据。私钥只能由一个设备保管，但是公钥可以公开给所有人，根据算法相关的知识我们可以知道，这种通信方式更为安全，但是传输速度收到加密解密速度的影响。</p>
-<p>&emsp;所以在https中，同时使用到了对称加密和非对称加密，非对称加密主要用于服务器的验证，对称加密主要用于大量数据的传输，利用对称加密和非对称加密的特点，共同解决http数据传输时的安全问题。</p>
-<h1 id="三-https过程详解"><a href="#三-https过程详解" class="headerlink" title="三 https过程详解"></a>三 https过程详解</h1><p>&emsp;关于HTTPS安全通信机制和HTTPS的通信步骤，不同人有不同的理解办法，这里引用《图解http》里面的内容来详细介绍这一过程。</p>
-<p><img src="http-02/20190713193234.png" alt="通信步骤概括图"></p>
-<p>摘选书中的内容主要分为下面12个步骤。</p>
-<blockquote>
-<ol>
-<li>客户端通过发送Client Hello报文开始SSL通信。报文中包含客户端支持的SSL的指定版本、加密组件（Cipher Suite）列表（所使用的加密算法及密钥长度等）。 </li>
-<li>服务器可进行SSL通信时，会以Server Hello报文作为应 答。和客户端一样，在报文中包含SSL 版本以及加密组 件。服务器的加密组件内容是从接收到的客户端加密组件内筛选出来的。 </li>
-<li>之后服务器发送 Certificate 报文。报文中包含公开密钥证书。 </li>
-<li>最后服务器发送Server Hello Done报文通知客户端，最初 阶段的SSL握手协商部分结束。 </li>
-<li>S SL第一次握手结束之后，客户端以Client Key Exchange 报文作为回应。报文中包含通信加密中使用的一种被称为 Pre-master secret的随机密码串。该报文已用步骤3中的公 开密钥进行加密。 </li>
-<li>接着客户端继续发送Change Cipher Spec报文。该报文会 提示服务器，在此报文之后的通信会采用Pre-master secret 密钥加密。</li>
-<li>客户端发送Finished报文。该报文包含连接至今全部报文 的整体校验值。这次握手协商是否能够成功，要以服务器 是否能够正确解密该报文作为判定标准。 </li>
-<li>服务器同样发送Change Cipher Spec报文。 </li>
-<li>服务器同样发送Finished报文。 </li>
-<li>服务器和客户端的Finished 报文交换完毕之后，SSL连接就算建立完成。当然，通信会受到SSL的保护。从此处开 始进行应用层协议的通信，即发送HTTP请求。 </li>
-<li>应用层协议通信，即发送HTTP响应。 </li>
-<li>最后由客户端断开连接。断开连接时，发送 close_notify报文。上图做了一些省略，这步之后再发送TCP FIN报文来关闭与TCP 的通信。</li>
-</ol>
-</blockquote>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
 
     <div class="card">
     
