@@ -8,7 +8,7 @@
 
 
     <meta name="description" content="&amp;emsp;紧随初窥http（1），这次探索的是现代网站常用的加密协议https。https的主要功能是确保web安全。它主要弥补了http下面的几个不足：  使用明文通信，内容可能会被窃听无法验证通信方的身份，可能存在伪装的情况无法验证报文的完整性，报文可能遭到修改。  &amp;emsp;这些问题通常会出现在所有非加密的信息传输协议中。为了解决上述的三个问题https应运而生。 一 什么是https&amp;">
-<meta name="keywords" content="http,https,图解http,ssl,非对称加密">
+<meta name="keywords" content="http,图解http,https,ssl,非对称加密">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初窥http（2）——加密版本的http协议https协议">
 <meta property="og:url" content="http://blog.100innovate.com/2019/07/13/http-02/index.html">
@@ -16,7 +16,7 @@
 <meta property="og:description" content="&amp;emsp;紧随初窥http（1），这次探索的是现代网站常用的加密协议https。https的主要功能是确保web安全。它主要弥补了http下面的几个不足：  使用明文通信，内容可能会被窃听无法验证通信方的身份，可能存在伪装的情况无法验证报文的完整性，报文可能遭到修改。  &amp;emsp;这些问题通常会出现在所有非加密的信息传输协议中。为了解决上述的三个问题https应运而生。 一 什么是https&amp;">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-07-13T11:49:13.967Z">
+<meta property="og:updated_time" content="2019-07-13T12:05:56.698Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初窥http（2）——加密版本的http协议https协议">
 <meta name="twitter:description" content="&amp;emsp;紧随初窥http（1），这次探索的是现代网站常用的加密协议https。https的主要功能是确保web安全。它主要弥补了http下面的几个不足：  使用明文通信，内容可能会被窃听无法验证通信方的身份，可能存在伪装的情况无法验证报文的完整性，报文可能遭到修改。  &amp;emsp;这些问题通常会出现在所有非加密的信息传输协议中。为了解决上述的三个问题https应运而生。 一 什么是https&amp;">
@@ -151,7 +151,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    8 分钟 读完 (大约 1161 个字)
+                    8 分钟 读完 (大约 1156 个字)
                 </span>
                 
                 
@@ -173,7 +173,7 @@
 <h1 id="二-对称加密非对称加密"><a href="#二-对称加密非对称加密" class="headerlink" title="二 对称加密非对称加密"></a>二 对称加密非对称加密</h1><p>&emsp;对称加密和非对称加密是我们常常使用的加密算法，对称加密时通信双方使用同一个密钥，此时如何保障该密钥的传输成为一个重大难题，通常来说在一些必要的情况下设备厂商会在设备内预置一些密钥对，这样在一定程度上保证通信安全。而非对称加密，一对密钥由公钥和私钥组成，私钥解密公钥加密数据，公钥解密私钥加密数据。私钥只能由一个设备保管，但是公钥可以公开给所有人，根据算法相关的知识我们可以知道，这种通信方式更为安全，但是传输速度收到加密解密速度的影响。</p>
 <p>&emsp;所以在https中，同时使用到了对称加密和非对称加密，非对称加密主要用于服务器的验证，对称加密主要用于大量数据的传输，利用对称加密和非对称加密的特点，共同解决http数据传输时的安全问题。</p>
 <h1 id="三-https过程详解"><a href="#三-https过程详解" class="headerlink" title="三 https过程详解"></a>三 https过程详解</h1><p>&emsp;关于HTTPS安全通信机制和HTTPS的通信步骤，不同人有不同的理解办法，这里引用《图解http》里面的内容来详细介绍这一过程。</p>
-<p><img src="http-02/20190713193234.png" alt="通信步骤概括图"></p>
+<p><img src="http-02/20190713193234.png" alt="图片"></p>
 <p>摘选书中的内容主要分为下面12个步骤。</p>
 <blockquote>
 <ol>
