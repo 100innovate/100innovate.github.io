@@ -16,7 +16,7 @@
 <meta property="og:description" content="&amp;emsp;经过漫长的等待后，果然头条的面试挂掉了。突然发现自己打了这么久的ACM，很多基础数据结构的概念掌握的还不是非常的牢固。这些数据结构可能并不难，特别是跳表和线段数组这样的数据结构，但是由于平日的疏忽导致这些概念有少许的以往。那么今天就要对这些掌握不是特别牢固的数据结构一一进行总结。 一 跳表 &amp;emsp;跳表是一个随机化的数据结构，实质就是一种可以进行二分查找的有序链表。&amp;emsp;跳表">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-07-12T12:57:33.307Z">
+<meta property="og:updated_time" content="2019-07-13T07:59:01.443Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构基础总结">
 <meta name="twitter:description" content="&amp;emsp;经过漫长的等待后，果然头条的面试挂掉了。突然发现自己打了这么久的ACM，很多基础数据结构的概念掌握的还不是非常的牢固。这些数据结构可能并不难，特别是跳表和线段数组这样的数据结构，但是由于平日的疏忽导致这些概念有少许的以往。那么今天就要对这些掌握不是特别牢固的数据结构一一进行总结。 一 跳表 &amp;emsp;跳表是一个随机化的数据结构，实质就是一种可以进行二分查找的有序链表。&amp;emsp;跳表">
@@ -168,7 +168,7 @@
 <h1 id="一-跳表"><a href="#一-跳表" class="headerlink" title="一 跳表"></a>一 跳表</h1><blockquote>
 <p>&emsp;跳表是一个随机化的数据结构，实质就是一种可以进行二分查找的有序链表。<br><br>&emsp;跳表在原有的有序链表上面增加了多级索引，通过索引来实现快速查找。<br><br>&emsp;跳表不仅能提高搜索性能，同时也可以提高插入和删除操作的性能。<br></p>
 </blockquote>
-<p><img src="/.com//17262272-232860d6d8296f69.png" alt="跳表示意图"></p>
+<p><img src="//blog.100innovate.com/2019/07/12/data-structure/17262272-232860d6d8296f69.png" alt="跳表示意图"></p>
 <p>&emsp;假设每M个元素构建索引，元素链表中总共有N个元素，那么构建的索引数如下：</p>
 <blockquote>
 <p>第一级有：n/M 个<br>第二级有：n/(M^2)个元素<br>…….<br>第k级有：n/(M^k)个元素</p>
@@ -185,14 +185,14 @@
 <p>更新点，查询区间<br><br>更新区间，查询点<br><br>更新区间，查询区间<br></p>
 </blockquote>
 <p>&emsp;通常来说，利用线段树处理的问题分为上面三种，通常而言线段树的时间复杂度是O(log2(N))，线段树的空间复杂度&lt;4n。下面通过一张图来显示线段树每个节点储存的信息，例子采用的是区间长度为10的数组。</p>
-<p><img src="/.com//825851-20151021201840020-1265982219.png" alt="线段树示意图"></p>
+<p><img src="//blog.100innovate.com/2019/07/12/data-structure/825851-20151021201840020-1265982219.png" alt="线段树示意图"></p>
 <p>&emsp;可以发现，每个叶子结点的值就是数组的值，每个非叶子结点的度都为二，且左右两个孩子分别存储父亲一半的区间。每个父亲的存储的值也就是两个孩子存储的值的最大值。</p>
 <p>&emsp;通过对上图的观察我们现在可以清晰的了解线段树点更新，区间更新，点查询，区间查询的方法。具体的代码需要在网上寻找，每个人都有自己独特的写法，如果是竞赛选手，强烈建议形成自己的一套模板。</p>
 <blockquote>
 <p><a href="https://www.cnblogs.com/xenny/p/9801703.html" target="_blank" rel="noopener">参考CSDN代码</a></p>
 </blockquote>
 <h1 id="三-线段数组"><a href="#三-线段数组" class="headerlink" title="三 线段数组"></a>三 线段数组</h1><p>&emsp;要了解线段数组，我们需要先了解树状数组，顾名思义，树状数组即利用数组构建树形结构。这种结构相比树形结构可以极大程度的降低内存的消耗，故在比赛中我们常常利用树状数组来解决线段树的问题，而不是动态开点。</p>
-<p><img src="/.com//1448672-20181003121604644-268531484.png" alt="树状数组"></p>
+<p><img src="//blog.100innovate.com/2019/07/12/data-structure/1448672-20181003121604644-268531484.png" alt="树状数组"></p>
 <p>&emsp;与普通的线段树相同，利用线段数组可以轻松的完成区间的修改、查询。他的复杂度和线段树相同均为O(logN)，但是相比线段树，树状数组拥有更小的常数，所以最终运行的速度更快。</p>
 <h1 id="四-红黑树"><a href="#四-红黑树" class="headerlink" title="四 红黑树"></a>四 红黑树</h1><p>红黑树具有下面五种特征：</p>
 <blockquote>
