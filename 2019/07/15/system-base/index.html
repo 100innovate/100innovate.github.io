@@ -16,7 +16,7 @@
 <meta property="og:description" content="&amp;emsp;本来以为自己的对于操作系统的基本理解应该是没有什么欠缺的，但是去搜刮了一波资料后发现自己好像啥都不会，本篇将主要总结：进程状态，CPU调度单位，中断实现机制，软硬中断的区别。 一 进程状态&amp;emsp;通常而言，进程的状态分为两大类，一种是三模态，一种是五模态，它们的简介分别如下：  一个进程从创建而产生至撤销而消亡的整个生命期间，有时占有处理器执行，有时虽可运行但分不到处理器、有时虽有">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-07-15T14:30:09.823Z">
+<meta property="og:updated_time" content="2019-07-15T14:37:30.968Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="操作系统基础">
 <meta name="twitter:description" content="&amp;emsp;本来以为自己的对于操作系统的基本理解应该是没有什么欠缺的，但是去搜刮了一波资料后发现自己好像啥都不会，本篇将主要总结：进程状态，CPU调度单位，中断实现机制，软硬中断的区别。 一 进程状态&amp;emsp;通常而言，进程的状态分为两大类，一种是三模态，一种是五模态，它们的简介分别如下：  一个进程从创建而产生至撤销而消亡的整个生命期间，有时占有处理器执行，有时虽可运行但分不到处理器、有时虽有">
@@ -199,8 +199,7 @@
 <li>等待态一一终止态:未在状态转换图中显示，但某些操作系统允许父进程终结子进程。</li>
 </ol>
 </blockquote>
-<img src="/2019/07/15/system-base/07/15/system-base/20160906192211991.png" title="五模态转换图解">
-
+<p><img src="/2019/07/15/system-base/20160906192211991.jpg" alt="五模态转换图解"></p>
 <p>&emsp;但是在linux系统中，进程的五种状态与上述的五模态还有一定的差别。linux系统中进程主要包含下面的五种状态：</p>
 <blockquote>
 <ol>
