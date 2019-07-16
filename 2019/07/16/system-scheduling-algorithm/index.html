@@ -2,19 +2,24 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>标签: 跳表 - 100innovate&#39;blog</title>
+<title>操作系统调度算法小结 - 100innovate&#39;blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="100innovate&#39;blog">
-<meta property="og:url" content="http://blog.100innovate.com/tags/跳表/index.html">
+    <meta name="description" content="&amp;emsp;真的是太懵圈了，突然发现操作系统还有调度算法这么一说。虽说操作系统课程已经过去了一年多了但是这种基础知识着实不能忘。 一 先来先服务算法&amp;emsp;先来先服务算法是操作系统调度算法中最简单的算法，该算法可以用于作业调度，同样也可以用于进程调度，调度的策略非常简单，就是先来先服务。 二 短作业优先算法&amp;emsp;短作业有限算法，同样作为操作系统调度算法中非常简单的算法，调度策略是优先选取">
+<meta name="keywords" content="操作系统,调度算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统调度算法小结">
+<meta property="og:url" content="http://blog.100innovate.com/2019/07/16/system-scheduling-algorithm/index.html">
 <meta property="og:site_name" content="100innovate&#39;blog">
+<meta property="og:description" content="&amp;emsp;真的是太懵圈了，突然发现操作系统还有调度算法这么一说。虽说操作系统课程已经过去了一年多了但是这种基础知识着实不能忘。 一 先来先服务算法&amp;emsp;先来先服务算法是操作系统调度算法中最简单的算法，该算法可以用于作业调度，同样也可以用于进程调度，调度的策略非常简单，就是先来先服务。 二 短作业优先算法&amp;emsp;短作业有限算法，同样作为操作系统调度算法中非常简单的算法，调度策略是优先选取">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-07-16T08:19:03.951Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="100innovate&#39;blog">
+<meta name="twitter:title" content="操作系统调度算法小结">
+<meta name="twitter:description" content="&amp;emsp;真的是太懵圈了，突然发现操作系统还有调度算法这么一说。虽说操作系统课程已经过去了一年多了但是这种基础知识着实不能忘。 一 先来先服务算法&amp;emsp;先来先服务算法是操作系统调度算法中最简单的算法，该算法可以用于作业调度，同样也可以用于进程调度，调度的策略非常简单，就是先来先服务。 二 短作业优先算法&amp;emsp;短作业有限算法，同样作为操作系统调度算法中非常简单的算法，调度策略是优先选取">
 <meta name="twitter:image" content="http://blog.100innovate.com/images/og_image.png">
 
 
@@ -89,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/og_image.png" alt="100innovate&#39;blog" height="28">
+                <img src="/images/og_image.png" alt="操作系统调度算法小结" height="28">
             
             </a>
         </div>
@@ -135,23 +140,12 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">标签</a></li>
-            <li class="is-active"><a href="#" aria-current="page">跳表</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-12T03:57:16.000Z">2019-07-12</time>
+                <time class="level-item has-text-grey" datetime="2019-07-16T08:08:05.000Z">2019-07-16</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
@@ -161,7 +155,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 分钟 读完 (大约 1291 个字)
+                    4 分钟 读完 (大约 595 个字)
                 </span>
                 
                 
@@ -170,46 +164,27 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/07/12/data-structure/">数据结构基础总结</a>
+                操作系统调度算法小结
             
         </h1>
         <div class="content">
-            <p>&emsp;经过漫长的等待后，果然头条的面试挂掉了。突然发现自己打了这么久的ACM，很多基础数据结构的概念掌握的还不是非常的牢固。这些数据结构可能并不难，特别是跳表和线段数组这样的数据结构，但是由于平日的疏忽导致这些概念有少许的以往。那么今天就要对这些掌握不是特别牢固的数据结构一一进行总结。</p>
-<h1 id="一-跳表"><a href="#一-跳表" class="headerlink" title="一 跳表"></a>一 跳表</h1><blockquote>
-<p>&emsp;跳表是一个随机化的数据结构，实质就是一种可以进行二分查找的有序链表。<br><br>&emsp;跳表在原有的有序链表上面增加了多级索引，通过索引来实现快速查找。<br><br>&emsp;跳表不仅能提高搜索性能，同时也可以提高插入和删除操作的性能。<br></p>
-</blockquote>
-<p><img src="/2019/07/12/data-structure/17262272-232860d6d8296f69.png" alt="跳表示意图"></p>
-<p>&emsp;假设每M个元素构建索引，元素链表中总共有N个元素，那么构建的索引数如下：</p>
-<blockquote>
-<p>第一级有：n/M 个<br>第二级有：n/(M^2)个元素<br>…….<br>第k级有：n/(M^k)个元素</p>
-</blockquote>
-<p>&emsp;假设第k级为最后一级则可知，n/(M^k) = M,  k = logn - 1, 再加上原始链表总共logn级平均每级搜索元素个数 = M + 1 ;</p>
-<p>时间复杂度 = O(log(n))</p>
-<p>空间复杂度 = n/M + n/(M^2) + … + n/(M^k)  = O(n)</p>
-<blockquote>
-<p>引用自简书<a href="https://www.jianshu.com/p/3e57e35b4900" target="_blank" rel="noopener">liuzhengqiu</a></p>
-</blockquote>
-<h1 id="二-线段树"><a href="#二-线段树" class="headerlink" title="二 线段树"></a>二 线段树</h1><p>&emsp;了解线段树前我们需要了解二叉树，线段树是二叉树的一种，他是一颗二叉搜索树。线段树上的每一个节点代表一个区间，同样也可以理解为一个线段，搜索则是在这些线段上进行搜索从而获得答案。</p>
-<p>&emsp;为了进一步的学习线段树，我们首先需要了解线段树的功能是什么，有过OI基础/ACM基础的同学们通常会认为线段树主要用于处理区间查询问题。但是在实际应用中可能线段树的功能比区间查询更加丰富，当然这里我们还是需要从区间查询问题开始说起。</p>
-<blockquote>
-<p>更新点，查询区间<br><br>更新区间，查询点<br><br>更新区间，查询区间<br></p>
-</blockquote>
-<p>&emsp;通常来说，利用线段树处理的问题分为上面三种，通常而言线段树的时间复杂度是O(log2(N))，线段树的空间复杂度&lt;4n。下面通过一张图来显示线段树每个节点储存的信息，例子采用的是区间长度为10的数组。</p>
-<p><img src="/2019/07/12/data-structure/825851-20151021201840020-1265982219.png" alt="线段树示意图"></p>
-<p>&emsp;可以发现，每个叶子结点的值就是数组的值，每个非叶子结点的度都为二，且左右两个孩子分别存储父亲一半的区间。每个父亲的存储的值也就是两个孩子存储的值的最大值。</p>
-<p>&emsp;通过对上图的观察我们现在可以清晰的了解线段树点更新，区间更新，点查询，区间查询的方法。具体的代码需要在网上寻找，每个人都有自己独特的写法，如果是竞赛选手，强烈建议形成自己的一套模板。</p>
-<blockquote>
-<p><a href="https://www.cnblogs.com/xenny/p/9801703.html" target="_blank" rel="noopener">参考CSDN代码</a></p>
-</blockquote>
-<h1 id="三-线段数组"><a href="#三-线段数组" class="headerlink" title="三 线段数组"></a>三 线段数组</h1><p>&emsp;要了解线段数组，我们需要先了解树状数组，顾名思义，树状数组即利用数组构建树形结构。这种结构相比树形结构可以极大程度的降低内存的消耗，故在比赛中我们常常利用树状数组来解决线段树的问题，而不是动态开点。</p>
-<p><img src="/2019/07/12/data-structure/1448672-20181003121604644-268531484.png" alt="树状数组"></p>
-<p>&emsp;与普通的线段树相同，利用线段数组可以轻松的完成区间的修改、查询。他的复杂度和线段树相同均为O(logN)，但是相比线段树，树状数组拥有更小的常数，所以最终运行的速度更快。</p>
-<h1 id="四-红黑树"><a href="#四-红黑树" class="headerlink" title="四 红黑树"></a>四 红黑树</h1><p>红黑树具有下面五种特征：</p>
-<blockquote>
-<p>性质1：每个节点要么是黑色，要么是红色。<br><br>性质2：根节点是黑色。<br><br>性质3：每个叶子节点（NIL）是黑色。<br><br>性质4：每个红色结点的两个子结点一定都是黑色。<br><br>性质5：任意一结点到每个叶子结点的路径都包含数量相同的黑结点。<br></p>
-</blockquote>
-<p>&emsp;红黑树是一种特殊的二叉平衡树，它通过左旋，右旋和变色来保持自平衡。他是一个非常负责的数据结构，在本篇中仅简单介绍其功能。更加丰富的内容日后会开专题介绍。</p>
+            <p>&emsp;真的是太懵圈了，突然发现操作系统还有调度算法这么一说。虽说操作系统课程已经过去了一年多了但是这种基础知识着实不能忘。</p>
+<h1 id="一-先来先服务算法"><a href="#一-先来先服务算法" class="headerlink" title="一 先来先服务算法"></a>一 先来先服务算法</h1><p>&emsp;先来先服务算法是操作系统调度算法中最简单的算法，该算法可以用于作业调度，同样也可以用于进程调度，调度的策略非常简单，就是先来先服务。</p>
+<h1 id="二-短作业优先算法"><a href="#二-短作业优先算法" class="headerlink" title="二 短作业优先算法"></a>二 短作业优先算法</h1><p>&emsp;短作业有限算法，同样作为操作系统调度算法中非常简单的算法，调度策略是优先选取运行所需时间短的任务。</p>
+<h1 id="三-高权值优先算法"><a href="#三-高权值优先算法" class="headerlink" title="三 高权值优先算法"></a>三 高权值优先算法</h1><p>&emsp;这里分为抢占式和非抢占式算法，抢占式算法在高权值的任务进入时直接挤掉当前运行的任务。非抢占式算法在任务执行结束后，选取权值最高的任务执行。</p>
+<h1 id="四-高响应比优先算法"><a href="#四-高响应比优先算法" class="headerlink" title="四 高响应比优先算法"></a>四 高响应比优先算法</h1><p>&emsp;由于等待时间与服务时间之和就是系统对该作业的响应时间，故该优先权又相当于响应比RP。作业优先级随等待时间增高而增高。随着等待时间增加，将会越来越快的被分配到cpu</p>
+<h1 id="五-时间片轮转算法"><a href="#五-时间片轮转算法" class="headerlink" title="五 时间片轮转算法"></a>五 时间片轮转算法</h1><p>&emsp;给队列中的每一个任务分配固定的时间片，然后每个任务执行完固定的时间片后将被轮出。但是这种算法如果时间片大小过大，则会造成cpu资源的浪费，如果时间片过小进程间不断切换也会浪费cpu资源。</p>
+<h1 id="六-多级反馈队列算法"><a href="#六-多级反馈队列算法" class="headerlink" title="六 多级反馈队列算法"></a>六 多级反馈队列算法</h1><p>&emsp;与时间片轮转算法非常相似，但是与其不同的式，拥有多个队列，当任务在第一个队列分配的时间片中无法完成全部任务时，将会被置入第二个队列中，分配给其的时间片大小会越来越大。由于大多数任务我们没有办法知道确切的运行时间。所以这种调度算法是目前最被广泛使用的调度算法。</p>
 
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/操作系统/">操作系统</a>, <a class="has-link-grey -link" href="/tags/调度算法/">调度算法</a>
+                </div>
+            </div>
         </div>
         
         
@@ -219,9 +194,50 @@
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/ali.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/16/database-base/">
+                <span class="level-item">数据库基础——索引</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -1055,7 +1071,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/og_image.png" alt="100innovate&#39;blog" height="28">
+                    <img src="/images/og_image.png" alt="操作系统调度算法小结" height="28">
                 
                 </a>
                 <p class="is-size-7">
