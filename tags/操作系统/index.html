@@ -151,6 +151,54 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-18T12:26:17.000Z">2019-07-18</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/面试基础/ACM-ICPC/">ACM-ICPC</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 567 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/07/18/LRU-O1/">LRU算法读取淘汰双O（1）算法</a>
+            
+        </h1>
+        <div class="content">
+            <p>&emsp;再次简介一下这个算法LRU全称是Least Recently Used,即最近最久未使用的意思。算法每一次将最久未使用的块更新出去。虽然口头很不愿意把这个算法实现一次，但是身体还是很诚实的，未来更加深刻的理解对吧，所以该写还是得写，刚好也分享给大家这个百度前几页没有的O(1)算法。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> cache_size = <span class="hljs-number">10</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> memory_size = <span class="hljs-number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">cache_node</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line">    cache_node* l_link;   <span class="hljs-comment">// 栈的链接</span></span><br><span class="line">    cache_node* r_link;</span><br><span class="line">    <span class="hljs-keyword">int</span> cache_id;       <span class="hljs-comment">// cache_id</span></span><br><span class="line">    <span class="hljs-keyword">int</span> cache_val;      <span class="hljs-comment">// chache 映射位置</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(cache_node*&amp;head,cache_node*&amp;tail)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    head=<span class="hljs-keyword">new</span> cache_node(&#123;<span class="hljs-literal">nullptr</span>,<span class="hljs-literal">nullptr</span>,<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>&#125;);</span><br><span class="line">    cache_node *tmp=head;</span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i(<span class="hljs-number">1</span>); i&lt;cache_size; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cache_node *x = <span class="hljs-keyword">new</span> cache_node(&#123;tmp,<span class="hljs-literal">nullptr</span>,<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>&#125;);</span><br><span class="line">        tmp-&gt;r_link=x;</span><br><span class="line">        tmp = x;</span><br><span class="line">    &#125;</span><br><span class="line">    tail = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;cache_node*&gt;memory_to_cache(memory_size,<span class="hljs-literal">nullptr</span>);</span><br><span class="line">    cache_node *head,*tail;</span><br><span class="line">    init(head,tail);</span><br><span class="line">    <span class="hljs-keyword">int</span> n;</span><br><span class="line">    <span class="hljs-built_in">cin</span>&gt;&gt;n;</span><br><span class="line">    <span class="hljs-comment">//n代表输入的数组组数，然后x代表这一次访问的对象，平均每次访问更新需要6次赋值，所以这个不是一个原子操作。假如cpu内部实现真的存在这种模式,内部大概会有许多门电路来使这多次赋值成为一个原子操作。</span></span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i(<span class="hljs-number">0</span>); i&lt;n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> x; </span><br><span class="line">        <span class="hljs-built_in">cin</span>&gt;&gt;x;</span><br><span class="line">        <span class="hljs-keyword">if</span>(memory_to_cache[x]==<span class="hljs-literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-built_in">cout</span>&lt;&lt;tail-&gt;cache_val&lt;&lt;<span class="hljs-string">"被清出"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">            <span class="hljs-built_in">cout</span>&lt;&lt;x&lt;&lt;<span class="hljs-string">"移入栈顶"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">            <span class="hljs-keyword">if</span>(tail-&gt;cache_val!=<span class="hljs-number">-1</span>)</span><br><span class="line">                memory_to_cache[tail-&gt;cache_val]=<span class="hljs-literal">nullptr</span>;</span><br><span class="line">            tail-&gt;l_link-&gt;r_link=<span class="hljs-literal">nullptr</span>;</span><br><span class="line">            tail-&gt;r_link=head;</span><br><span class="line">            head-&gt;l_link=tail;</span><br><span class="line">            tail=tail-&gt;l_link;</span><br><span class="line">            head=head-&gt;l_link;</span><br><span class="line">            head-&gt;l_link=<span class="hljs-literal">nullptr</span>;</span><br><span class="line">            head-&gt;cache_val=x;</span><br><span class="line">            memory_to_cache[x]=head;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(head==memory_to_cache[x])</span><br><span class="line">                <span class="hljs-keyword">continue</span>;</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-built_in">cout</span>&lt;&lt;x&lt;&lt;<span class="hljs-string">"移入栈顶"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">                memory_to_cache[x]-&gt;l_link-&gt;r_link=memory_to_cache[x]-&gt;r_link;</span><br><span class="line">                <span class="hljs-keyword">if</span>(memory_to_cache[x]-&gt;r_link!=<span class="hljs-literal">nullptr</span>)</span><br><span class="line">                    memory_to_cache[x]-&gt;r_link-&gt;l_link=memory_to_cache[x]-&gt;l_link;</span><br><span class="line">                <span class="hljs-keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    tail=memory_to_cache[x]-&gt;l_link;</span><br><span class="line">                &#125;</span><br><span class="line">                memory_to_cache[x]-&gt;l_link=<span class="hljs-literal">nullptr</span>;</span><br><span class="line">                memory_to_cache[x]-&gt;r_link=head;</span><br><span class="line">                head-&gt;l_link=memory_to_cache[x];</span><br><span class="line">                head=memory_to_cache[x];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;完整的代码就是上面附的这一些了，然后由于代码比较简单主要是考察逻辑，所以也不再附更多的注释了。值得注意的是上面的代码的第一层if else中有数行功能相同，其实可以通过调整代码位置使其合并。但是过度合并可能会造成一些可读性缺失，这里就不再做深层次的代码优化了。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-07-18T05:56:51.000Z">2019-07-18</time>
                 
                 <div class="level-item">
@@ -600,7 +648,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        10
+                        11
                     </p>
                 </div>
             </div>
@@ -610,7 +658,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        2
+                        3
                     </p>
                 </div>
             </div>
@@ -620,7 +668,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        30
+                        31
                     </p>
                 </div>
             </div>
@@ -707,9 +755,17 @@
                 <span class="level-item">面试基础</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">8</span>
+                <span class="level-item tag">9</span>
             </span>
-        </a></li>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/面试基础/ACM-ICPC/">
+            <span class="level-start">
+                <span class="level-item">ACM-ICPC</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li>
             </ul>
         </div>
     </div>
@@ -721,7 +777,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 15px;">今日头条</a> <a href="/tags/图解http/" style="font-size: 15px;">图解http</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
+        <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 15px;">今日头条</a> <a href="/tags/图解http/" style="font-size: 15px;">图解http</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
     </div>
 </div>
 
@@ -735,6 +791,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/18/LRU-O1/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="LRU算法读取淘汰双O（1）算法">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T12:26:17.000Z">2019-07-18</time></div>
+                    <a href="/2019/07/18/LRU-O1/" class="has-link-black-ter is-size-6">LRU算法读取淘汰双O（1）算法</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a> / <a class="has-link-grey -link" href="/categories/面试基础/ACM-ICPC/">ACM-ICPC</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -812,25 +887,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/15/system-base/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="操作系统基础">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-15T13:40:02.000Z">2019-07-15</time></div>
-                    <a href="/2019/07/15/system-base/" class="has-link-black-ter is-size-6">操作系统基础</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -849,7 +905,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">10</span>
+                    <span class="level-item tag">11</span>
                 </span>
             </a>
         </li>
@@ -975,7 +1031,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/操作系统/">
                         <span class="tag">操作系统</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">6</span>
                     </a>
                 </div>
                 
@@ -989,6 +1045,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/数据结构/">
                         <span class="tag">数据结构</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数组映射/">
+                        <span class="tag">数组映射</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1102,6 +1165,25 @@
         
         <article class="media">
             
+            <a href="/2019/07/18/LRU-O1/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="LRU算法读取淘汰双O（1）算法">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T12:26:17.000Z">2019-07-18</time></div>
+                    <a href="/2019/07/18/LRU-O1/" class="has-link-black-ter is-size-6">LRU算法读取淘汰双O（1）算法</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a> / <a class="has-link-grey -link" href="/categories/面试基础/ACM-ICPC/">ACM-ICPC</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/07/18/i-need-offer/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="头条三面凉经分析">
@@ -1176,25 +1258,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/15/system-base/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="操作系统基础">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-15T13:40:02.000Z">2019-07-15</time></div>
-                    <a href="/2019/07/15/system-base/" class="has-link-black-ter is-size-6">操作系统基础</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1213,7 +1276,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">10</span>
+                    <span class="level-item tag">11</span>
                 </span>
             </a>
         </li>
@@ -1339,7 +1402,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/操作系统/">
                         <span class="tag">操作系统</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">6</span>
                     </a>
                 </div>
                 
@@ -1353,6 +1416,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/数据结构/">
                         <span class="tag">数据结构</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数组映射/">
+                        <span class="tag">数组映射</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
