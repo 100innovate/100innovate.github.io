@@ -2,24 +2,24 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>算法基础——dijkstra算法 - 100innovate&#39;blog</title>
+<title>深入了解C++（1）——C++内存分配机制 - 100innovate&#39;blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="&amp;emsp;发现时间久了脑子稍微有点糊，今天不想总结新的面试知识了，为了保持工作热度，回顾一下以前学习的知识。所以在在这里稍微总结一下迪杰斯特拉算法。也称最短路算法。 一 基础版n^2实现123456789101112memset(v, 0, sizeof(v)); for(int i = 0; i &amp;lt; n; i++)     d[i] = (i==0 ? 0 : INF); for(int">
-<meta name="keywords" content="图论,dijkstra">
+    <meta name="description" content="&amp;emsp;常常被人问到，会不会写C++，曾经以为了解对面对象编程，了解qt等开源的库之后，就可以称之为会写C++了。但是深入了解之后就会发现，C++其实并不是这么简单。作为本专题的第一篇记录，将从内存分配机制开始深入的剖析C++。 一 C++ 内存分配方式&amp;emsp;在C++中内存被分为五个区分别是：堆、栈、自由存储区、全局/静态存储区、常量存储区。   栈：是分配给函数局部变量的存储单元，函数">
+<meta name="keywords" content="c++,内存分配">
 <meta property="og:type" content="article">
-<meta property="og:title" content="算法基础——dijkstra算法">
-<meta property="og:url" content="http://blog.100innovate.com/2019/07/19/algorithm-graph/index.html">
+<meta property="og:title" content="深入了解C++（1）——C++内存分配机制">
+<meta property="og:url" content="http://blog.100innovate.com/2019/07/20/cpp-memory/index.html">
 <meta property="og:site_name" content="100innovate&#39;blog">
-<meta property="og:description" content="&amp;emsp;发现时间久了脑子稍微有点糊，今天不想总结新的面试知识了，为了保持工作热度，回顾一下以前学习的知识。所以在在这里稍微总结一下迪杰斯特拉算法。也称最短路算法。 一 基础版n^2实现123456789101112memset(v, 0, sizeof(v)); for(int i = 0; i &amp;lt; n; i++)     d[i] = (i==0 ? 0 : INF); for(int">
+<meta property="og:description" content="&amp;emsp;常常被人问到，会不会写C++，曾经以为了解对面对象编程，了解qt等开源的库之后，就可以称之为会写C++了。但是深入了解之后就会发现，C++其实并不是这么简单。作为本专题的第一篇记录，将从内存分配机制开始深入的剖析C++。 一 C++ 内存分配方式&amp;emsp;在C++中内存被分为五个区分别是：堆、栈、自由存储区、全局/静态存储区、常量存储区。   栈：是分配给函数局部变量的存储单元，函数">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-07-19T06:22:59.601Z">
+<meta property="og:updated_time" content="2019-07-19T16:06:41.733Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="算法基础——dijkstra算法">
-<meta name="twitter:description" content="&amp;emsp;发现时间久了脑子稍微有点糊，今天不想总结新的面试知识了，为了保持工作热度，回顾一下以前学习的知识。所以在在这里稍微总结一下迪杰斯特拉算法。也称最短路算法。 一 基础版n^2实现123456789101112memset(v, 0, sizeof(v)); for(int i = 0; i &amp;lt; n; i++)     d[i] = (i==0 ? 0 : INF); for(int">
+<meta name="twitter:title" content="深入了解C++（1）——C++内存分配机制">
+<meta name="twitter:description" content="&amp;emsp;常常被人问到，会不会写C++，曾经以为了解对面对象编程，了解qt等开源的库之后，就可以称之为会写C++了。但是深入了解之后就会发现，C++其实并不是这么简单。作为本专题的第一篇记录，将从内存分配机制开始深入的剖析C++。 一 C++ 内存分配方式&amp;emsp;在C++中内存被分为五个区分别是：堆、栈、自由存储区、全局/静态存储区、常量存储区。   栈：是分配给函数局部变量的存储单元，函数">
 <meta name="twitter:image" content="http://blog.100innovate.com/images/og_image.png">
 
 
@@ -94,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/og_image.png" alt="算法基础——dijkstra算法" height="28">
+                <img src="/images/og_image.png" alt="深入了解C++（1）——C++内存分配机制" height="28">
             
             </a>
         </div>
@@ -145,17 +145,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-19T05:55:20.000Z">2019-07-19</time>
+                <time class="level-item has-text-grey" datetime="2019-07-19T16:05:00.000Z">2019-07-20</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/算法基础/">算法基础</a>
+                <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 391 个字)
+                    7 分钟 读完 (大约 989 个字)
                 </span>
                 
                 
@@ -164,20 +164,43 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                算法基础——dijkstra算法
+                深入了解C++（1）——C++内存分配机制
             
         </h1>
         <div class="content">
-            <p>&emsp;发现时间久了脑子稍微有点糊，今天不想总结新的面试知识了，为了保持工作热度，回顾一下以前学习的知识。所以在在这里稍微总结一下迪杰斯特拉算法。也称最短路算法。</p>
-<h1 id="一-基础版n-2实现"><a href="#一-基础版n-2实现" class="headerlink" title="一 基础版n^2实现"></a>一 基础版n^2实现</h1><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">memset</span>(v, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(v)); </span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) </span><br><span class="line">    d[i] = (i==<span class="hljs-number">0</span> ? <span class="hljs-number">0</span> : INF); </span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;  </span><br><span class="line">    <span class="hljs-keyword">int</span> x, m = INF;  </span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> y = <span class="hljs-number">0</span>; y &lt; n; y++) </span><br><span class="line">        <span class="hljs-keyword">if</span>(!v[y] &amp;&amp; d[y] &lt;= m) </span><br><span class="line">            m = d[y], x = y; </span><br><span class="line">    v[x] = <span class="hljs-number">1</span>;  </span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> y = <span class="hljs-number">0</span>; y &lt; n; y++) </span><br><span class="line">        d[y] = min(d[y], d[x] + w[x][y]); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <p>&emsp;常常被人问到，会不会写C++，曾经以为了解对面对象编程，了解qt等开源的库之后，就可以称之为会写C++了。但是深入了解之后就会发现，C++其实并不是这么简单。作为本专题的第一篇记录，将从内存分配机制开始深入的剖析C++。</p>
+<h1 id="一-C-内存分配方式"><a href="#一-C-内存分配方式" class="headerlink" title="一 C++ 内存分配方式"></a>一 C++ 内存分配方式</h1><p>&emsp;在C++中内存被分为五个区分别是：堆、栈、自由存储区、全局/静态存储区、常量存储区。</p>
+<blockquote>
+<ul>
+<li>栈：是分配给函数局部变量的存储单元，函数结束后，该变量的存储单元自动释放，效率高，分配的空间有限。</li>
+<li>堆：由new创建，由delete释放的动态内存单元。如果用户不释放该内存，程序结束时，系统会自动回收。</li>
+<li>自由存储区：由malloc创建，由free释放的动态内存单元，与堆类似。</li>
+<li>全局（静态）存储去：全局变量和静态变量占一块内存空间。</li>
+<li>常量存储区：存储常量，内容不允许更改。<br><br>引用自<a href="https://blog.csdn.net/ladybai/article/details/51234300" target="_blank" rel="noopener">ladybai</a></li>
+</ul>
+</blockquote>
+<p>&emsp;一般而言对于程序员，我们只需要去关注堆和栈的概念。相比堆，栈大量减少了内存的碎片问题，并且计算机在系统底层提供专门的指令执行，而new的机制相比更为复杂所以分配效率相较于栈更慢。</p>
+<h1 id="二-内存分配失败"><a href="#二-内存分配失败" class="headerlink" title="二 内存分配失败"></a>二 内存分配失败</h1><p>&emsp;根据许多血一般的教训，下列的代码在动态分配内存的时候至关重要。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">object* c = <span class="hljs-keyword">new</span> object();</span><br><span class="line"><span class="hljs-comment">//在较新的标准中，使用 new（nothrow） 才会出现分配失败时返回nullptr </span></span><br><span class="line"><span class="hljs-keyword">if</span>(c==<span class="hljs-literal">nullptr</span>)&#123;</span><br><span class="line">    <span class="hljs-comment">//错误处理机制</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="二-利用边集和优先级队列Mlog-N-实现"><a href="#二-利用边集和优先级队列Mlog-N-实现" class="headerlink" title="二 利用边集和优先级队列Mlog(N)实现"></a>二 利用边集和优先级队列Mlog(N)实现</h1><p>&emsp;首先需要定义边，边的定义如下。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">DistNode</span> &#123;</span></span><br><span class="line">  <span class="hljs-keyword">int</span> d, u;</span><br><span class="line">  <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span> &lt; (<span class="hljs-keyword">const</span> HeapNode&amp; rhs) <span class="hljs-keyword">const</span> &#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> d &gt; rhs.d; <span class="hljs-comment">//这样一来，队列中在最顶层的是最小值</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;但是其实在较新的C++标准中，出现内存分配失败时会抛出</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">std</span>::bad_alloc</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;使用优先级队列进行优化。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;Node&gt; q;</span><br><span class="line"><span class="hljs-built_in">memset</span>(vis,<span class="hljs-number">0</span>,<span class="hljs-keyword">sizeof</span>(vis));</span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>;i &lt;= n;i++)</span><br><span class="line">    d[i] = INF;</span><br><span class="line">d[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;</span><br><span class="line">q.push(make_pair(d[<span class="hljs-number">1</span>],<span class="hljs-number">1</span>));</span><br><span class="line"><span class="hljs-keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">    Node t = q.top();q.pop();</span><br><span class="line">    <span class="hljs-keyword">if</span>(vis[t.second])<span class="hljs-keyword">continue</span>;</span><br><span class="line">    vis[t.second] = <span class="hljs-number">1</span>;</span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>;i &lt;= n;i++)</span><br><span class="line">        <span class="hljs-keyword">if</span>(!vis[i] &amp;&amp; d[i] &gt; t.first+G[t.second][i]) &#123;</span><br><span class="line">            d[i] = t.first+G[t.second][i];</span><br><span class="line">            q.push(make_pair(d[i],i));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;但是针对这个我们主要需要意识到一个问题，内存的分配可能失败。</p>
+<h1 id="三-new-operator-new-placement-new"><a href="#三-new-operator-new-placement-new" class="headerlink" title="三 new/operator new/placement new"></a>三 new/operator new/placement new</h1><p>&emsp;为了防止反复的释放内存，C++除了最基本的new操作之外还提供了placement new的操作。下面简单介绍这三种不同的new操作</p>
+<blockquote>
+<ul>
+<li>运算符 new = 先调用函数 operator new 分配空间 + 然后调用构造函数。</li>
+<li>对于operator new 函数内部，他是通过再调用malloc函数，进行空间分配的（当然也可以重写一个自己的空间分配器）。</li>
+<li>placement new 指的是，不进行分配空间，而是在指定的空间上面进行调用构造函数。当然，在析构的时候，也只能显示的调用析构函数。（因为并不是真正的释放空间）<br><br>引用自<a href="https://www.jianshu.com/p/5921001f7ad4" target="_blank" rel="noopener">爱秋刀鱼的猫</a></li>
+</ul>
+</blockquote>
+<p>&emsp;下面简单给出new的代码。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">object* a = <span class="hljs-keyword">new</span> object(); </span><br><span class="line"><span class="hljs-keyword">char</span>* chunk = <span class="hljs-keyword">new</span>(nothrow) <span class="hljs-keyword">char</span>[<span class="hljs-number">10</span>];</span><br><span class="line">object* b = <span class="hljs-keyword">new</span> (chunk) object();</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;算法比较简单暂时先不做过多的讲解，然后更新这个主要还有一个原因就是回家了但是不想划水太严重。所以暂时先更新这个不带过多讲解的版本啦。等23号正式开始给暑期集训讲课的时候在对内容进行更深一步的优化。</p>
+<p>&emsp;那么其实来说就是上面的两种new，然后operator new的含义应该是仅分配内存但是不初始化函数。</p>
+<p>&emsp;针对大多数场景，我们使用普通的new可以完成绝大多数任务。但是极少数情况，我们可能需要反复利用一块极大的内存空间，此时利用placement new可以减少内存空间的申请释放所消耗的时间。</p>
+<h1 id="四-总结"><a href="#四-总结" class="headerlink" title="四 总结"></a>四 总结</h1><p>&emsp;本篇主要简要介绍了C++内存分配的机制，并且了解了针对大块内存反复申请释放采用placement new的操作。本模块将持续更新，介绍更多关于C++更为深入的内容。</p>
 
         </div>
         
@@ -185,7 +208,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/dijkstra/">dijkstra</a>, <a class="has-link-grey -link" href="/tags/图论/">图论</a>
+                    <a class="has-link-grey -link" href="/tags/c/">c++</a>, <a class="has-link-grey -link" href="/tags/内存分配/">内存分配</a>
                 </div>
             </div>
         </div>
@@ -231,17 +254,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/07/20/cpp-memory/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">深入了解C++（1）——C++内存分配机制</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/18/LRU-O1/">
-                <span class="level-item">LRU算法读取淘汰双O（1）算法</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/19/algorithm-graph/">
+                <span class="level-item">算法基础——dijkstra算法</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -1237,7 +1253,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/og_image.png" alt="算法基础——dijkstra算法" height="28">
+                    <img src="/images/og_image.png" alt="深入了解C++（1）——C++内存分配机制" height="28">
                 
                 </a>
                 <p class="is-size-7">
