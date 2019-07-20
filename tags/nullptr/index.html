@@ -2,14 +2,14 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>标签: 进程 - 100innovate&#39;blog</title>
+<title>标签: nullptr - 100innovate&#39;blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="100innovate&#39;blog">
-<meta property="og:url" content="http://blog.100innovate.com/tags/进程/index.html">
+<meta property="og:url" content="http://blog.100innovate.com/tags/nullptr/index.html">
 <meta property="og:site_name" content="100innovate&#39;blog">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
@@ -139,7 +139,7 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
             <li><a href="/tags">标签</a></li>
-            <li class="is-active"><a href="#" aria-current="page">进程</a></li>
+            <li class="is-active"><a href="#" aria-current="page">nullptr</a></li>
         </ul>
         </nav>
     </div>
@@ -151,17 +151,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-11T15:50:54.000Z">2019-07-11</time>
+                <time class="level-item has-text-grey" datetime="2019-07-20T17:24:49.000Z">2019-07-21</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    6 分钟 读完 (大约 867 个字)
+                    12 分钟 读完 (大约 1733 个字)
                 </span>
                 
                 
@@ -170,27 +170,64 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/07/11/process-thread/">后端面试基础——进程与线程</a>
+                <a class="has-link-black-ter" href="/2019/07/21/cpp11-feature/">深入了解C++（3）——C++11特性小结</a>
             
         </h1>
         <div class="content">
-            <p>&emsp;刚刚经历了大学以来的第一次面试，不得不说头条作为宇宙厂面试有非常高的难度，平日进行的简单开发和底层的深入理解不可而与，为了更加透彻的理解进程与线程，这里特别对进程和线程相关的知识进行总结。并且利用准确的术语来表述进程和线程的特点以及关系。</p>
-<h1 id="一-进程的基本概念"><a href="#一-进程的基本概念" class="headerlink" title="一 进程的基本概念"></a>一 进程的基本概念</h1><p>&emsp;进程是并发执行的程序在执行过程中分配和管理资源的基本单位，是一个动态概念，竞争计算机系统资源的基本单位。作为一个程序执行的一个实体，是系统分配资源的基本单位。</p>
-<p>&emsp;进程通信主要有五种通信方式，分别是管道、命名管道、信号量、消息队列、共享内存。</p>
-<h1 id="二-线程的基本概念"><a href="#二-线程的基本概念" class="headerlink" title="二 线程的基本概念"></a>二 线程的基本概念</h1><p>&emsp;线程是进程的一个执行单元，是进程的一个特定执行路径。当一个线程修改了进程的资源，同一个进程下的其他线程将会立即看到这种变化。</p>
-<p>&emsp;相较于进程，由于线程共享进程中的全局变量，所以通常而言不需要特别的线程通信方式，在C/C++中我们常利用volatile关键词使编译器不对代码段进行优化，无需将该值放入寄存器中，使该值可以被外部改变。或者利用windows消息队列进行线程通信。此外还可以利用std中std::promise、std::packaged_task来进行线程通信。</p>
-<h1 id="三-进程和线程的主要区别及优势"><a href="#三-进程和线程的主要区别及优势" class="headerlink" title="三 进程和线程的主要区别及优势"></a>三 进程和线程的主要区别及优势</h1><h2 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h2><p>1.代码段、内存:进程间相互独立，同一进程的各线程间共享。线程仅在同一个进程内可见。</p>
-<p>2.通信：进程间通信IPC（管道、命名管道、信号量、共享内存、消息队列），线程间通信相对进程间通信更为简单，直接使用全局变量即可。但是使用时需要考虑锁机制和同步机制。</p>
-<p>3.调度和切换：线程上下文切换比进程上下文切换快得多。</p>
-<p>4.在多线程OS中，进程不是一个可执行的实体。</p>
-<h2 id="选择："><a href="#选择：" class="headerlink" title="选择："></a>选择：</h2><p>1.需要频繁创建销毁的优先使用线程；因为对进程来说创建和销毁一个进程的代价是很大的。</p>
-<p>2.线程的切换速度快，所以在需要大量计算，切换频繁时使用线程，还有耗时的操作时用使用线程可提高应用程序的响应。</p>
-<p>3.因为对CPU系统的效率使用上线程更占优势，所以可能要发展到多机分布的用进程，多核分布用线程。</p>
-<p>4.并行操作时用线程，如C/S架构的服务器端并发线程响应用户的请求。</p>
-<p>5.需要更稳定安全时，适合选择进程；需要速度时，选择线程更好。</p>
-<blockquote>
-<p>资源引用：<a href="https://www.cnblogs.com/aaronthon/p/9824396.html" target="_blank" rel="noopener">什么是进程？什么是线程？进程和线程之间的区别是什么？</a></p>
-</blockquote>
+            <p>&emsp;C++的第一版发布于98年，但是随着时代的变迁，一些更加现代化的思想也渐渐融入到C++的标准之中，特别显著的就是C++11的版本。今天就简要的介绍C++11的新特性。</p>
+<h1 id="一-nullptr"><a href="#一-nullptr" class="headerlink" title="一 nullptr"></a>一 nullptr</h1><p>&emsp;在C++11的新标准中，利用nullptr替换了NULL关键字。这个关键词的目的主要是解决0的二义性。我们可以从下面的示例代码简要了解C和C++中NULL通常的定义方式。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> __cplusplus ---简称：cpp c++ 文件</span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> NULL 0</span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> NULL ((void *)0)</span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;因为在C++中void*不能隐式的转换为其他类型的指针，然后为了为了解决空指针的问题所以特别引入0代表空指针的操作，但是这样的操作在下面的情况就会造成严重的二义性。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">(sometype1 a, sometype2 *b)</span></span>;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">(sometype1 a, <span class="hljs-keyword">int</span> i)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;为了解决二义性问题，有时候会采取这样的代码来避免二义性,即使用static_cast对0进行显式类型转换。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bar(a, <span class="hljs-literal">NULL</span>)<span class="hljs-comment">//×××</span></span><br><span class="line">bar(a, <span class="hljs-keyword">static_cast</span>&lt;sometype2 *&gt;(<span class="hljs-number">0</span>)); <span class="hljs-comment">//√√√</span></span><br><span class="line">bar(a, <span class="hljs-keyword">static_cast</span>&lt;sometype2 *&gt;(<span class="hljs-literal">NULL</span>)); <span class="hljs-comment">//√√√</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;上述的这种操作可以说是异常别扭的。在进行这样特殊的重载时，使用NULL必须使用手动转换，这可以说时让人十分头皮发麻的。所以这里引入nullptr极大程度的解决了这个问题。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bar(a, <span class="hljs-literal">nullptr</span>)<span class="hljs-comment">//√√√ C++11</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;使用nullptr可以解决NULL的二义性问题，这可以说是一波让人心情舒畅的操作。</p>
+<h1 id="二-使用using代替typedef"><a href="#二-使用using代替typedef" class="headerlink" title="二 使用using代替typedef"></a>二 使用using代替typedef</h1><p>&emsp;使用using替代typedef的简要代码如下:</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">double</span> db;</span><br><span class="line"><span class="hljs-comment">//c98</span></span><br><span class="line"><span class="hljs-keyword">using</span> db = <span class="hljs-keyword">double</span>;</span><br><span class="line"><span class="hljs-comment">//c++11</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">using</span> query_record = <span class="hljs-built_in">std</span>::tuple&lt;<span class="hljs-keyword">time_t</span>, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt;;</span><br><span class="line"><span class="hljs-comment">//c++11</span></span><br><span class="line"><span class="hljs-keyword">template</span>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt; <span class="hljs-title">using</span> <span class="hljs-title">twins</span> = <span class="hljs-title">std</span>:</span>:pair&lt;T, T&gt;；</span><br><span class="line"><span class="hljs-comment">//更广泛的还可以用于模板</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;就个人感觉而言，这种变化带来的最大优势如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ll long long</span></span><br><span class="line"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll</span><br><span class="line"><span class="hljs-keyword">using</span> ll = <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;使用typedef感觉会产生巨大的歧义，这句话的含义可以是ll=&gt;long long 但是其实某种意义上也能被理解为 long ll =&gt; long？？。不得不说这里利用using代替typedef让人无比的舒畅。</p>
+<h1 id="三-神器auto与基于范围的遍历"><a href="#三-神器auto与基于范围的遍历" class="headerlink" title="三 神器auto与基于范围的遍历"></a>三 神器auto与基于范围的遍历</h1><p>&emsp;不得不说，在C++11中，对于程序员来说最让人欣喜的就是auto关键字。不管从哪方面来看，auto关键字都大大的减少了程序员敲键盘的频率（大雾）。有效的缓解了程序员的肌肉劳损。</p>
+<p>&emsp;auto关键字的最大功能就是推测类型，然后我们还可以利用decltype获取变量的类型，简要的功能代码如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">auto</span> a = <span class="hljs-number">1</span>;</span><br><span class="line"><span class="hljs-keyword">auto</span> task = <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">void</span> ()&gt;([<span class="hljs-keyword">this</span>, a] &#123;</span><br><span class="line">    ~~~~~</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">decltype</span>(a) b = <span class="hljs-number">2</span>;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;上述的代码可以说还是小case，auto关键词最大的优势可能在下面的新特性中：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">map</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;all;</span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-built_in">map</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;::iterator i(all.begin());i!=all.end();i++)&#123;</span><br><span class="line">    <span class="hljs-comment">//~~~</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> &amp;i:all)&#123;</span><br><span class="line">    <span class="hljs-comment">//~~~</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;可以说简直让人爽到原地起飞，如果说map里面的类型名非常的长，这个时候利用auto就可以顺利的避开敲这么一长串。当然部分开发领域为了保证阅读时语义清晰，还是会采用上面的写法，but很显然下面的写法逐渐成了主流，毕竟python里面迭代一个容器只需要下面的代码：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]</span><br><span class="line"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> a:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;虽然不知道这种迭代方式最初源自于哪个语言，但不得不说这是C++的一大进步。</p>
+<h1 id="四-右值引用"><a href="#四-右值引用" class="headerlink" title="四 右值引用"></a>四 右值引用</h1><p>&emsp;一般来说我们采用一个非常简单的方法来判断一个值是左值还是右值：看能不能对表达式取地址，如果能，则为左值，否则为右值。对于C++11来说右值引用主要是为了拯救函数的返回值。</p>
+<p>&emsp;通常来说一个函数的返回值会销毁掉，比如下面的这个函数：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a,<span class="hljs-keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> c = add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;这个函数返回的是一个临时变量，他在运算结束后就会被销毁。如同上面的变量C，它是利用add函数的返回的临时变量给自己赋值，然后临时变量在运行完该行代码后会被销毁。在C++11之前，为了减少这样的开销，通常人们会采用神奇的常用左值引用的办法。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> &amp;c = add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;这样的操作虽然可以延长返回值的生命周期，但是缺点也是显而易见的，变量c的值可能被固定不能修改。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> &amp;&amp; c= add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;使用&amp;&amp;后可以使add的返回值重获新生。该返回值将会一直存活下去直到c变量消亡。</p>
+<h1 id="五-move"><a href="#五-move" class="headerlink" title="五 move"></a>五 move</h1><p>&emsp;move其实是右值引用相关的内容，但是由于内容规划的问题不知道如何衔接了，所以特别开出另外一个板块。move的作用之一就是将一个左值转换成右值。主要用于下面的情况。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> <span class="hljs-comment">// 构造函数</span></span><br><span class="line">MyString(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* cstr=<span class="hljs-number">0</span>)&#123;</span><br><span class="line">    <span class="hljs-keyword">if</span> (cstr) &#123;</span><br><span class="line">       m_data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[<span class="hljs-built_in">strlen</span>(cstr)+<span class="hljs-number">1</span>];</span><br><span class="line">       <span class="hljs-built_in">strcpy</span>(m_data, cstr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">       m_data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[<span class="hljs-number">1</span>];</span><br><span class="line">       *m_data = <span class="hljs-string">'\0'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 拷贝构造函数</span></span><br><span class="line">MyString(<span class="hljs-keyword">const</span> MyString&amp; str) &#123;</span><br><span class="line">    CCtor ++;</span><br><span class="line">    m_data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[ <span class="hljs-built_in">strlen</span>(str.m_data) + <span class="hljs-number">1</span> ];</span><br><span class="line">    <span class="hljs-built_in">strcpy</span>(m_data, str.m_data);</span><br><span class="line">&#125;</span><br><span class="line"> <span class="hljs-comment">// 移动构造函数</span></span><br><span class="line">MyString(MyString&amp;&amp; str) <span class="hljs-keyword">noexcept</span></span><br><span class="line">    :m_data(str.m_data) &#123;</span><br><span class="line">    MCtor ++;</span><br><span class="line">    str.m_data = <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">//不再指向之前的资源了</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;首简要贴出三种构造函数。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">vector</span>&lt;Mystring&gt; vec_str;</span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i(<span class="hljs-number">0</span>);i&lt;<span class="hljs-number">100</span>;i++)&#123;</span><br><span class="line">    Mystring a = <span class="hljs-string">"hello world"</span></span><br><span class="line">    vec_str.push_back(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">vector</span>&lt;Mystring&gt; vec_str;</span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i(<span class="hljs-number">0</span>);i&lt;<span class="hljs-number">100</span>;i++)&#123;</span><br><span class="line">    Mystring a = <span class="hljs-string">"hello world"</span></span><br><span class="line">    vec_str.push_back(<span class="hljs-built_in">std</span>::move(a));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;通过自定义的类我们可以发现，前一段代码调用了拷贝构造函数，而后一段代码调用了移动构造函数。</p>
+<p>&emsp;最后作为总结贴出一个利用move的特性构造的swap。在类定义了移动拷贝函数时，这种方式将大大降低开销，在没有定义时它跟普通函数相似。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(T&amp; a, T&amp; b)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-function">T <span class="hljs-title">tmp</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::move(a))</span></span>;</span><br><span class="line">    a = <span class="hljs-built_in">std</span>::move(b);</span><br><span class="line">    b = <span class="hljs-built_in">std</span>::move(tmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>&emsp;这篇东西是在晚上睡不着觉但是又不想刷手机的时候查资料敲出来的，不知道有没有错，但是其实是知道关于右值引用的部分写的是有一定的欠缺的。倘若未来有幸使用C++11进行真正的工程时间，必将把该部分继续完善。頑張りましょう～</p>
 
         </div>
         

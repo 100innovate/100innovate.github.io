@@ -141,6 +141,104 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-20T17:24:49.000Z">2019-07-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    12 分钟 读完 (大约 1733 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/07/21/cpp11-feature/">深入了解C++（3）——C++11特性小结</a>
+            
+        </h1>
+        <div class="content">
+            <p>&emsp;C++的第一版发布于98年，但是随着时代的变迁，一些更加现代化的思想也渐渐融入到C++的标准之中，特别显著的就是C++11的版本。今天就简要的介绍C++11的新特性。</p>
+<h1 id="一-nullptr"><a href="#一-nullptr" class="headerlink" title="一 nullptr"></a>一 nullptr</h1><p>&emsp;在C++11的新标准中，利用nullptr替换了NULL关键字。这个关键词的目的主要是解决0的二义性。我们可以从下面的示例代码简要了解C和C++中NULL通常的定义方式。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> __cplusplus ---简称：cpp c++ 文件</span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> NULL 0</span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> NULL ((void *)0)</span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;因为在C++中void*不能隐式的转换为其他类型的指针，然后为了为了解决空指针的问题所以特别引入0代表空指针的操作，但是这样的操作在下面的情况就会造成严重的二义性。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">(sometype1 a, sometype2 *b)</span></span>;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">(sometype1 a, <span class="hljs-keyword">int</span> i)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;为了解决二义性问题，有时候会采取这样的代码来避免二义性,即使用static_cast对0进行显式类型转换。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bar(a, <span class="hljs-literal">NULL</span>)<span class="hljs-comment">//×××</span></span><br><span class="line">bar(a, <span class="hljs-keyword">static_cast</span>&lt;sometype2 *&gt;(<span class="hljs-number">0</span>)); <span class="hljs-comment">//√√√</span></span><br><span class="line">bar(a, <span class="hljs-keyword">static_cast</span>&lt;sometype2 *&gt;(<span class="hljs-literal">NULL</span>)); <span class="hljs-comment">//√√√</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;上述的这种操作可以说是异常别扭的。在进行这样特殊的重载时，使用NULL必须使用手动转换，这可以说时让人十分头皮发麻的。所以这里引入nullptr极大程度的解决了这个问题。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bar(a, <span class="hljs-literal">nullptr</span>)<span class="hljs-comment">//√√√ C++11</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;使用nullptr可以解决NULL的二义性问题，这可以说是一波让人心情舒畅的操作。</p>
+<h1 id="二-使用using代替typedef"><a href="#二-使用using代替typedef" class="headerlink" title="二 使用using代替typedef"></a>二 使用using代替typedef</h1><p>&emsp;使用using替代typedef的简要代码如下:</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">double</span> db;</span><br><span class="line"><span class="hljs-comment">//c98</span></span><br><span class="line"><span class="hljs-keyword">using</span> db = <span class="hljs-keyword">double</span>;</span><br><span class="line"><span class="hljs-comment">//c++11</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">using</span> query_record = <span class="hljs-built_in">std</span>::tuple&lt;<span class="hljs-keyword">time_t</span>, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt;;</span><br><span class="line"><span class="hljs-comment">//c++11</span></span><br><span class="line"><span class="hljs-keyword">template</span>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt; <span class="hljs-title">using</span> <span class="hljs-title">twins</span> = <span class="hljs-title">std</span>:</span>:pair&lt;T, T&gt;；</span><br><span class="line"><span class="hljs-comment">//更广泛的还可以用于模板</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;就个人感觉而言，这种变化带来的最大优势如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ll long long</span></span><br><span class="line"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll</span><br><span class="line"><span class="hljs-keyword">using</span> ll = <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;使用typedef感觉会产生巨大的歧义，这句话的含义可以是ll=&gt;long long 但是其实某种意义上也能被理解为 long ll =&gt; long？？。不得不说这里利用using代替typedef让人无比的舒畅。</p>
+<h1 id="三-神器auto与基于范围的遍历"><a href="#三-神器auto与基于范围的遍历" class="headerlink" title="三 神器auto与基于范围的遍历"></a>三 神器auto与基于范围的遍历</h1><p>&emsp;不得不说，在C++11中，对于程序员来说最让人欣喜的就是auto关键字。不管从哪方面来看，auto关键字都大大的减少了程序员敲键盘的频率（大雾）。有效的缓解了程序员的肌肉劳损。</p>
+<p>&emsp;auto关键字的最大功能就是推测类型，然后我们还可以利用decltype获取变量的类型，简要的功能代码如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">auto</span> a = <span class="hljs-number">1</span>;</span><br><span class="line"><span class="hljs-keyword">auto</span> task = <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">void</span> ()&gt;([<span class="hljs-keyword">this</span>, a] &#123;</span><br><span class="line">    ~~~~~</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">decltype</span>(a) b = <span class="hljs-number">2</span>;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;上述的代码可以说还是小case，auto关键词最大的优势可能在下面的新特性中：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">map</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;all;</span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-built_in">map</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;::iterator i(all.begin());i!=all.end();i++)&#123;</span><br><span class="line">    <span class="hljs-comment">//~~~</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> &amp;i:all)&#123;</span><br><span class="line">    <span class="hljs-comment">//~~~</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;可以说简直让人爽到原地起飞，如果说map里面的类型名非常的长，这个时候利用auto就可以顺利的避开敲这么一长串。当然部分开发领域为了保证阅读时语义清晰，还是会采用上面的写法，but很显然下面的写法逐渐成了主流，毕竟python里面迭代一个容器只需要下面的代码：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]</span><br><span class="line"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> a:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;虽然不知道这种迭代方式最初源自于哪个语言，但不得不说这是C++的一大进步。</p>
+<h1 id="四-右值引用"><a href="#四-右值引用" class="headerlink" title="四 右值引用"></a>四 右值引用</h1><p>&emsp;一般来说我们采用一个非常简单的方法来判断一个值是左值还是右值：看能不能对表达式取地址，如果能，则为左值，否则为右值。对于C++11来说右值引用主要是为了拯救函数的返回值。</p>
+<p>&emsp;通常来说一个函数的返回值会销毁掉，比如下面的这个函数：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a,<span class="hljs-keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> c = add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;这个函数返回的是一个临时变量，他在运算结束后就会被销毁。如同上面的变量C，它是利用add函数的返回的临时变量给自己赋值，然后临时变量在运行完该行代码后会被销毁。在C++11之前，为了减少这样的开销，通常人们会采用神奇的常用左值引用的办法。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> &amp;c = add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;这样的操作虽然可以延长返回值的生命周期，但是缺点也是显而易见的，变量c的值可能被固定不能修改。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> &amp;&amp; c= add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;使用&amp;&amp;后可以使add的返回值重获新生。该返回值将会一直存活下去直到c变量消亡。</p>
+<h1 id="五-move"><a href="#五-move" class="headerlink" title="五 move"></a>五 move</h1><p>&emsp;move其实是右值引用相关的内容，但是由于内容规划的问题不知道如何衔接了，所以特别开出另外一个板块。move的作用之一就是将一个左值转换成右值。主要用于下面的情况。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> <span class="hljs-comment">// 构造函数</span></span><br><span class="line">MyString(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* cstr=<span class="hljs-number">0</span>)&#123;</span><br><span class="line">    <span class="hljs-keyword">if</span> (cstr) &#123;</span><br><span class="line">       m_data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[<span class="hljs-built_in">strlen</span>(cstr)+<span class="hljs-number">1</span>];</span><br><span class="line">       <span class="hljs-built_in">strcpy</span>(m_data, cstr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">       m_data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[<span class="hljs-number">1</span>];</span><br><span class="line">       *m_data = <span class="hljs-string">'\0'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 拷贝构造函数</span></span><br><span class="line">MyString(<span class="hljs-keyword">const</span> MyString&amp; str) &#123;</span><br><span class="line">    CCtor ++;</span><br><span class="line">    m_data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[ <span class="hljs-built_in">strlen</span>(str.m_data) + <span class="hljs-number">1</span> ];</span><br><span class="line">    <span class="hljs-built_in">strcpy</span>(m_data, str.m_data);</span><br><span class="line">&#125;</span><br><span class="line"> <span class="hljs-comment">// 移动构造函数</span></span><br><span class="line">MyString(MyString&amp;&amp; str) <span class="hljs-keyword">noexcept</span></span><br><span class="line">    :m_data(str.m_data) &#123;</span><br><span class="line">    MCtor ++;</span><br><span class="line">    str.m_data = <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">//不再指向之前的资源了</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;首简要贴出三种构造函数。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">vector</span>&lt;Mystring&gt; vec_str;</span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i(<span class="hljs-number">0</span>);i&lt;<span class="hljs-number">100</span>;i++)&#123;</span><br><span class="line">    Mystring a = <span class="hljs-string">"hello world"</span></span><br><span class="line">    vec_str.push_back(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">vector</span>&lt;Mystring&gt; vec_str;</span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i(<span class="hljs-number">0</span>);i&lt;<span class="hljs-number">100</span>;i++)&#123;</span><br><span class="line">    Mystring a = <span class="hljs-string">"hello world"</span></span><br><span class="line">    vec_str.push_back(<span class="hljs-built_in">std</span>::move(a));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;通过自定义的类我们可以发现，前一段代码调用了拷贝构造函数，而后一段代码调用了移动构造函数。</p>
+<p>&emsp;最后作为总结贴出一个利用move的特性构造的swap。在类定义了移动拷贝函数时，这种方式将大大降低开销，在没有定义时它跟普通函数相似。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(T&amp; a, T&amp; b)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-function">T <span class="hljs-title">tmp</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::move(a))</span></span>;</span><br><span class="line">    a = <span class="hljs-built_in">std</span>::move(b);</span><br><span class="line">    b = <span class="hljs-built_in">std</span>::move(tmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>&emsp;这篇东西是在晚上睡不着觉但是又不想刷手机的时候查资料敲出来的，不知道有没有错，但是其实是知道关于右值引用的部分写的是有一定的欠缺的。倘若未来有幸使用C++11进行真正的工程时间，必将把该部分继续完善。頑張りましょう～</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-07-20T14:28:34.000Z">2019-07-20</time>
                 
                 <div class="level-item">
@@ -786,79 +884,6 @@
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-13T16:00:01.000Z">2019-07-14</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    15 分钟 读完 (大约 2197 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/07/14/python-socket/">网络编程之python-socket编程</a>
-            
-        </h1>
-        <div class="content">
-            <p>&emsp;对于python的socket编程，在之前仅有非常基础的了解。通常来说我们会利用以下的代码完成我们的socket编程。</p>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:</span><br><span class="line">    <span class="hljs-comment"># 接受一个新连接:</span></span><br><span class="line">    sock, addr = s.accept() <span class="hljs-comment"># 阻塞</span></span><br><span class="line">    <span class="hljs-comment"># 直接进行一些操作</span></span><br><span class="line">    <span class="hljs-comment"># or 创建新线程来处理TCP连接:</span></span><br><span class="line">    t = threading.Thread(target=tcplink, args=(sock, addr))</span><br><span class="line">    t.start()</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;直接进行一些操作将会造成非常严重的阻塞问题，直观的来看，似乎采用多线程/进程的方式可以解决这个问题，但是其实并不然如果要同时响应成百上千路的连接请求，则无论多线程还是多进程都会严重占据系统资源，降低系统对外界响应效率，而线程与进程本身也更容易进入假死状态。<sup><a href="https://blog.csdn.net/JackLiu16/article/details/87838941" target="_blank" rel="noopener">1</a></sup></p>
-<p>&emsp;很多人可能会采用线程池、进程池的方法减少创建和销毁进程线程的次数，降低系统因为销毁或者创建进程/线程消耗的系统资源。但是在大规模的系统中仍然可能会遇到瓶颈。所以这里我们会采用非阻塞式接口来解决这个问题。</p>
-<h1 id="一-非阻塞IO"><a href="#一-非阻塞IO" class="headerlink" title="一 非阻塞IO"></a>一 非阻塞IO</h1><p>&emsp;在python-socket编程中，设置setblocking的值为False(默认为True)，那么现在accept()将不再阻塞。常规的非阻塞式IO的代码如下 <sup><a href="https://www.cnblogs.com/xiao-apple36/p/8683198.html#_label1" target="_blank" rel="noopener">2</a></sup></p>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:</span><br><span class="line">    <span class="hljs-keyword">try</span>:</span><br><span class="line">        conn, addr = sock.accept()  <span class="hljs-comment"># 被动接受TCP客户的连接，等待连接的到来，收不到时会报异常</span></span><br><span class="line">        print(<span class="hljs-string">'connect by '</span>, addr)</span><br><span class="line">        conn_list.append(conn)</span><br><span class="line">        conn.setblocking(<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 设置非阻塞</span></span><br><span class="line">    <span class="hljs-keyword">except</span> BlockingIOError <span class="hljs-keyword">as</span> e:</span><br><span class="line">        <span class="hljs-keyword">pass</span></span><br><span class="line"></span><br><span class="line">    tmp_list = [conn <span class="hljs-keyword">for</span> conn <span class="hljs-keyword">in</span> conn_list]</span><br><span class="line">    <span class="hljs-keyword">for</span> conn <span class="hljs-keyword">in</span> tmp_list:</span><br><span class="line">        <span class="hljs-keyword">try</span>:</span><br><span class="line">            data = conn.recv(<span class="hljs-number">1024</span>) <span class="hljs-comment"># 接收数据1024字节</span></span><br><span class="line">            <span class="hljs-keyword">if</span> data:</span><br><span class="line">                print(<span class="hljs-string">'收到的数据是&#123;&#125;'</span>.format(data.decode()))</span><br><span class="line">                conn.send(data)</span><br><span class="line">            <span class="hljs-keyword">else</span>:</span><br><span class="line">                print(<span class="hljs-string">'close conn'</span>,conn)</span><br><span class="line">                conn.close()</span><br><span class="line">                conn_list.remove(conn)</span><br><span class="line">                print(<span class="hljs-string">'还有客户端=&gt;'</span>,len(conn_list))</span><br><span class="line">        <span class="hljs-keyword">except</span> IOError:</span><br><span class="line">            <span class="hljs-keyword">pass</span></span><br></pre></td></tr></table></figure>
-
-<p>&emsp;但是从上述的代码我们可以观察到，虽然非阻塞式IO解决了阻塞的问题，一个进程可以同时干其他的任务，但是非阻塞式IO是非常不被推荐的，由于不断地while(True)可能会导致CPU资源占满，无故消耗了许多不需要消耗的系统资源。</p>
-<h1 id="二-多路复用IO"><a href="#二-多路复用IO" class="headerlink" title="二 多路复用IO"></a>二 多路复用IO</h1><h2 id="select模型"><a href="#select模型" class="headerlink" title="select模型"></a>select模型</h2><p>&emsp;把socket交给操作系统去监控，相当于找个代理人(select), 去收快递。快递到了,就通知用户，用户自己去取。<br><br>&emsp;阻塞I/O只能阻塞一个I/O操作，而I/O复用模型能够阻塞多个I/O操作，所以才叫做多路复用</p>
-<p>&emsp;使用select以后最大的优势是用户可以在一个线程内同时处理多个socket的IO请求。用户可以注册多个socket，然后不断地调用select读取被激活的socket，即可达到在同一个线程内同时处理多个IO请求的目的。而在同步阻塞模型中，必须通过多线程的方式才能达到这个目的。</p>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">s_list = [s.fileno(),]  <span class="hljs-comment">#fileno()获取套接字的唯一描述符,每个套接字都是唯一不同的</span></span><br><span class="line">s_dict = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:</span><br><span class="line">    list_readable,a,b = select(s_list,[],[]) <span class="hljs-comment">#分别对应: 输入,输出,错误输出</span></span><br><span class="line">    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> list_readable:</span><br><span class="line">        <span class="hljs-keyword">if</span> i == s.fileno():</span><br><span class="line">            conn,userinfo = s.accept()</span><br><span class="line">            s_list.append(conn.fileno())</span><br><span class="line">            s_dict[conn.fileno()] = conn</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            cs = s_dict[i]</span><br><span class="line">            recv_data = cs.recv(<span class="hljs-number">1024</span>)</span><br><span class="line">            <span class="hljs-keyword">if</span> len(recv_data) &lt;= <span class="hljs-number">0</span>:</span><br><span class="line">                s_dict[i].close()</span><br><span class="line">                s_dict.pop(i)</span><br><span class="line">                s_list.remove(i)</span><br><span class="line">            <span class="hljs-keyword">else</span>:</span><br><span class="line">                cs.send(recv_data)</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;但是select模型的复杂度较高，每次会不断的轮询所负责的所有socket描述符，当某个socket有数据到达了，就通知用户进程。所以select模型主要存在以下的问题 <sup><a href="https://www.cnblogs.com/shangzekai/p/4626088.html" target="_blank" rel="noopener">3</a></sup></p>
-<blockquote>
-<ol>
-<li>最大并发数限制，因为一个进程所打开的 FD （文件描述符）是有限制的，由 FD_SETSIZE 设置，默认值是 1024/2048 ，因此 Select 模型的最大并发数就被相应限制了。当然我们也可以采用修改FD_SETSIZE从而增加最大并发数。</li>
-<li>效率问题， select 每次调用都会线性扫描全部的 FD 集合，这样效率就会呈现线性下降，把 FD_SETSIZE 改大的后果就是，大家都慢慢来，什么？都超时了。</li>
-<li>内核 / 用户空间 内存拷贝问题，如何让内核把 FD 消息通知给用户空间呢？在这个问题上 select 采取了内存拷贝方法，在FD非常多的时候，非常的耗费时间。</li>
-</ol>
-</blockquote>
-<p>&emsp;上述三点可以总结为：1.连接数受限  2.查找配对速度慢 3.数据由内核拷贝到用户态消耗时间</p>
-<h2 id="epoll模型"><a href="#epoll模型" class="headerlink" title="epoll模型"></a>epoll模型</h2><p>&emsp;epoll模型是对select模型的改进，其效率非常高，但仅可用于Unix/Linux操作系统。由于其非常重要，这里完整摘取python源码。 <sup><a href="https://www.cnblogs.com/maociping/p/5132583.html" target="_blank" rel="noopener">4</a></sup></p>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#创建socket对象</span></span><br><span class="line">serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line"><span class="hljs-comment">#设置IP地址复用</span></span><br><span class="line">serversocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="hljs-number">1</span>)</span><br><span class="line"><span class="hljs-comment">#ip地址和端口号</span></span><br><span class="line">server_address = (<span class="hljs-string">"127.0.0.1"</span>, <span class="hljs-number">8888</span>)</span><br><span class="line"><span class="hljs-comment">#绑定IP地址</span></span><br><span class="line">serversocket.bind(server_address)</span><br><span class="line"><span class="hljs-comment">#监听，并设置最大连接数</span></span><br><span class="line">serversocket.listen(<span class="hljs-number">10</span>)</span><br><span class="line"><span class="hljs-keyword">print</span>  <span class="hljs-string">"服务器启动成功，监听IP："</span> , server_address</span><br><span class="line"><span class="hljs-comment">#服务端设置非阻塞</span></span><br><span class="line">serversocket.setblocking(<span class="hljs-literal">False</span>)  </span><br><span class="line"><span class="hljs-comment">#超时时间</span></span><br><span class="line">timeout = <span class="hljs-number">10</span></span><br><span class="line"><span class="hljs-comment">#创建epoll事件对象，后续要监控的事件添加到其中</span></span><br><span class="line">epoll = select.epoll()</span><br><span class="line"><span class="hljs-comment">#注册服务器监听fd到等待读事件集合</span></span><br><span class="line">epoll.register(serversocket.fileno(), select.EPOLLIN)</span><br><span class="line"><span class="hljs-comment">#保存连接客户端消息的字典，格式为&#123;&#125;</span></span><br><span class="line">message_queues = &#123;&#125;</span><br><span class="line"><span class="hljs-comment">#文件句柄到所对应对象的字典，格式为&#123;句柄：对象&#125;</span></span><br><span class="line">fd_to_socket = &#123;serversocket.fileno():serversocket,&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:</span><br><span class="line">  <span class="hljs-keyword">print</span> <span class="hljs-string">"等待活动连接......"</span></span><br><span class="line">  <span class="hljs-comment">#轮询注册的事件集合，返回值为[(文件句柄，对应的事件)，(...),....]</span></span><br><span class="line">  events = epoll.poll(timeout)</span><br><span class="line">  <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> events:</span><br><span class="line">     <span class="hljs-keyword">print</span> <span class="hljs-string">"epoll超时无活动连接，重新轮询......"</span></span><br><span class="line">     <span class="hljs-keyword">continue</span></span><br><span class="line">  <span class="hljs-keyword">print</span> <span class="hljs-string">"有"</span> , len(events), <span class="hljs-string">"个新事件，开始处理......"</span></span><br><span class="line">  </span><br><span class="line">  <span class="hljs-keyword">for</span> fd, event <span class="hljs-keyword">in</span> events:</span><br><span class="line">     socket = fd_to_socket[fd]</span><br><span class="line">     <span class="hljs-comment">#如果活动socket为当前服务器socket，表示有新连接</span></span><br><span class="line">     <span class="hljs-keyword">if</span> socket == serversocket:</span><br><span class="line">            connection, address = serversocket.accept()</span><br><span class="line">            <span class="hljs-keyword">print</span> <span class="hljs-string">"新连接："</span> , address</span><br><span class="line">            <span class="hljs-comment">#新连接socket设置为非阻塞</span></span><br><span class="line">            connection.setblocking(<span class="hljs-literal">False</span>)</span><br><span class="line">            <span class="hljs-comment">#注册新连接fd到待读事件集合</span></span><br><span class="line">            epoll.register(connection.fileno(), select.EPOLLIN)</span><br><span class="line">            <span class="hljs-comment">#把新连接的文件句柄以及对象保存到字典</span></span><br><span class="line">            fd_to_socket[connection.fileno()] = connection</span><br><span class="line">            <span class="hljs-comment">#以新连接的对象为键值，值存储在队列中，保存每个连接的信息</span></span><br><span class="line">            message_queues[connection]  = Queue.Queue()</span><br><span class="line">     <span class="hljs-comment">#关闭事件</span></span><br><span class="line">     <span class="hljs-keyword">elif</span> event &amp; select.EPOLLHUP:</span><br><span class="line">        <span class="hljs-keyword">print</span> <span class="hljs-string">'client close'</span></span><br><span class="line">        <span class="hljs-comment">#在epoll中注销客户端的文件句柄</span></span><br><span class="line">        epoll.unregister(fd)</span><br><span class="line">        <span class="hljs-comment">#关闭客户端的文件句柄</span></span><br><span class="line">        fd_to_socket[fd].close()</span><br><span class="line">        <span class="hljs-comment">#在字典中删除与已关闭客户端相关的信息</span></span><br><span class="line">        <span class="hljs-keyword">del</span> fd_to_socket[fd]</span><br><span class="line">     <span class="hljs-comment">#可读事件</span></span><br><span class="line">     <span class="hljs-keyword">elif</span> event &amp; select.EPOLLIN:</span><br><span class="line">        <span class="hljs-comment">#接收数据</span></span><br><span class="line">        data = socket.recv(<span class="hljs-number">1024</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span> data:</span><br><span class="line">           <span class="hljs-keyword">print</span> <span class="hljs-string">"收到数据："</span> , data , <span class="hljs-string">"客户端："</span> , socket.getpeername()</span><br><span class="line">           <span class="hljs-comment">#将数据放入对应客户端的字典</span></span><br><span class="line">           message_queues[socket].put(data)</span><br><span class="line">           <span class="hljs-comment">#修改读取到消息的连接到等待写事件集合(即对应客户端收到消息后，再将其fd修改并加入写事件集合)</span></span><br><span class="line">           epoll.modify(fd, select.EPOLLOUT)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">           <span class="hljs-keyword">print</span> <span class="hljs-string">'closing'</span>, address, <span class="hljs-string">'after reading no data'</span></span><br><span class="line">           epoll.unregister(fd)</span><br><span class="line">           connections[fd].close()</span><br><span class="line">           <span class="hljs-keyword">del</span> connections[fd]</span><br><span class="line">     <span class="hljs-comment">#可写事件</span></span><br><span class="line">     <span class="hljs-keyword">elif</span> event &amp; select.EPOLLOUT:</span><br><span class="line">        <span class="hljs-keyword">try</span>:</span><br><span class="line">           <span class="hljs-comment">#从字典中获取对应客户端的信息</span></span><br><span class="line">           msg = message_queues[socket].get_nowait()</span><br><span class="line">        <span class="hljs-keyword">except</span> Queue.Empty:</span><br><span class="line">           <span class="hljs-keyword">print</span> socket.getpeername() , <span class="hljs-string">" queue empty"</span></span><br><span class="line">           <span class="hljs-comment">#修改文件句柄为读事件</span></span><br><span class="line">           epoll.modify(fd, select.EPOLLIN)</span><br><span class="line">        <span class="hljs-keyword">else</span> :</span><br><span class="line">           <span class="hljs-keyword">print</span> <span class="hljs-string">"发送数据："</span> , data , <span class="hljs-string">"客户端："</span> , socket.getpeername()</span><br><span class="line">           <span class="hljs-comment">#发送数据</span></span><br><span class="line">           socket.send(msg)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#在epoll中注销服务端文件句柄</span></span><br><span class="line">epoll.unregister(serversocket.fileno())</span><br><span class="line"><span class="hljs-comment">#关闭epoll</span></span><br><span class="line">epoll.close()</span><br><span class="line"><span class="hljs-comment">#关闭服务器socket</span></span><br><span class="line">serversocket.close()</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;但客户端的代码基本与其他模型无疑，这里对客户端代码做基本记录。</p>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#创建客户端socket对象</span></span><br><span class="line">clientsocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line"><span class="hljs-comment">#服务端IP地址和端口号元组</span></span><br><span class="line">server_address = (<span class="hljs-string">'127.0.0.1'</span>,<span class="hljs-number">8888</span>)</span><br><span class="line"><span class="hljs-comment">#客户端连接指定的IP地址和端口号</span></span><br><span class="line">clientsocket.connect(server_address)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:</span><br><span class="line">    <span class="hljs-comment">#输入数据</span></span><br><span class="line">    data = raw_input(<span class="hljs-string">'please input:'</span>)</span><br><span class="line">    <span class="hljs-comment">#客户端发送数据</span></span><br><span class="line">    clientsocket.sendall(data)</span><br><span class="line">    <span class="hljs-comment">#客户端接收数据</span></span><br><span class="line">    server_data = clientsocket.recv(<span class="hljs-number">1024</span>)</span><br><span class="line">    <span class="hljs-keyword">print</span> <span class="hljs-string">'客户端收到的数据：'</span>server_data</span><br><span class="line">    <span class="hljs-comment">#关闭客户端socket</span></span><br><span class="line">    clientsocket.close()</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;通过上述的这些样例，大致了解了python如何利用内核模型进行编程，但是由于缺少编程经验，暂时尚未掌握这些操作在实习开发时如何运用。希望未来能对这个领域进行更深一步的理解，届时将再次更新总结对内核模型的理解。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -921,7 +946,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        15
                     </p>
                 </div>
             </div>
@@ -941,7 +966,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        40
+                        43
                     </p>
                 </div>
             </div>
@@ -1028,7 +1053,7 @@
                 <span class="level-item">深入了解C++</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/算法基础/">
@@ -1058,7 +1083,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 15px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/图解http/" style="font-size: 15px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
+        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/auto/" style="font-size: 10px;">auto</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nullptr/" style="font-size: 10px;">nullptr</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 15px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/右值引用/" style="font-size: 10px;">右值引用</a> <a href="/tags/图解http/" style="font-size: 15px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
     </div>
 </div>
 
@@ -1072,6 +1097,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/21/cpp11-feature/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（3）——C++11特性小结">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-20T17:24:49.000Z">2019-07-21</time></div>
+                    <a href="/2019/07/21/cpp11-feature/" class="has-link-black-ter is-size-6">深入了解C++（3）——C++11特性小结</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1149,25 +1193,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/18/i-need-offer/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="头条三面凉经分析">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T05:56:51.000Z">2019-07-18</time></div>
-                    <a href="/2019/07/18/i-need-offer/" class="has-link-black-ter is-size-6">头条三面凉经分析</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1186,7 +1211,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">14</span>
+                    <span class="level-item tag">15</span>
                 </span>
             </a>
         </li>
@@ -1233,9 +1258,16 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/auto/">
+                        <span class="tag">auto</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/c/">
                         <span class="tag">c++</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1282,6 +1314,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/nullptr/">
+                        <span class="tag">nullptr</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/python/">
                         <span class="tag">python</span>
                         <span class="tag is-grey">1</span>
@@ -1319,6 +1358,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/内存分配/">
                         <span class="tag">内存分配</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/右值引用/">
+                        <span class="tag">右值引用</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1509,6 +1555,25 @@
         
         <article class="media">
             
+            <a href="/2019/07/21/cpp11-feature/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（3）——C++11特性小结">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-20T17:24:49.000Z">2019-07-21</time></div>
+                    <a href="/2019/07/21/cpp11-feature/" class="has-link-black-ter is-size-6">深入了解C++（3）——C++11特性小结</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/07/20/cpp-virtualfunction/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（2）——虚函数与虚函数底层实现">
@@ -1583,25 +1648,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/18/i-need-offer/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="头条三面凉经分析">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T05:56:51.000Z">2019-07-18</time></div>
-                    <a href="/2019/07/18/i-need-offer/" class="has-link-black-ter is-size-6">头条三面凉经分析</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1620,7 +1666,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">14</span>
+                    <span class="level-item tag">15</span>
                 </span>
             </a>
         </li>
@@ -1667,9 +1713,16 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/auto/">
+                        <span class="tag">auto</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/c/">
                         <span class="tag">c++</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1716,6 +1769,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/nullptr/">
+                        <span class="tag">nullptr</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/python/">
                         <span class="tag">python</span>
                         <span class="tag is-grey">1</span>
@@ -1753,6 +1813,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/内存分配/">
                         <span class="tag">内存分配</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/右值引用/">
+                        <span class="tag">右值引用</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
