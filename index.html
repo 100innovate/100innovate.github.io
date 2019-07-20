@@ -141,6 +141,77 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-20T14:28:34.000Z">2019-07-20</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1080 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/07/20/cpp-virtualfunction/">深入了解C++（2）——虚函数与虚函数底层实现</a>
+            
+        </h1>
+        <div class="content">
+            <p>&emsp;面向对象程序设计（object-oriented programming）是一个非常重要的概念，其核心思想是数据抽象、继承、动态绑定。在C++语言中，虚函数的作用是实现多态性。而纯虚函数则作为一个没有具体实现的虚函数，与java程序设计的influence非常相似。今天本篇文章将简要总结C++中的虚函数，并且深入研究C++虚函数的底层实现方式。</p>
+<p>本文共分为四个部分 虚函数、纯虚函数、动态绑定、虚函数底层实现</p>
+<h1 id="一-虚函数"><a href="#一-虚函数" class="headerlink" title="一 虚函数"></a>一 虚函数</h1><p>&emsp;在C++中，虚函数的作用就是为了实现多态性，即父类为子类提供虚函数的默认实现。子类可以重写虚函数以实现自身的特殊化。一段最基本的包含虚函数的父类定义及子类定义如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"A(output):"</span>&lt;&lt;s&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span>:</span><span class="hljs-keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"B(output):"</span>&lt;&lt;s&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    A* ptr=<span class="hljs-keyword">new</span> B();</span><br><span class="line">    ptr-&gt;output(<span class="hljs-string">"hello"</span>);</span><br><span class="line">    <span class="hljs-keyword">delete</span> ptr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;基于上述的代码，我们将得到“B(output):hello”的输出，注意一旦我们定义一个函数为虚函数，那么它将一直作为虚函数，子类无法改变该函数是虚函数这个事实。</p>
+<h1 id="二-纯虚函数"><a href="#二-纯虚函数" class="headerlink" title="二 纯虚函数"></a>二 纯虚函数</h1><p>&emsp;在C++中，如果一个类包含纯虚函数，那么这个类将成为一个抽象类。抽象类无法创建出对象，只有继承了抽象类的子类通过实现虚函数才能被实例化。纯虚函数的概念与java中的influence非常相近，它是一种只提供声明不提供实现的约束。子类需要一一将其全部实现。一个常见的纯虚函数实现如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span>=<span class="hljs-number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span>:</span><span class="hljs-keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"B(output):"</span>&lt;&lt;s&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;如果不想实现一个纯虚函数，那么继承它的类也将是一个抽象类。这个范例如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span>=<span class="hljs-number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span>:</span><span class="hljs-keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span>=<span class="hljs-number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">C</span>:</span><span class="hljs-keyword">public</span> B</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span>&#123;</span><br><span class="line">        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"C(output):"</span>&lt;&lt;s&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="三-动态绑定"><a href="#三-动态绑定" class="headerlink" title="三 动态绑定"></a>三 动态绑定</h1><p>&emsp;在了解虚函数的底层实现之前，首先需要了解的是动态绑定概念。</p>
+<blockquote>
+<ul>
+<li>在执行期间（非编译期）判断所引用对象的实际类型，根据实际类型（动态类型）调用相应的方法。</li>
+<li>动态绑定灵活性相对静态绑定来说要高，因为它在运行之前可以进行选择性的绑定，但同时，动态绑定的执行效率要低些，因为绑定对象还要进行编译（现在编译期一般都会多次编译）。<br><br><br>触发动态绑定的条件：</li>
+<li>（1）只有指定为虚函数的成员函数才能进行动态绑定；</li>
+<li>（2）只有通过基类的指针或引用进行函数调用。</li>
+</ul>
+</blockquote>
+<p>&emsp;了解了这个关键点后，我们发现我们需要去了解的重点是，如何进行动态绑定的概念，此时就涉及到了C++虚函数的底层实现。</p>
+<h1 id="四-虚函数的底层实现"><a href="#四-虚函数的底层实现" class="headerlink" title="四 虚函数的底层实现"></a>四 虚函数的底层实现</h1><p>&emsp;简单查阅资料我们可以发现，C++虚函数的实现主要利用了虚函数表。编译器将为实现了虚函数的基类和覆盖了虚函数的派生类分别创建一个虚函数表(Virtual Function Table,VFT)。也就是说Base和Derived类都将有自己的虚函数表。实例化这些类的对象时，将创建一个隐藏的指针VFT*，它指向相应的VFT。可将VFT视为一个包含函数指针的静态数组，其中每个指针都指向相应的虚函数。Base类和Derived类的虚函数表如下图所示：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Func1</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//Func1的实现代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Func2</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//Func2的实现代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="hljs-comment">//Func3、Func4等虚函数的实现 </span></span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">FuncN</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//FuncN的实现代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derived</span>:</span><span class="hljs-keyword">public</span> Base</span><br><span class="line">&#123;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Func1</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//Func2覆盖Base类的Func1代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="hljs-comment">//除去Func2的其他所有虚函数的实现代码 </span></span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">FuncN</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//FuncN覆盖Base类的FuncN代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/07/20/cpp-virtualfunction/20160111175542668.png" alt="继承关系示意图"></p>
+<p>&emsp;如上图所示，利用上述代码编译后，编译器将会为base类和derived类提供虚函数表。当一个对象被实例化时，将会创建一个隐藏的指针指向对应的虚函数表，从而实现运行时多态。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-07-19T16:05:00.000Z">2019-07-20</time>
                 
                 <div class="level-item">
@@ -788,78 +859,6 @@
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-13T11:49:16.000Z">2019-07-13</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/初窥http/">初窥http</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    8 分钟 读完 (大约 1161 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/07/13/http-02/">初窥http（2）——加密版本的http协议https协议</a>
-            
-        </h1>
-        <div class="content">
-            <p>&emsp;紧随初窥http（1），这次探索的是现代网站常用的加密协议https。https的主要功能是确保web安全。它主要弥补了http下面的几个不足：</p>
-<blockquote>
-<p>使用明文通信，内容可能会被窃听<br><br>无法验证通信方的身份，可能存在伪装的情况<br><br>无法验证报文的完整性，报文可能遭到修改。</p>
-</blockquote>
-<p>&emsp;这些问题通常会出现在所有非加密的信息传输协议中。为了解决上述的三个问题https应运而生。</p>
-<h1 id="一-什么是https"><a href="#一-什么是https" class="headerlink" title="一 什么是https"></a>一 什么是https</h1><p>&emsp;利用SSL或者TLS的组合使用，加密HTTP的通信内容。通过SSL建立安全通信线路之后，就可以在这条线路上进行HTTP通信。与SSL组合使用的HTTP被称为HTTPS或者HTTP over SSL。</p>
-<h1 id="二-对称加密非对称加密"><a href="#二-对称加密非对称加密" class="headerlink" title="二 对称加密非对称加密"></a>二 对称加密非对称加密</h1><p>&emsp;对称加密和非对称加密是我们常常使用的加密算法，对称加密时通信双方使用同一个密钥，此时如何保障该密钥的传输成为一个重大难题，通常来说在一些必要的情况下设备厂商会在设备内预置一些密钥对，这样在一定程度上保证通信安全。而非对称加密，一对密钥由公钥和私钥组成，私钥解密公钥加密数据，公钥解密私钥加密数据。私钥只能由一个设备保管，但是公钥可以公开给所有人，根据算法相关的知识我们可以知道，这种通信方式更为安全，但是传输速度收到加密解密速度的影响。</p>
-<p>&emsp;所以在https中，同时使用到了对称加密和非对称加密，非对称加密主要用于服务器的验证，对称加密主要用于大量数据的传输，利用对称加密和非对称加密的特点，共同解决http数据传输时的安全问题。</p>
-<h1 id="三-https过程详解"><a href="#三-https过程详解" class="headerlink" title="三 https过程详解"></a>三 https过程详解</h1><p>&emsp;关于HTTPS安全通信机制和HTTPS的通信步骤，不同人有不同的理解办法，这里引用《图解http》里面的内容来详细介绍这一过程。</p>
-<img src="/2019/07/13/http-02/20190713193234.png" title="https同步机制图解">
-
-<p>摘选书中的内容主要分为下面12个步骤。</p>
-<blockquote>
-<ol>
-<li>客户端通过发送Client Hello报文开始SSL通信。报文中包含客户端支持的SSL的指定版本、加密组件（Cipher Suite）列表（所使用的加密算法及密钥长度等）。 </li>
-<li>服务器可进行SSL通信时，会以Server Hello报文作为应答。和客户端一样，在报文中包含SSL版本以及加密组件。服务器的加密组件内容是从接收到的客户端加密组件内筛选出来的。</li>
-<li>之后服务器发送Certificate 报文。报文中包含公开密钥证书。 </li>
-<li>最后服务器发送Server Hello Done报文通知客户端，最初阶段的SSL握手协商部分结束。 </li>
-<li>SSL第一次握手结束之后，客户端以Client Key Exchange 报文作为回应。报文中包含通信加密中使用的一种被称为 Pre-master secret的随机密码串。该报文已用步骤3中的公开密钥进行加密。 </li>
-<li>接着客户端继续发送Change Cipher Spec报文。该报文会 提示服务器，在此报文之后的通信会采用Pre-master secret 密钥加密。</li>
-<li>客户端发送Finished报文。该报文包含连接至今全部报文 的整体校验值。这次握手协商是否能够成功，要以服务器是否能够正确解密该报文作为判定标准。 </li>
-<li>服务器同样发送Change Cipher Spec报文。 </li>
-<li>服务器同样发送Finished报文。 </li>
-<li>服务器和客户端的Finished 报文交换完毕之后，SSL连接就算建立完成。当然，通信会受到SSL的保护。从此处开始进行应用层协议的通信，即发送HTTP请求。 </li>
-<li>应用层协议通信，即发送HTTP响应。 </li>
-<li>最后由客户端断开连接。断开连接时，发送close_notify报文。上图做了一些省略，这步之后再发送TCP FIN报文来关闭与TCP 的通信。</li>
-</ol>
-</blockquote>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -922,7 +921,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        13
+                        14
                     </p>
                 </div>
             </div>
@@ -942,7 +941,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        35
+                        40
                     </p>
                 </div>
             </div>
@@ -1029,7 +1028,7 @@
                 <span class="level-item">深入了解C++</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/算法基础/">
@@ -1059,7 +1058,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 15px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/图解http/" style="font-size: 15px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
+        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 15px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/图解http/" style="font-size: 15px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
     </div>
 </div>
 
@@ -1073,6 +1072,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/20/cpp-virtualfunction/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（2）——虚函数与虚函数底层实现">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-20T14:28:34.000Z">2019-07-20</time></div>
+                    <a href="/2019/07/20/cpp-virtualfunction/" class="has-link-black-ter is-size-6">深入了解C++（2）——虚函数与虚函数底层实现</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1150,25 +1168,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/17/system-io/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="操作系统——io操作小结">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T01:53:56.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/system-io/" class="has-link-black-ter is-size-6">操作系统——io操作小结</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1187,7 +1186,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">13</span>
+                    <span class="level-item tag">14</span>
                 </span>
             </a>
         </li>
@@ -1204,6 +1203,13 @@
                 标签
             </h3>
             <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/C/">
+                        <span class="tag">C++</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/I-O/">
@@ -1339,6 +1345,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/抽象类/">
+                        <span class="tag">抽象类</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/操作系统/">
                         <span class="tag">操作系统</span>
                         <span class="tag is-grey">6</span>
@@ -1409,6 +1422,20 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/继承/">
+                        <span class="tag">继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/虚函数/">
+                        <span class="tag">虚函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/计算机网络/">
                         <span class="tag">计算机网络</span>
                         <span class="tag is-grey">1</span>
@@ -1432,6 +1459,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/进程/">
                         <span class="tag">进程</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/重载/">
+                        <span class="tag">重载</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1475,6 +1509,25 @@
         
         <article class="media">
             
+            <a href="/2019/07/20/cpp-virtualfunction/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（2）——虚函数与虚函数底层实现">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-20T14:28:34.000Z">2019-07-20</time></div>
+                    <a href="/2019/07/20/cpp-virtualfunction/" class="has-link-black-ter is-size-6">深入了解C++（2）——虚函数与虚函数底层实现</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/07/20/cpp-memory/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（1）——C++内存分配机制">
@@ -1549,25 +1602,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/17/system-io/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="操作系统——io操作小结">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T01:53:56.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/system-io/" class="has-link-black-ter is-size-6">操作系统——io操作小结</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1586,7 +1620,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">13</span>
+                    <span class="level-item tag">14</span>
                 </span>
             </a>
         </li>
@@ -1603,6 +1637,13 @@
                 标签
             </h3>
             <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/C/">
+                        <span class="tag">C++</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/I-O/">
@@ -1738,6 +1779,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/抽象类/">
+                        <span class="tag">抽象类</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/操作系统/">
                         <span class="tag">操作系统</span>
                         <span class="tag is-grey">6</span>
@@ -1808,6 +1856,20 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/继承/">
+                        <span class="tag">继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/虚函数/">
+                        <span class="tag">虚函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/计算机网络/">
                         <span class="tag">计算机网络</span>
                         <span class="tag is-grey">1</span>
@@ -1831,6 +1893,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/进程/">
                         <span class="tag">进程</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/重载/">
+                        <span class="tag">重载</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>

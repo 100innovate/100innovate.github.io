@@ -2,24 +2,24 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>操作系统——调度算法小结 - 100innovate&#39;blog</title>
+<title>深入了解C++（2）——虚函数与虚函数底层实现 - 100innovate&#39;blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="&amp;emsp;真的是太懵圈了，突然发现操作系统还有调度算法这么一说。虽说操作系统课程已经过去了一年多了但是这种基础知识着实不能忘。 一 先来先服务算法&amp;emsp;先来先服务算法是操作系统调度算法中最简单的算法，该算法可以用于作业调度，同样也可以用于进程调度，调度的策略非常简单，就是先来先服务。 二 短作业优先算法&amp;emsp;短作业有限算法，同样作为操作系统调度算法中非常简单的算法，调度策略是优先选取">
-<meta name="keywords" content="操作系统,调度算法">
+    <meta name="description" content="&amp;emsp;面向对象程序设计（object-oriented programming）是一个非常重要的概念，其核心思想是数据抽象、继承、动态绑定。在C++语言中，虚函数的作用是实现多态性。而纯虚函数则作为一个没有具体实现的虚函数，与java程序设计的influence非常相似。今天本篇文章将简要总结C++中的虚函数，并且深入研究C++虚函数的底层实现方式。 本文共分为四个部分 虚函数、纯虚函数、动">
+<meta name="keywords" content="C++,虚函数,继承,重载,抽象类">
 <meta property="og:type" content="article">
-<meta property="og:title" content="操作系统——调度算法小结">
-<meta property="og:url" content="http://blog.100innovate.com/2019/07/16/system-scheduling-algorithm/index.html">
+<meta property="og:title" content="深入了解C++（2）——虚函数与虚函数底层实现">
+<meta property="og:url" content="http://blog.100innovate.com/2019/07/20/cpp-virtualfunction/index.html">
 <meta property="og:site_name" content="100innovate&#39;blog">
-<meta property="og:description" content="&amp;emsp;真的是太懵圈了，突然发现操作系统还有调度算法这么一说。虽说操作系统课程已经过去了一年多了但是这种基础知识着实不能忘。 一 先来先服务算法&amp;emsp;先来先服务算法是操作系统调度算法中最简单的算法，该算法可以用于作业调度，同样也可以用于进程调度，调度的策略非常简单，就是先来先服务。 二 短作业优先算法&amp;emsp;短作业有限算法，同样作为操作系统调度算法中非常简单的算法，调度策略是优先选取">
+<meta property="og:description" content="&amp;emsp;面向对象程序设计（object-oriented programming）是一个非常重要的概念，其核心思想是数据抽象、继承、动态绑定。在C++语言中，虚函数的作用是实现多态性。而纯虚函数则作为一个没有具体实现的虚函数，与java程序设计的influence非常相似。今天本篇文章将简要总结C++中的虚函数，并且深入研究C++虚函数的底层实现方式。 本文共分为四个部分 虚函数、纯虚函数、动">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-07-16T11:58:19.550Z">
+<meta property="og:updated_time" content="2019-07-20T15:17:42.125Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="操作系统——调度算法小结">
-<meta name="twitter:description" content="&amp;emsp;真的是太懵圈了，突然发现操作系统还有调度算法这么一说。虽说操作系统课程已经过去了一年多了但是这种基础知识着实不能忘。 一 先来先服务算法&amp;emsp;先来先服务算法是操作系统调度算法中最简单的算法，该算法可以用于作业调度，同样也可以用于进程调度，调度的策略非常简单，就是先来先服务。 二 短作业优先算法&amp;emsp;短作业有限算法，同样作为操作系统调度算法中非常简单的算法，调度策略是优先选取">
+<meta name="twitter:title" content="深入了解C++（2）——虚函数与虚函数底层实现">
+<meta name="twitter:description" content="&amp;emsp;面向对象程序设计（object-oriented programming）是一个非常重要的概念，其核心思想是数据抽象、继承、动态绑定。在C++语言中，虚函数的作用是实现多态性。而纯虚函数则作为一个没有具体实现的虚函数，与java程序设计的influence非常相似。今天本篇文章将简要总结C++中的虚函数，并且深入研究C++虚函数的底层实现方式。 本文共分为四个部分 虚函数、纯虚函数、动">
 <meta name="twitter:image" content="http://blog.100innovate.com/images/og_image.png">
 
 
@@ -94,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/og_image.png" alt="操作系统——调度算法小结" height="28">
+                <img src="/images/og_image.png" alt="深入了解C++（2）——虚函数与虚函数底层实现" height="28">
             
             </a>
         </div>
@@ -145,17 +145,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-16T08:08:05.000Z">2019-07-16</time>
+                <time class="level-item has-text-grey" datetime="2019-07-20T14:28:34.000Z">2019-07-20</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    4 分钟 读完 (大约 595 个字)
+                    7 分钟 读完 (大约 1080 个字)
                 </span>
                 
                 
@@ -164,17 +164,37 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                操作系统——调度算法小结
+                深入了解C++（2）——虚函数与虚函数底层实现
             
         </h1>
         <div class="content">
-            <p>&emsp;真的是太懵圈了，突然发现操作系统还有调度算法这么一说。虽说操作系统课程已经过去了一年多了但是这种基础知识着实不能忘。</p>
-<h1 id="一-先来先服务算法"><a href="#一-先来先服务算法" class="headerlink" title="一 先来先服务算法"></a>一 先来先服务算法</h1><p>&emsp;先来先服务算法是操作系统调度算法中最简单的算法，该算法可以用于作业调度，同样也可以用于进程调度，调度的策略非常简单，就是先来先服务。</p>
-<h1 id="二-短作业优先算法"><a href="#二-短作业优先算法" class="headerlink" title="二 短作业优先算法"></a>二 短作业优先算法</h1><p>&emsp;短作业有限算法，同样作为操作系统调度算法中非常简单的算法，调度策略是优先选取运行所需时间短的任务。</p>
-<h1 id="三-高权值优先算法"><a href="#三-高权值优先算法" class="headerlink" title="三 高权值优先算法"></a>三 高权值优先算法</h1><p>&emsp;这里分为抢占式和非抢占式算法，抢占式算法在高权值的任务进入时直接挤掉当前运行的任务。非抢占式算法在任务执行结束后，选取权值最高的任务执行。</p>
-<h1 id="四-高响应比优先算法"><a href="#四-高响应比优先算法" class="headerlink" title="四 高响应比优先算法"></a>四 高响应比优先算法</h1><p>&emsp;由于等待时间与服务时间之和就是系统对该作业的响应时间，故该优先权又相当于响应比RP。作业优先级随等待时间增高而增高。随着等待时间增加，将会越来越快的被分配到cpu</p>
-<h1 id="五-时间片轮转算法"><a href="#五-时间片轮转算法" class="headerlink" title="五 时间片轮转算法"></a>五 时间片轮转算法</h1><p>&emsp;给队列中的每一个任务分配固定的时间片，然后每个任务执行完固定的时间片后将被轮出。但是这种算法如果时间片大小过大，则会造成cpu资源的浪费，如果时间片过小进程间不断切换也会浪费cpu资源。</p>
-<h1 id="六-多级反馈队列算法"><a href="#六-多级反馈队列算法" class="headerlink" title="六 多级反馈队列算法"></a>六 多级反馈队列算法</h1><p>&emsp;与时间片轮转算法非常相似，但是与其不同的式，拥有多个队列，当任务在第一个队列分配的时间片中无法完成全部任务时，将会被置入第二个队列中，分配给其的时间片大小会越来越大。由于大多数任务我们没有办法知道确切的运行时间。所以这种调度算法是目前最被广泛使用的调度算法。</p>
+            <p>&emsp;面向对象程序设计（object-oriented programming）是一个非常重要的概念，其核心思想是数据抽象、继承、动态绑定。在C++语言中，虚函数的作用是实现多态性。而纯虚函数则作为一个没有具体实现的虚函数，与java程序设计的influence非常相似。今天本篇文章将简要总结C++中的虚函数，并且深入研究C++虚函数的底层实现方式。</p>
+<p>本文共分为四个部分 虚函数、纯虚函数、动态绑定、虚函数底层实现</p>
+<h1 id="一-虚函数"><a href="#一-虚函数" class="headerlink" title="一 虚函数"></a>一 虚函数</h1><p>&emsp;在C++中，虚函数的作用就是为了实现多态性，即父类为子类提供虚函数的默认实现。子类可以重写虚函数以实现自身的特殊化。一段最基本的包含虚函数的父类定义及子类定义如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"A(output):"</span>&lt;&lt;s&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span>:</span><span class="hljs-keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"B(output):"</span>&lt;&lt;s&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    A* ptr=<span class="hljs-keyword">new</span> B();</span><br><span class="line">    ptr-&gt;output(<span class="hljs-string">"hello"</span>);</span><br><span class="line">    <span class="hljs-keyword">delete</span> ptr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;基于上述的代码，我们将得到“B(output):hello”的输出，注意一旦我们定义一个函数为虚函数，那么它将一直作为虚函数，子类无法改变该函数是虚函数这个事实。</p>
+<h1 id="二-纯虚函数"><a href="#二-纯虚函数" class="headerlink" title="二 纯虚函数"></a>二 纯虚函数</h1><p>&emsp;在C++中，如果一个类包含纯虚函数，那么这个类将成为一个抽象类。抽象类无法创建出对象，只有继承了抽象类的子类通过实现虚函数才能被实例化。纯虚函数的概念与java中的influence非常相近，它是一种只提供声明不提供实现的约束。子类需要一一将其全部实现。一个常见的纯虚函数实现如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span>=<span class="hljs-number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span>:</span><span class="hljs-keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"B(output):"</span>&lt;&lt;s&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;如果不想实现一个纯虚函数，那么继承它的类也将是一个抽象类。这个范例如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span>=<span class="hljs-number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span>:</span><span class="hljs-keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span>=<span class="hljs-number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">C</span>:</span><span class="hljs-keyword">public</span> B</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span>&#123;</span><br><span class="line">        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"C(output):"</span>&lt;&lt;s&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="三-动态绑定"><a href="#三-动态绑定" class="headerlink" title="三 动态绑定"></a>三 动态绑定</h1><p>&emsp;在了解虚函数的底层实现之前，首先需要了解的是动态绑定概念。</p>
+<blockquote>
+<ul>
+<li>在执行期间（非编译期）判断所引用对象的实际类型，根据实际类型（动态类型）调用相应的方法。</li>
+<li>动态绑定灵活性相对静态绑定来说要高，因为它在运行之前可以进行选择性的绑定，但同时，动态绑定的执行效率要低些，因为绑定对象还要进行编译（现在编译期一般都会多次编译）。<br><br><br>触发动态绑定的条件：</li>
+<li>（1）只有指定为虚函数的成员函数才能进行动态绑定；</li>
+<li>（2）只有通过基类的指针或引用进行函数调用。</li>
+</ul>
+</blockquote>
+<p>&emsp;了解了这个关键点后，我们发现我们需要去了解的重点是，如何进行动态绑定的概念，此时就涉及到了C++虚函数的底层实现。</p>
+<h1 id="四-虚函数的底层实现"><a href="#四-虚函数的底层实现" class="headerlink" title="四 虚函数的底层实现"></a>四 虚函数的底层实现</h1><p>&emsp;简单查阅资料我们可以发现，C++虚函数的实现主要利用了虚函数表。编译器将为实现了虚函数的基类和覆盖了虚函数的派生类分别创建一个虚函数表(Virtual Function Table,VFT)。也就是说Base和Derived类都将有自己的虚函数表。实例化这些类的对象时，将创建一个隐藏的指针VFT*，它指向相应的VFT。可将VFT视为一个包含函数指针的静态数组，其中每个指针都指向相应的虚函数。Base类和Derived类的虚函数表如下图所示：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Func1</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//Func1的实现代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Func2</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//Func2的实现代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="hljs-comment">//Func3、Func4等虚函数的实现 </span></span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">FuncN</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//FuncN的实现代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derived</span>:</span><span class="hljs-keyword">public</span> Base</span><br><span class="line">&#123;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Func1</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//Func2覆盖Base类的Func1代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="hljs-comment">//除去Func2的其他所有虚函数的实现代码 </span></span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">FuncN</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//FuncN覆盖Base类的FuncN代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/07/20/cpp-virtualfunction/20160111175542668.png" alt="继承关系示意图"></p>
+<p>&emsp;如上图所示，利用上述代码编译后，编译器将会为base类和derived类提供虚函数表。当一个对象被实例化时，将会创建一个隐藏的指针指向对应的虚函数表，从而实现运行时多态。</p>
 
         </div>
         
@@ -182,7 +202,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/操作系统/">操作系统</a>, <a class="has-link-grey -link" href="/tags/调度算法/">调度算法</a>
+                    <a class="has-link-grey -link" href="/tags/C/">C++</a>, <a class="has-link-grey -link" href="/tags/抽象类/">抽象类</a>, <a class="has-link-grey -link" href="/tags/继承/">继承</a>, <a class="has-link-grey -link" href="/tags/虚函数/">虚函数</a>, <a class="has-link-grey -link" href="/tags/重载/">重载</a>
                 </div>
             </div>
         </div>
@@ -228,17 +248,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/07/17/system-io/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">操作系统——io操作小结</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/16/database-base/">
-                <span class="level-item">数据库基础——索引</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/20/cpp-memory/">
+                <span class="level-item">深入了解C++（1）——C++内存分配机制</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -1304,7 +1317,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/og_image.png" alt="操作系统——调度算法小结" height="28">
+                    <img src="/images/og_image.png" alt="深入了解C++（2）——虚函数与虚函数底层实现" height="28">
                 
                 </a>
                 <p class="is-size-7">
