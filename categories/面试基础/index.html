@@ -152,6 +152,71 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-21T16:06:18.000Z">2019-07-22</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1088 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/07/22/icmp/">浅析ICMP协议</a>
+            
+        </h1>
+        <div class="content">
+            <p>&emsp;前一段时间碰到一个面试题，问题是ping命令使用的是什么协议，这个问题的答案就是今天的主角ICMP协议。但是那个时候只知其名不知其今天就查阅资料简要总结ICMP协议。</p>
+<h1 id="一-ICMP简介"><a href="#一-ICMP简介" class="headerlink" title="一 ICMP简介"></a>一 ICMP简介</h1><p>&emsp;ICMP协议是一个网络层协议。 一个新搭建好的网络，往往需要先进行一个简单的测试，来验证网络是否畅通；但是IP协议并不提供可靠传输。如果丢包了，IP协议并不能通知传输层是否丢包以及丢包的原因。<br>所以我们就需要一种协议来完成这样的功能–ICMP协议。</p>
+<p>&emsp;ICMP协议的功能主要有： </p>
+<ol>
+<li>确认IP包是否成功到达目标地址 </li>
+<li>通知在发送过程中IP包被丢弃的原因 </li>
+</ol>
+<p>&emsp;需要注意的是ICMP是基于IP协议工作的，但是它并不是传输层的功能，因此仍然把它归结为网络层协议 。所以如果我们问ping的端口时什么的时候，我们应该回答的是ping命令基于ICMP是一个网络层的概念，而端口是传输层的概念，所以ICMP不需要关注端口号。</p>
+<h1 id="二-报文格式"><a href="#二-报文格式" class="headerlink" title="二 报文格式"></a>二 报文格式</h1><p><img src="/2019/07/22/icmp/806469-20180306123940403-1730998630.png" alt="数据包格式图"></p>
+<p>&emsp;用来传送ICMP 报文的IP 数据包上实际上有不少字段。但是实际上与ICMP 协议相关的只有7 个子段。</p>
+<p>1）协议；2）源IP 地址；3）目的IP 地址；4）生存时间；这四个包含在IP 首部的字段。<br>5）类型；6）代码；7）选项数据；这三个包含在ICMP数据部分的字段。</p>
+<blockquote>
+<p>&emsp;这里面，1)协议字段值是1。2)和3)是用来交流ICMP 报文的地址信息，没有特殊意义。对于理解ICMP 本身，重要的是5)，6)，7)三个字段。这里面的可以称为核心的重要字段是5)类型，6)代码这两个字段。所有ICMP 用来交流错误通知和信息询问的报文，都是由类型和代码的组合来表示的。RFC 定义了15种类型。“报文不可到达”这样的错误通知和“回送请求”这样的信息查询是由类型字段来区分的。ICMP报文由类型来表达它的大概意义，需要传递细小的信息时由代码来分类。进一步，需要向对方传送数据的时候，用7）选项数据字段来放置。引用自<a href="https://www.cnblogs.com/iiiiher/p/8513748.html" target="_blank" rel="noopener">_毛台</a></p>
+</blockquote>
+<h1 id="三-常用的ICMP协议命令"><a href="#三-常用的ICMP协议命令" class="headerlink" title="三 常用的ICMP协议命令"></a>三 常用的ICMP协议命令</h1><ol>
+<li>ping<br><br>（1）能验证网络的连通性 <br><br>（2）会统计响应时间和TTL(IP包中的Time To Live，生存周期) </li>
+<li>tracert<br><br>&emsp;打印出可执行程序主机，一直到目标主机之前经历多少路由器。 </li>
+</ol>
+<h1 id="四-安全问题"><a href="#四-安全问题" class="headerlink" title="四 安全问题"></a>四 安全问题</h1><blockquote>
+<p>引用自<a href="https://www.cnblogs.com/iiiiher/p/8513748.html" target="_blank" rel="noopener">_毛台</a><br><br>&emsp;作为恶意使用ICMP 的最有代表性的例子，也就是所谓的 “ping 洪水”的攻击。它利用ping 的原理，向目标服务器发送大量的ICMP 回送请求。这是黑客向特定的机器连续发送大量的ICMP 回送请求报文。目标机器回答到达的ICMP 回送请求已经用尽全力了，原来的通信处理就变得很不稳定了。进一步，目标机器连接的网络也可能由于大量的ICMP 数据包而陷入不可使用的状态。<br><br>&emsp;与ping 洪水相似，以更加恶劣的使用方法而闻名的是称为“smurf”的攻击手法。smurf 同样，黑客恶意的使用ICMP 回送请求报文。这一点同ping 洪水是相同的。不过在smurf，对ICMP 回送请求实施了一些加工。源IP 地址被伪装成攻击对象服务器的地址，目标地址也不是攻击对象服务器的地址，而是成为中转台的网络的广播地址。</p>
+</blockquote>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-07-18T12:26:17.000Z">2019-07-18</time>
                 
                 <div class="level-item">
@@ -851,7 +916,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        16
                     </p>
                 </div>
             </div>
@@ -871,7 +936,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        43
+                        45
                     </p>
                 </div>
             </div>
@@ -974,7 +1039,7 @@
                 <span class="level-item">面试基础</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">9</span>
+                <span class="level-item tag">10</span>
             </span>
         </a></li>
             </ul>
@@ -988,7 +1053,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/auto/" style="font-size: 10px;">auto</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nullptr/" style="font-size: 10px;">nullptr</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 15px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/右值引用/" style="font-size: 10px;">右值引用</a> <a href="/tags/图解http/" style="font-size: 15px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
+        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 15px;">TCP/IP</a> <a href="/tags/auto/" style="font-size: 10px;">auto</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nullptr/" style="font-size: 10px;">nullptr</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 15px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/右值引用/" style="font-size: 10px;">右值引用</a> <a href="/tags/图解http/" style="font-size: 15px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
     </div>
 </div>
 
@@ -1002,6 +1067,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/22/icmp/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="浅析ICMP协议">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-21T16:06:18.000Z">2019-07-22</time></div>
+                    <a href="/2019/07/22/icmp/" class="has-link-black-ter is-size-6">浅析ICMP协议</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1079,25 +1163,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/18/LRU-O1/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="LRU算法读取淘汰双O（1）算法">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T12:26:17.000Z">2019-07-18</time></div>
-                    <a href="/2019/07/18/LRU-O1/" class="has-link-black-ter is-size-6">LRU算法读取淘汰双O（1）算法</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1116,7 +1181,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">15</span>
+                    <span class="level-item tag">16</span>
                 </span>
             </a>
         </li>
@@ -1149,6 +1214,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/ICMP/">
+                        <span class="tag">ICMP</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/LRU算法/">
                         <span class="tag">LRU算法</span>
                         <span class="tag is-grey">1</span>
@@ -1158,7 +1230,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/TCP-IP/">
                         <span class="tag">TCP/IP</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1221,6 +1293,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/nullptr/">
                         <span class="tag">nullptr</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ping/">
+                        <span class="tag">ping</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1460,6 +1539,25 @@
         
         <article class="media">
             
+            <a href="/2019/07/22/icmp/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="浅析ICMP协议">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-21T16:06:18.000Z">2019-07-22</time></div>
+                    <a href="/2019/07/22/icmp/" class="has-link-black-ter is-size-6">浅析ICMP协议</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/07/21/cpp11-feature/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（3）——C++11特性小结">
@@ -1534,25 +1632,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/18/LRU-O1/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="LRU算法读取淘汰双O（1）算法">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T12:26:17.000Z">2019-07-18</time></div>
-                    <a href="/2019/07/18/LRU-O1/" class="has-link-black-ter is-size-6">LRU算法读取淘汰双O（1）算法</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1571,7 +1650,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">15</span>
+                    <span class="level-item tag">16</span>
                 </span>
             </a>
         </li>
@@ -1604,6 +1683,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/ICMP/">
+                        <span class="tag">ICMP</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/LRU算法/">
                         <span class="tag">LRU算法</span>
                         <span class="tag is-grey">1</span>
@@ -1613,7 +1699,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/TCP-IP/">
                         <span class="tag">TCP/IP</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1676,6 +1762,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/nullptr/">
                         <span class="tag">nullptr</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ping/">
+                        <span class="tag">ping</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
