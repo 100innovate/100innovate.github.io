@@ -2,14 +2,14 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>标签: c++ - 100innovate&#39;blog</title>
+<title>标签: C++ - 100innovate&#39;blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="100innovate&#39;blog">
-<meta property="og:url" content="http://blog.100innovate.com/tags/c/index.html">
+<meta property="og:url" content="http://blog.100innovate.com/tags/C/index.html">
 <meta property="og:site_name" content="100innovate&#39;blog">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
@@ -139,7 +139,7 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
             <li><a href="/tags">标签</a></li>
-            <li class="is-active"><a href="#" aria-current="page">c++</a></li>
+            <li class="is-active"><a href="#" aria-current="page">C++</a></li>
         </ul>
         </nav>
     </div>
@@ -151,7 +151,7 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-20T17:24:49.000Z">2019-07-21</time>
+                <time class="level-item has-text-grey" datetime="2019-07-20T14:28:34.000Z">2019-07-20</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
@@ -161,7 +161,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    12 分钟 读完 (大约 1733 个字)
+                    7 分钟 读完 (大约 1080 个字)
                 </span>
                 
                 
@@ -170,141 +170,37 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/07/21/cpp11-feature/">深入了解C++（3）——C++11特性小结</a>
+                <a class="has-link-black-ter" href="/2019/07/20/cpp-virtualfunction/">深入了解C++（2）——虚函数与虚函数底层实现</a>
             
         </h1>
         <div class="content">
-            <p>&emsp;C++的第一版发布于98年，但是随着时代的变迁，一些更加现代化的思想也渐渐融入到C++的标准之中，特别显著的就是C++11的版本。今天就简要的介绍C++11的新特性。</p>
-<h1 id="一-nullptr"><a href="#一-nullptr" class="headerlink" title="一 nullptr"></a>一 nullptr</h1><p>&emsp;在C++11的新标准中，利用nullptr替换了NULL关键字。这个关键词的目的主要是解决0的二义性。我们可以从下面的示例代码简要了解C和C++中NULL通常的定义方式。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> __cplusplus ---简称：cpp c++ 文件</span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> NULL 0</span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> NULL ((void *)0)</span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+            <p>&emsp;面向对象程序设计（object-oriented programming）是一个非常重要的概念，其核心思想是数据抽象、继承、动态绑定。在C++语言中，虚函数的作用是实现多态性。而纯虚函数则作为一个没有具体实现的虚函数，与java程序设计的influence非常相似。今天本篇文章将简要总结C++中的虚函数，并且深入研究C++虚函数的底层实现方式。</p>
+<p>本文共分为四个部分 虚函数、纯虚函数、动态绑定、虚函数底层实现</p>
+<h1 id="一-虚函数"><a href="#一-虚函数" class="headerlink" title="一 虚函数"></a>一 虚函数</h1><p>&emsp;在C++中，虚函数的作用就是为了实现多态性，即父类为子类提供虚函数的默认实现。子类可以重写虚函数以实现自身的特殊化。一段最基本的包含虚函数的父类定义及子类定义如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"A(output):"</span>&lt;&lt;s&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span>:</span><span class="hljs-keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"B(output):"</span>&lt;&lt;s&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    A* ptr=<span class="hljs-keyword">new</span> B();</span><br><span class="line">    ptr-&gt;output(<span class="hljs-string">"hello"</span>);</span><br><span class="line">    <span class="hljs-keyword">delete</span> ptr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;因为在C++中void*不能隐式的转换为其他类型的指针，然后为了为了解决空指针的问题所以特别引入0代表空指针的操作，但是这样的操作在下面的情况就会造成严重的二义性。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">(sometype1 a, sometype2 *b)</span></span>;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">(sometype1 a, <span class="hljs-keyword">int</span> i)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>&emsp;基于上述的代码，我们将得到“B(output):hello”的输出，注意一旦我们定义一个函数为虚函数，那么它将一直作为虚函数，子类无法改变该函数是虚函数这个事实。</p>
+<h1 id="二-纯虚函数"><a href="#二-纯虚函数" class="headerlink" title="二 纯虚函数"></a>二 纯虚函数</h1><p>&emsp;在C++中，如果一个类包含纯虚函数，那么这个类将成为一个抽象类。抽象类无法创建出对象，只有继承了抽象类的子类通过实现虚函数才能被实例化。纯虚函数的概念与java中的influence非常相近，它是一种只提供声明不提供实现的约束。子类需要一一将其全部实现。一个常见的纯虚函数实现如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span>=<span class="hljs-number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span>:</span><span class="hljs-keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"B(output):"</span>&lt;&lt;s&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;为了解决二义性问题，有时候会采取这样的代码来避免二义性,即使用static_cast对0进行显式类型转换。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bar(a, <span class="hljs-literal">NULL</span>)<span class="hljs-comment">//×××</span></span><br><span class="line">bar(a, <span class="hljs-keyword">static_cast</span>&lt;sometype2 *&gt;(<span class="hljs-number">0</span>)); <span class="hljs-comment">//√√√</span></span><br><span class="line">bar(a, <span class="hljs-keyword">static_cast</span>&lt;sometype2 *&gt;(<span class="hljs-literal">NULL</span>)); <span class="hljs-comment">//√√√</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;如果不想实现一个纯虚函数，那么继承它的类也将是一个抽象类。这个范例如下：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span>=<span class="hljs-number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span>:</span><span class="hljs-keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span>=<span class="hljs-number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">C</span>:</span><span class="hljs-keyword">public</span> B</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">output</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span>&#123;</span><br><span class="line">        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"C(output):"</span>&lt;&lt;s&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;上述的这种操作可以说是异常别扭的。在进行这样特殊的重载时，使用NULL必须使用手动转换，这可以说时让人十分头皮发麻的。所以这里引入nullptr极大程度的解决了这个问题。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bar(a, <span class="hljs-literal">nullptr</span>)<span class="hljs-comment">//√√√ C++11</span></span><br></pre></td></tr></table></figure>
-
-<p>&emsp;使用nullptr可以解决NULL的二义性问题，这可以说是一波让人心情舒畅的操作。</p>
-<h1 id="二-使用using代替typedef"><a href="#二-使用using代替typedef" class="headerlink" title="二 使用using代替typedef"></a>二 使用using代替typedef</h1><p>&emsp;使用using替代typedef的简要代码如下:</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">double</span> db;</span><br><span class="line"><span class="hljs-comment">//c98</span></span><br><span class="line"><span class="hljs-keyword">using</span> db = <span class="hljs-keyword">double</span>;</span><br><span class="line"><span class="hljs-comment">//c++11</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">using</span> query_record = <span class="hljs-built_in">std</span>::tuple&lt;<span class="hljs-keyword">time_t</span>, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt;;</span><br><span class="line"><span class="hljs-comment">//c++11</span></span><br><span class="line"><span class="hljs-keyword">template</span>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt; <span class="hljs-title">using</span> <span class="hljs-title">twins</span> = <span class="hljs-title">std</span>:</span>:pair&lt;T, T&gt;；</span><br><span class="line"><span class="hljs-comment">//更广泛的还可以用于模板</span></span><br></pre></td></tr></table></figure>
-
-<p>&emsp;就个人感觉而言，这种变化带来的最大优势如下：</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ll long long</span></span><br><span class="line"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll</span><br><span class="line"><span class="hljs-keyword">using</span> ll = <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span></span><br></pre></td></tr></table></figure>
-
-<p>&emsp;使用typedef感觉会产生巨大的歧义，这句话的含义可以是ll=&gt;long long 但是其实某种意义上也能被理解为 long ll =&gt; long？？。不得不说这里利用using代替typedef让人无比的舒畅。</p>
-<h1 id="三-神器auto与基于范围的遍历"><a href="#三-神器auto与基于范围的遍历" class="headerlink" title="三 神器auto与基于范围的遍历"></a>三 神器auto与基于范围的遍历</h1><p>&emsp;不得不说，在C++11中，对于程序员来说最让人欣喜的就是auto关键字。不管从哪方面来看，auto关键字都大大的减少了程序员敲键盘的频率（大雾）。有效的缓解了程序员的肌肉劳损。</p>
-<p>&emsp;auto关键字的最大功能就是推测类型，然后我们还可以利用decltype获取变量的类型，简要的功能代码如下：</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">auto</span> a = <span class="hljs-number">1</span>;</span><br><span class="line"><span class="hljs-keyword">auto</span> task = <span class="hljs-built_in">std</span>::function&lt;<span class="hljs-keyword">void</span> ()&gt;([<span class="hljs-keyword">this</span>, a] &#123;</span><br><span class="line">    ~~~~~</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">decltype</span>(a) b = <span class="hljs-number">2</span>;</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;上述的代码可以说还是小case，auto关键词最大的优势可能在下面的新特性中：</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">map</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;all;</span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-built_in">map</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;::iterator i(all.begin());i!=all.end();i++)&#123;</span><br><span class="line">    <span class="hljs-comment">//~~~</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> &amp;i:all)&#123;</span><br><span class="line">    <span class="hljs-comment">//~~~</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;可以说简直让人爽到原地起飞，如果说map里面的类型名非常的长，这个时候利用auto就可以顺利的避开敲这么一长串。当然部分开发领域为了保证阅读时语义清晰，还是会采用上面的写法，but很显然下面的写法逐渐成了主流，毕竟python里面迭代一个容器只需要下面的代码：</p>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]</span><br><span class="line"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> a:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;虽然不知道这种迭代方式最初源自于哪个语言，但不得不说这是C++的一大进步。</p>
-<h1 id="四-右值引用"><a href="#四-右值引用" class="headerlink" title="四 右值引用"></a>四 右值引用</h1><p>&emsp;一般来说我们采用一个非常简单的方法来判断一个值是左值还是右值：看能不能对表达式取地址，如果能，则为左值，否则为右值。对于C++11来说右值引用主要是为了拯救函数的返回值。</p>
-<p>&emsp;通常来说一个函数的返回值会销毁掉，比如下面的这个函数：</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a,<span class="hljs-keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> c = add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;这个函数返回的是一个临时变量，他在运算结束后就会被销毁。如同上面的变量C，它是利用add函数的返回的临时变量给自己赋值，然后临时变量在运行完该行代码后会被销毁。在C++11之前，为了减少这样的开销，通常人们会采用神奇的常用左值引用的办法。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> &amp;c = add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;这样的操作虽然可以延长返回值的生命周期，但是缺点也是显而易见的，变量c的值可能被固定不能修改。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> &amp;&amp; c= add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;使用&amp;&amp;后可以使add的返回值重获新生。该返回值将会一直存活下去直到c变量消亡。</p>
-<h1 id="五-move"><a href="#五-move" class="headerlink" title="五 move"></a>五 move</h1><p>&emsp;move其实是右值引用相关的内容，但是由于内容规划的问题不知道如何衔接了，所以特别开出另外一个板块。move的作用之一就是将一个左值转换成右值。主要用于下面的情况。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> <span class="hljs-comment">// 构造函数</span></span><br><span class="line">MyString(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* cstr=<span class="hljs-number">0</span>)&#123;</span><br><span class="line">    <span class="hljs-keyword">if</span> (cstr) &#123;</span><br><span class="line">       m_data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[<span class="hljs-built_in">strlen</span>(cstr)+<span class="hljs-number">1</span>];</span><br><span class="line">       <span class="hljs-built_in">strcpy</span>(m_data, cstr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">       m_data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[<span class="hljs-number">1</span>];</span><br><span class="line">       *m_data = <span class="hljs-string">'\0'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 拷贝构造函数</span></span><br><span class="line">MyString(<span class="hljs-keyword">const</span> MyString&amp; str) &#123;</span><br><span class="line">    CCtor ++;</span><br><span class="line">    m_data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[ <span class="hljs-built_in">strlen</span>(str.m_data) + <span class="hljs-number">1</span> ];</span><br><span class="line">    <span class="hljs-built_in">strcpy</span>(m_data, str.m_data);</span><br><span class="line">&#125;</span><br><span class="line"> <span class="hljs-comment">// 移动构造函数</span></span><br><span class="line">MyString(MyString&amp;&amp; str) <span class="hljs-keyword">noexcept</span></span><br><span class="line">    :m_data(str.m_data) &#123;</span><br><span class="line">    MCtor ++;</span><br><span class="line">    str.m_data = <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">//不再指向之前的资源了</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;首简要贴出三种构造函数。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">vector</span>&lt;Mystring&gt; vec_str;</span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i(<span class="hljs-number">0</span>);i&lt;<span class="hljs-number">100</span>;i++)&#123;</span><br><span class="line">    Mystring a = <span class="hljs-string">"hello world"</span></span><br><span class="line">    vec_str.push_back(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">vector</span>&lt;Mystring&gt; vec_str;</span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i(<span class="hljs-number">0</span>);i&lt;<span class="hljs-number">100</span>;i++)&#123;</span><br><span class="line">    Mystring a = <span class="hljs-string">"hello world"</span></span><br><span class="line">    vec_str.push_back(<span class="hljs-built_in">std</span>::move(a));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;通过自定义的类我们可以发现，前一段代码调用了拷贝构造函数，而后一段代码调用了移动构造函数。</p>
-<p>&emsp;最后作为总结贴出一个利用move的特性构造的swap。在类定义了移动拷贝函数时，这种方式将大大降低开销，在没有定义时它跟普通函数相似。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(T&amp; a, T&amp; b)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-function">T <span class="hljs-title">tmp</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::move(a))</span></span>;</span><br><span class="line">    a = <span class="hljs-built_in">std</span>::move(b);</span><br><span class="line">    b = <span class="hljs-built_in">std</span>::move(tmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>&emsp;这篇东西是在晚上睡不着觉但是又不想刷手机的时候查资料敲出来的，不知道有没有错，但是其实是知道关于右值引用的部分写的是有一定的欠缺的。倘若未来有幸使用C++11进行真正的工程时间，必将把该部分继续完善。頑張りましょう～</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-19T16:05:00.000Z">2019-07-20</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    7 分钟 读完 (大约 989 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/07/20/cpp-memory/">深入了解C++（1）——C++内存分配机制</a>
-            
-        </h1>
-        <div class="content">
-            <p>&emsp;常常被人问到，会不会写C++，曾经以为了解对面对象编程，了解qt等开源的库之后，就可以称之为会写C++了。但是深入了解之后就会发现，C++其实并不是这么简单。作为本专题的第一篇记录，将从内存分配机制开始深入的剖析C++。</p>
-<h1 id="一-C-内存分配方式"><a href="#一-C-内存分配方式" class="headerlink" title="一 C++ 内存分配方式"></a>一 C++ 内存分配方式</h1><p>&emsp;在C++中内存被分为五个区分别是：堆、栈、自由存储区、全局/静态存储区、常量存储区。</p>
+<h1 id="三-动态绑定"><a href="#三-动态绑定" class="headerlink" title="三 动态绑定"></a>三 动态绑定</h1><p>&emsp;在了解虚函数的底层实现之前，首先需要了解的是动态绑定概念。</p>
 <blockquote>
 <ul>
-<li>栈：是分配给函数局部变量的存储单元，函数结束后，该变量的存储单元自动释放，效率高，分配的空间有限。</li>
-<li>堆：由new创建，由delete释放的动态内存单元。如果用户不释放该内存，程序结束时，系统会自动回收。</li>
-<li>自由存储区：由malloc创建，由free释放的动态内存单元，与堆类似。</li>
-<li>全局（静态）存储去：全局变量和静态变量占一块内存空间。</li>
-<li>常量存储区：存储常量，内容不允许更改。<br><br>引用自<a href="https://blog.csdn.net/ladybai/article/details/51234300" target="_blank" rel="noopener">ladybai</a></li>
+<li>在执行期间（非编译期）判断所引用对象的实际类型，根据实际类型（动态类型）调用相应的方法。</li>
+<li>动态绑定灵活性相对静态绑定来说要高，因为它在运行之前可以进行选择性的绑定，但同时，动态绑定的执行效率要低些，因为绑定对象还要进行编译（现在编译期一般都会多次编译）。<br><br><br>触发动态绑定的条件：</li>
+<li>（1）只有指定为虚函数的成员函数才能进行动态绑定；</li>
+<li>（2）只有通过基类的指针或引用进行函数调用。</li>
 </ul>
 </blockquote>
-<p>&emsp;一般而言对于程序员，我们只需要去关注堆和栈的概念。相比堆，栈大量减少了内存的碎片问题，并且计算机在系统底层提供专门的指令执行，而new的机制相比更为复杂所以分配效率相较于栈更慢。</p>
-<h1 id="二-内存分配失败"><a href="#二-内存分配失败" class="headerlink" title="二 内存分配失败"></a>二 内存分配失败</h1><p>&emsp;根据许多血一般的教训，下列的代码在动态分配内存的时候至关重要。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">object* c = <span class="hljs-keyword">new</span> object();</span><br><span class="line"><span class="hljs-comment">//在较新的标准中，使用 new（nothrow） 才会出现分配失败时返回nullptr </span></span><br><span class="line"><span class="hljs-keyword">if</span>(c==<span class="hljs-literal">nullptr</span>)&#123;</span><br><span class="line">    <span class="hljs-comment">//错误处理机制</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;了解了这个关键点后，我们发现我们需要去了解的重点是，如何进行动态绑定的概念，此时就涉及到了C++虚函数的底层实现。</p>
+<h1 id="四-虚函数的底层实现"><a href="#四-虚函数的底层实现" class="headerlink" title="四 虚函数的底层实现"></a>四 虚函数的底层实现</h1><p>&emsp;简单查阅资料我们可以发现，C++虚函数的实现主要利用了虚函数表。编译器将为实现了虚函数的基类和覆盖了虚函数的派生类分别创建一个虚函数表(Virtual Function Table,VFT)。也就是说Base和Derived类都将有自己的虚函数表。实例化这些类的对象时，将创建一个隐藏的指针VFT*，它指向相应的VFT。可将VFT视为一个包含函数指针的静态数组，其中每个指针都指向相应的虚函数。Base类和Derived类的虚函数表如下图所示：</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Func1</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//Func1的实现代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Func2</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//Func2的实现代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="hljs-comment">//Func3、Func4等虚函数的实现 </span></span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">FuncN</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//FuncN的实现代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derived</span>:</span><span class="hljs-keyword">public</span> Base</span><br><span class="line">&#123;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Func1</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//Func2覆盖Base类的Func1代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="hljs-comment">//除去Func2的其他所有虚函数的实现代码 </span></span><br><span class="line">	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">FuncN</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">	</span>&#123;</span><br><span class="line">		<span class="hljs-comment">//FuncN覆盖Base类的FuncN代码 </span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;但是其实在较新的C++标准中，出现内存分配失败时会抛出</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">std</span>::bad_alloc</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;但是针对这个我们主要需要意识到一个问题，内存的分配可能失败。</p>
-<h1 id="三-new-operator-new-placement-new"><a href="#三-new-operator-new-placement-new" class="headerlink" title="三 new/operator new/placement new"></a>三 new/operator new/placement new</h1><p>&emsp;为了防止反复的释放内存，C++除了最基本的new操作之外还提供了placement new的操作。下面简单介绍这三种不同的new操作</p>
-<blockquote>
-<ul>
-<li>运算符 new = 先调用函数 operator new 分配空间 + 然后调用构造函数。</li>
-<li>对于operator new 函数内部，他是通过再调用malloc函数，进行空间分配的（当然也可以重写一个自己的空间分配器）。</li>
-<li>placement new 指的是，不进行分配空间，而是在指定的空间上面进行调用构造函数。当然，在析构的时候，也只能显示的调用析构函数。（因为并不是真正的释放空间）<br><br>引用自<a href="https://www.jianshu.com/p/5921001f7ad4" target="_blank" rel="noopener">爱秋刀鱼的猫</a></li>
-</ul>
-</blockquote>
-<p>&emsp;下面简单给出new的代码。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">object* a = <span class="hljs-keyword">new</span> object(); </span><br><span class="line"><span class="hljs-keyword">char</span>* chunk = <span class="hljs-keyword">new</span>(nothrow) <span class="hljs-keyword">char</span>[<span class="hljs-number">10</span>];</span><br><span class="line">object* b = <span class="hljs-keyword">new</span> (chunk) object();</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;那么其实来说就是上面的两种new，然后operator new的含义应该是仅分配内存但是不初始化函数。</p>
-<p>&emsp;针对大多数场景，我们使用普通的new可以完成绝大多数任务。但是极少数情况，我们可能需要反复利用一块极大的内存空间，此时利用placement new可以减少内存空间的申请释放所消耗的时间。</p>
-<h1 id="四-总结"><a href="#四-总结" class="headerlink" title="四 总结"></a>四 总结</h1><p>&emsp;本篇主要简要介绍了C++内存分配的机制，并且了解了针对大块内存反复申请释放采用placement new的操作。本模块将持续更新，介绍更多关于C++更为深入的内容。</p>
+<p><img src="/2019/07/20/cpp-virtualfunction/20160111175542668.png" alt="继承关系示意图"></p>
+<p>&emsp;如上图所示，利用上述代码编译后，编译器将会为base类和derived类提供虚函数表。当一个对象被实例化时，将会创建一个隐藏的指针指向对应的虚函数表，从而实现运行时多态。</p>
 
         </div>
         
@@ -363,7 +259,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        16
+                        17
                     </p>
                 </div>
             </div>
@@ -462,7 +358,7 @@
                 <span class="level-item">初窥http</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/深入了解C/">
@@ -500,7 +396,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 15px;">TCP/IP</a> <a href="/tags/auto/" style="font-size: 10px;">auto</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nullptr/" style="font-size: 10px;">nullptr</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 15px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/右值引用/" style="font-size: 10px;">右值引用</a> <a href="/tags/图解http/" style="font-size: 15px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
+        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 13.33px;">TCP/IP</a> <a href="/tags/auto/" style="font-size: 10px;">auto</a> <a href="/tags/c/" style="font-size: 13.33px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 16.67px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nullptr/" style="font-size: 10px;">nullptr</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 13.33px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/右值引用/" style="font-size: 10px;">右值引用</a> <a href="/tags/图解http/" style="font-size: 13.33px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
     </div>
 </div>
 
@@ -514,6 +410,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/23/http-head/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="初窥http（3）——浅析http报文">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-23T11:27:47.000Z">2019-07-23</time></div>
+                    <a href="/2019/07/23/http-head/" class="has-link-black-ter is-size-6">初窥http（3）——浅析http报文</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/初窥http/">初窥http</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -591,25 +506,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/19/algorithm-graph/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="算法基础——dijkstra算法">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-19T05:55:20.000Z">2019-07-19</time></div>
-                    <a href="/2019/07/19/algorithm-graph/" class="has-link-black-ter is-size-6">算法基础——dijkstra算法</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/算法基础/">算法基础</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -628,7 +524,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">16</span>
+                    <span class="level-item tag">17</span>
                 </span>
             </a>
         </li>
@@ -712,7 +608,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/http/">
                         <span class="tag">http</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -986,6 +882,25 @@
         
         <article class="media">
             
+            <a href="/2019/07/23/http-head/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="初窥http（3）——浅析http报文">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-23T11:27:47.000Z">2019-07-23</time></div>
+                    <a href="/2019/07/23/http-head/" class="has-link-black-ter is-size-6">初窥http（3）——浅析http报文</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/初窥http/">初窥http</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/07/22/icmp/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="浅析ICMP协议">
@@ -1060,25 +975,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/19/algorithm-graph/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="算法基础——dijkstra算法">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-19T05:55:20.000Z">2019-07-19</time></div>
-                    <a href="/2019/07/19/algorithm-graph/" class="has-link-black-ter is-size-6">算法基础——dijkstra算法</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/算法基础/">算法基础</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1097,7 +993,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">16</span>
+                    <span class="level-item tag">17</span>
                 </span>
             </a>
         </li>
@@ -1181,7 +1077,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/http/">
                         <span class="tag">http</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -1293,6 +1189,345 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/抽象类/">
                         <span class="tag">抽象类</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/操作系统/">
+                        <span class="tag">操作系统</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数据库/">
+                        <span class="tag">数据库</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数据结构/">
+                        <span class="tag">数据结构</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数组映射/">
+                        <span class="tag">数组映射</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/深度学习/">
+                        <span class="tag">深度学习</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/索引/">
+                        <span class="tag">索引</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/红黑树/">
+                        <span class="tag">红黑树</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/线段数组/">
+                        <span class="tag">线段数组</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/线段树/">
+                        <span class="tag">线段树</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/线程/">
+                        <span class="tag">线程</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/继承/">
+                        <span class="tag">继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/虚函数/">
+                        <span class="tag">虚函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/计算机网络/">
+                        <span class="tag">计算机网络</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/调度算法/">
+                        <span class="tag">调度算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/跳表/">
+                        <span class="tag">跳表</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/进程/">
+                        <span class="tag">进程</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/重载/">
+                        <span class="tag">重载</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/非对称加密/">
+                        <span class="tag">非对称加密</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/面试/">
+                        <span class="tag">面试</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/og_image.png" alt="100innovate&#39;blog" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 JunLin Chen&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?25318b56a0ba0f3934ddb1eb23d8004c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>="tag">抽象类</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>

@@ -2,19 +2,24 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>分类: ACM-ICPC - 100innovate&#39;blog</title>
+<title>初窥http（3）——浅析http报文 - 100innovate&#39;blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="100innovate&#39;blog">
-<meta property="og:url" content="http://blog.100innovate.com/categories/面试基础/ACM-ICPC/index.html">
+    <meta name="description" content="&amp;emsp;今天一天给18级新生讲算法，但是呢日更还是得维持，所以就晚上更新一个简单一点的内容。今天的内容主要浅要分析http报文 一 请求报文和结构 &amp;emsp;由上图可知，请求报文和响应报文的内容由下面的数据组成。  请求行&amp;emsp;用于表示请求的方法，请求的URI和HTTP版本 状态行&amp;emsp;包含表明响应结果的状态码，原因短语和 HTTP 版本。 首段字段&amp;emsp;包含表示请求和响应">
+<meta name="keywords" content="http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初窥http（3）——浅析http报文">
+<meta property="og:url" content="http://blog.100innovate.com/2019/07/23/http-head/index.html">
 <meta property="og:site_name" content="100innovate&#39;blog">
+<meta property="og:description" content="&amp;emsp;今天一天给18级新生讲算法，但是呢日更还是得维持，所以就晚上更新一个简单一点的内容。今天的内容主要浅要分析http报文 一 请求报文和结构 &amp;emsp;由上图可知，请求报文和响应报文的内容由下面的数据组成。  请求行&amp;emsp;用于表示请求的方法，请求的URI和HTTP版本 状态行&amp;emsp;包含表明响应结果的状态码，原因短语和 HTTP 版本。 首段字段&amp;emsp;包含表示请求和响应">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-07-23T14:39:05.638Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="100innovate&#39;blog">
+<meta name="twitter:title" content="初窥http（3）——浅析http报文">
+<meta name="twitter:description" content="&amp;emsp;今天一天给18级新生讲算法，但是呢日更还是得维持，所以就晚上更新一个简单一点的内容。今天的内容主要浅要分析http报文 一 请求报文和结构 &amp;emsp;由上图可知，请求报文和响应报文的内容由下面的数据组成。  请求行&amp;emsp;用于表示请求的方法，请求的URI和HTTP版本 状态行&amp;emsp;包含表明响应结果的状态码，原因短语和 HTTP 版本。 首段字段&amp;emsp;包含表示请求和响应">
 <meta name="twitter:image" content="http://blog.100innovate.com/images/og_image.png">
 
 
@@ -89,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/og_image.png" alt="100innovate&#39;blog" height="28">
+                <img src="/images/og_image.png" alt="初窥http（3）——浅析http报文" height="28">
             
             </a>
         </div>
@@ -135,36 +140,22 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/categories">分类</a></li>
-            
-            <li><a href="/categories/面试基础/">面试基础</a></li>
-            
-            <li class="is-active"><a href="#" aria-current="page">ACM-ICPC</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-18T12:26:17.000Z">2019-07-18</time>
+                <time class="level-item has-text-grey" datetime="2019-07-23T11:27:47.000Z">2019-07-23</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/面试基础/ACM-ICPC/">ACM-ICPC</a>
+                <a class="has-link-grey -link" href="/categories/初窥http/">初窥http</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    4 分钟 读完 (大约 552 个字)
+                    4 分钟 读完 (大约 540 个字)
                 </span>
                 
                 
@@ -173,15 +164,42 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/07/18/LRU-O1/">LRU算法读取淘汰双O（1）算法</a>
+                初窥http（3）——浅析http报文
             
         </h1>
         <div class="content">
-            <p>&emsp;再次简介一下这个算法LRU全称是Least Recently Used,即最近最久未使用的意思。算法每一次将最久未使用的块更新出去。但是呢上一篇笔记附上的百度的代码复杂度实在不堪入目，所以该写还是得写，刚好也分享给大家这个百度前几页没有的O(1)算法。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> cache_size = <span class="hljs-number">10</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> memory_size = <span class="hljs-number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">cache_node</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line">    cache_node* l_link;   <span class="hljs-comment">// 栈的链接</span></span><br><span class="line">    cache_node* r_link;</span><br><span class="line">    <span class="hljs-keyword">int</span> cache_id;       <span class="hljs-comment">// cache_id</span></span><br><span class="line">    <span class="hljs-keyword">int</span> cache_val;      <span class="hljs-comment">// chache 映射位置</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(cache_node*&amp;head,cache_node*&amp;tail)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    head=<span class="hljs-keyword">new</span> cache_node(&#123;<span class="hljs-literal">nullptr</span>,<span class="hljs-literal">nullptr</span>,<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>&#125;);</span><br><span class="line">    cache_node *tmp=head;</span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i(<span class="hljs-number">1</span>); i&lt;cache_size; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cache_node *x = <span class="hljs-keyword">new</span> cache_node(&#123;tmp,<span class="hljs-literal">nullptr</span>,<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>&#125;);</span><br><span class="line">        tmp-&gt;r_link=x;</span><br><span class="line">        tmp = x;</span><br><span class="line">    &#125;</span><br><span class="line">    tail = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;cache_node*&gt;memory_to_cache(memory_size,<span class="hljs-literal">nullptr</span>);</span><br><span class="line">    cache_node *head,*tail;</span><br><span class="line">    init(head,tail);</span><br><span class="line">    <span class="hljs-keyword">int</span> n;</span><br><span class="line">    <span class="hljs-built_in">cin</span>&gt;&gt;n;</span><br><span class="line">    <span class="hljs-comment">//n代表输入的数组组数，然后x代表这一次访问的对象，平均每次访问更新需要6次赋值，所以这个不是一个原子操作。假如cpu内部实现真的存在这种模式,内部大概会有许多门电路来使这多次赋值成为一个原子操作。</span></span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i(<span class="hljs-number">0</span>); i&lt;n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> x; </span><br><span class="line">        <span class="hljs-built_in">cin</span>&gt;&gt;x;</span><br><span class="line">        <span class="hljs-keyword">if</span>(memory_to_cache[x]==<span class="hljs-literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-built_in">cout</span>&lt;&lt;tail-&gt;cache_val&lt;&lt;<span class="hljs-string">"被清出"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">            <span class="hljs-built_in">cout</span>&lt;&lt;x&lt;&lt;<span class="hljs-string">"移入栈顶"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">            <span class="hljs-keyword">if</span>(tail-&gt;cache_val!=<span class="hljs-number">-1</span>)</span><br><span class="line">                memory_to_cache[tail-&gt;cache_val]=<span class="hljs-literal">nullptr</span>;</span><br><span class="line">            tail-&gt;l_link-&gt;r_link=<span class="hljs-literal">nullptr</span>;</span><br><span class="line">            tail-&gt;r_link=head;</span><br><span class="line">            head-&gt;l_link=tail;</span><br><span class="line">            tail=tail-&gt;l_link;</span><br><span class="line">            head=head-&gt;l_link;</span><br><span class="line">            head-&gt;l_link=<span class="hljs-literal">nullptr</span>;</span><br><span class="line">            head-&gt;cache_val=x;</span><br><span class="line">            memory_to_cache[x]=head;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(head==memory_to_cache[x])</span><br><span class="line">                <span class="hljs-keyword">continue</span>;</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-built_in">cout</span>&lt;&lt;x&lt;&lt;<span class="hljs-string">"移入栈顶"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">                memory_to_cache[x]-&gt;l_link-&gt;r_link=memory_to_cache[x]-&gt;r_link;</span><br><span class="line">                <span class="hljs-keyword">if</span>(memory_to_cache[x]-&gt;r_link!=<span class="hljs-literal">nullptr</span>)</span><br><span class="line">                    memory_to_cache[x]-&gt;r_link-&gt;l_link=memory_to_cache[x]-&gt;l_link;</span><br><span class="line">                <span class="hljs-keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    tail=memory_to_cache[x]-&gt;l_link;</span><br><span class="line">                &#125;</span><br><span class="line">                memory_to_cache[x]-&gt;l_link=<span class="hljs-literal">nullptr</span>;</span><br><span class="line">                memory_to_cache[x]-&gt;r_link=head;</span><br><span class="line">                head-&gt;l_link=memory_to_cache[x];</span><br><span class="line">                head=memory_to_cache[x];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <p>&emsp;今天一天给18级新生讲算法，但是呢日更还是得维持，所以就晚上更新一个简单一点的内容。今天的内容主要浅要分析http报文</p>
+<h1 id="一-请求报文和结构"><a href="#一-请求报文和结构" class="headerlink" title="一 请求报文和结构"></a>一 请求报文和结构</h1><p><img src="http-head/http1.png" alt="http报文图"></p>
+<p>&emsp;由上图可知，请求报文和响应报文的内容由下面的数据组成。</p>
+<ol>
+<li>请求行<br><br>&emsp;用于表示请求的方法，请求的URI和HTTP版本</li>
+<li>状态行<br><br>&emsp;包含表明响应结果的状态码，原因短语和 HTTP 版本。</li>
+<li>首段字段<br><br>&emsp;包含表示请求和响应的各种条件和属性的各类首部。<br><br>&emsp;一般有4种首部，分别是：通用首部、请求首部、响应首部和实体 首部。</li>
+<li>其他<br><br>&emsp;可能包含 HTTP 的 RFC 里未定义的首部（Cookie 等）</li>
+</ol>
+<h1 id="二-HTTP传输与压缩"><a href="#二-HTTP传输与压缩" class="headerlink" title="二 HTTP传输与压缩"></a>二 HTTP传输与压缩</h1><p>&emsp;在http协议中有一种被称为内容编码的功能可以进行内容压缩。常用的内容编码如下:</p>
+<ul>
+<li>gzip（GNU●zip） </li>
+<li>compress（UNIX 系统的标准压缩）</li>
+<li>deflate（zlib） </li>
+<li>identity（不进行编码）</li>
+</ul>
+<h1 id="三-分割发送的分块编码"><a href="#三-分割发送的分块编码" class="headerlink" title="三 分割发送的分块编码"></a>三 分割发送的分块编码</h1><blockquote>
+<p>&emsp;分块传输编码会将实体主体分成多个部分（块）。每一块都会用十六进制来标记块的大小，而实体主体的最后一块会使用“0(CR+LF)” 来标记。 <br><br>&emsp;使用分块传输编码的实体主体会由接收的客户端负责解码，恢复到编码前的实体主体。 <br><br>&emsp;HTTP/1.1 中存在一种称为传输编码（Transfer Coding）的机制，它可以在通信时按某种编码方式传输，但只定义作用于分块传输编码中。</p>
+</blockquote>
+<h1 id="四-获取部分内容的范围请求"><a href="#四-获取部分内容的范围请求" class="headerlink" title="四 获取部分内容的范围请求"></a>四 获取部分内容的范围请求</h1><p>&emsp;http协议中该部分的功能是为了在网速较慢的情况下，能够对大文件断点重传。通过在首部定义Range字段即可完成该功能。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Range: bytes=5001-10000  单范围</span><br><span class="line">Range: bytes=-3000, 5000-7000 多范围</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;完整的代码就是上面附的这一些了，然后由于代码比较简单主要是考察逻辑，所以也不再附更多的注释了。值得注意的是上面的代码的第一层if else中有数行功能相同，其实可以通过调整代码位置使其合并。但是过度合并可能会造成一些可读性缺失，这里就不再做深层次的代码优化了。</p>
 
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/http/">http</a>
+                </div>
+            </div>
         </div>
         
         
@@ -191,9 +209,50 @@
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/ali.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/22/icmp/">
+                <span class="level-item">浅析ICMP协议</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -239,7 +298,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        11
+                        17
                     </p>
                 </div>
             </div>
@@ -249,7 +308,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        3
+                        4
                     </p>
                 </div>
             </div>
@@ -259,7 +318,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        31
+                        45
                     </p>
                 </div>
             </div>
@@ -338,7 +397,23 @@
                 <span class="level-item">初窥http</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/深入了解C/">
+            <span class="level-start">
+                <span class="level-item">深入了解C++</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/算法基础/">
+            <span class="level-start">
+                <span class="level-item">算法基础</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/面试基础/">
@@ -346,17 +421,9 @@
                 <span class="level-item">面试基础</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">9</span>
+                <span class="level-item tag">10</span>
             </span>
-        </a><ul><li>
-        <a class="level is-marginless" href="/categories/面试基础/ACM-ICPC/">
-            <span class="level-start">
-                <span class="level-item">ACM-ICPC</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li></ul></li>
+        </a></li>
             </ul>
         </div>
     </div>
@@ -368,7 +435,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 15px;">今日头条</a> <a href="/tags/图解http/" style="font-size: 15px;">图解http</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
+        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 13.33px;">TCP/IP</a> <a href="/tags/auto/" style="font-size: 10px;">auto</a> <a href="/tags/c/" style="font-size: 13.33px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 16.67px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nullptr/" style="font-size: 10px;">nullptr</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 13.33px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/右值引用/" style="font-size: 10px;">右值引用</a> <a href="/tags/图解http/" style="font-size: 13.33px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
     </div>
 </div>
 
@@ -385,18 +452,18 @@
         
         <article class="media">
             
-            <a href="/2019/07/18/LRU-O1/" class="media-left">
+            <a href="/2019/07/23/http-head/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="LRU算法读取淘汰双O（1）算法">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="初窥http（3）——浅析http报文">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T12:26:17.000Z">2019-07-18</time></div>
-                    <a href="/2019/07/18/LRU-O1/" class="has-link-black-ter is-size-6">LRU算法读取淘汰双O（1）算法</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-23T11:27:47.000Z">2019-07-23</time></div>
+                    <a href="/2019/07/23/http-head/" class="has-link-black-ter is-size-6">初窥http（3）——浅析http报文</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a> / <a class="has-link-grey -link" href="/categories/面试基础/ACM-ICPC/">ACM-ICPC</a>
+                        <a class="has-link-grey -link" href="/categories/初窥http/">初窥http</a>
                     </p>
                 </div>
             </div>
@@ -404,16 +471,16 @@
         
         <article class="media">
             
-            <a href="/2019/07/18/i-need-offer/" class="media-left">
+            <a href="/2019/07/22/icmp/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="头条三面凉经分析">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="浅析ICMP协议">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T05:56:51.000Z">2019-07-18</time></div>
-                    <a href="/2019/07/18/i-need-offer/" class="has-link-black-ter is-size-6">头条三面凉经分析</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-21T16:06:18.000Z">2019-07-22</time></div>
+                    <a href="/2019/07/22/icmp/" class="has-link-black-ter is-size-6">浅析ICMP协议</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
                     </p>
@@ -423,18 +490,18 @@
         
         <article class="media">
             
-            <a href="/2019/07/17/system-io/" class="media-left">
+            <a href="/2019/07/21/cpp11-feature/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="操作系统——io操作小结">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（3）——C++11特性小结">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T01:53:56.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/system-io/" class="has-link-black-ter is-size-6">操作系统——io操作小结</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-20T17:24:49.000Z">2019-07-21</time></div>
+                    <a href="/2019/07/21/cpp11-feature/" class="has-link-black-ter is-size-6">深入了解C++（3）——C++11特性小结</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
                     </p>
                 </div>
             </div>
@@ -442,18 +509,18 @@
         
         <article class="media">
             
-            <a href="/2019/07/16/system-scheduling-algorithm/" class="media-left">
+            <a href="/2019/07/20/cpp-virtualfunction/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="操作系统——调度算法小结">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（2）——虚函数与虚函数底层实现">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-16T08:08:05.000Z">2019-07-16</time></div>
-                    <a href="/2019/07/16/system-scheduling-algorithm/" class="has-link-black-ter is-size-6">操作系统——调度算法小结</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-20T14:28:34.000Z">2019-07-20</time></div>
+                    <a href="/2019/07/20/cpp-virtualfunction/" class="has-link-black-ter is-size-6">深入了解C++（2）——虚函数与虚函数底层实现</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
                     </p>
                 </div>
             </div>
@@ -461,18 +528,18 @@
         
         <article class="media">
             
-            <a href="/2019/07/16/database-base/" class="media-left">
+            <a href="/2019/07/20/cpp-memory/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="数据库基础——索引">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（1）——C++内存分配机制">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-16T04:42:05.000Z">2019-07-16</time></div>
-                    <a href="/2019/07/16/database-base/" class="has-link-black-ter is-size-6">数据库基础——索引</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-19T16:05:00.000Z">2019-07-20</time></div>
+                    <a href="/2019/07/20/cpp-memory/" class="has-link-black-ter is-size-6">深入了解C++（1）——C++内存分配机制</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
                     </p>
                 </div>
             </div>
@@ -496,7 +563,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">11</span>
+                    <span class="level-item tag">17</span>
                 </span>
             </a>
         </li>
@@ -515,8 +582,22 @@
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/C/">
+                        <span class="tag">C++</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/I-O/">
                         <span class="tag">I/O</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ICMP/">
+                        <span class="tag">ICMP</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -531,6 +612,27 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/TCP-IP/">
                         <span class="tag">TCP/IP</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/auto/">
+                        <span class="tag">auto</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/c/">
+                        <span class="tag">c++</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dijkstra/">
+                        <span class="tag">dijkstra</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -545,7 +647,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/http/">
                         <span class="tag">http</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -566,6 +668,20 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/mysql/">
                         <span class="tag">mysql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/nullptr/">
+                        <span class="tag">nullptr</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ping/">
+                        <span class="tag">ping</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -606,6 +722,20 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/内存分配/">
+                        <span class="tag">内存分配</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/右值引用/">
+                        <span class="tag">右值引用</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/图解http/">
                         <span class="tag">图解http</span>
                         <span class="tag is-grey">2</span>
@@ -613,8 +743,22 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/图论/">
+                        <span class="tag">图论</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/思维题/">
                         <span class="tag">思维题</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/抽象类/">
+                        <span class="tag">抽象类</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -690,6 +834,20 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/继承/">
+                        <span class="tag">继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/虚函数/">
+                        <span class="tag">虚函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/计算机网络/">
                         <span class="tag">计算机网络</span>
                         <span class="tag is-grey">1</span>
@@ -713,6 +871,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/进程/">
                         <span class="tag">进程</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/重载/">
+                        <span class="tag">重载</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -756,18 +921,18 @@
         
         <article class="media">
             
-            <a href="/2019/07/18/LRU-O1/" class="media-left">
+            <a href="/2019/07/23/http-head/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="LRU算法读取淘汰双O（1）算法">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="初窥http（3）——浅析http报文">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T12:26:17.000Z">2019-07-18</time></div>
-                    <a href="/2019/07/18/LRU-O1/" class="has-link-black-ter is-size-6">LRU算法读取淘汰双O（1）算法</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-23T11:27:47.000Z">2019-07-23</time></div>
+                    <a href="/2019/07/23/http-head/" class="has-link-black-ter is-size-6">初窥http（3）——浅析http报文</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a> / <a class="has-link-grey -link" href="/categories/面试基础/ACM-ICPC/">ACM-ICPC</a>
+                        <a class="has-link-grey -link" href="/categories/初窥http/">初窥http</a>
                     </p>
                 </div>
             </div>
@@ -775,16 +940,16 @@
         
         <article class="media">
             
-            <a href="/2019/07/18/i-need-offer/" class="media-left">
+            <a href="/2019/07/22/icmp/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="头条三面凉经分析">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="浅析ICMP协议">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T05:56:51.000Z">2019-07-18</time></div>
-                    <a href="/2019/07/18/i-need-offer/" class="has-link-black-ter is-size-6">头条三面凉经分析</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-21T16:06:18.000Z">2019-07-22</time></div>
+                    <a href="/2019/07/22/icmp/" class="has-link-black-ter is-size-6">浅析ICMP协议</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
                     </p>
@@ -794,18 +959,18 @@
         
         <article class="media">
             
-            <a href="/2019/07/17/system-io/" class="media-left">
+            <a href="/2019/07/21/cpp11-feature/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="操作系统——io操作小结">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（3）——C++11特性小结">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T01:53:56.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/system-io/" class="has-link-black-ter is-size-6">操作系统——io操作小结</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-20T17:24:49.000Z">2019-07-21</time></div>
+                    <a href="/2019/07/21/cpp11-feature/" class="has-link-black-ter is-size-6">深入了解C++（3）——C++11特性小结</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
                     </p>
                 </div>
             </div>
@@ -813,18 +978,18 @@
         
         <article class="media">
             
-            <a href="/2019/07/16/system-scheduling-algorithm/" class="media-left">
+            <a href="/2019/07/20/cpp-virtualfunction/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="操作系统——调度算法小结">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（2）——虚函数与虚函数底层实现">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-16T08:08:05.000Z">2019-07-16</time></div>
-                    <a href="/2019/07/16/system-scheduling-algorithm/" class="has-link-black-ter is-size-6">操作系统——调度算法小结</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-20T14:28:34.000Z">2019-07-20</time></div>
+                    <a href="/2019/07/20/cpp-virtualfunction/" class="has-link-black-ter is-size-6">深入了解C++（2）——虚函数与虚函数底层实现</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
                     </p>
                 </div>
             </div>
@@ -832,18 +997,18 @@
         
         <article class="media">
             
-            <a href="/2019/07/16/database-base/" class="media-left">
+            <a href="/2019/07/20/cpp-memory/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="数据库基础——索引">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（1）——C++内存分配机制">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-16T04:42:05.000Z">2019-07-16</time></div>
-                    <a href="/2019/07/16/database-base/" class="has-link-black-ter is-size-6">数据库基础——索引</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-19T16:05:00.000Z">2019-07-20</time></div>
+                    <a href="/2019/07/20/cpp-memory/" class="has-link-black-ter is-size-6">深入了解C++（1）——C++内存分配机制</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
                     </p>
                 </div>
             </div>
@@ -867,7 +1032,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">11</span>
+                    <span class="level-item tag">17</span>
                 </span>
             </a>
         </li>
@@ -886,8 +1051,22 @@
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/C/">
+                        <span class="tag">C++</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/I-O/">
                         <span class="tag">I/O</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ICMP/">
+                        <span class="tag">ICMP</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -902,6 +1081,27 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/TCP-IP/">
                         <span class="tag">TCP/IP</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/auto/">
+                        <span class="tag">auto</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/c/">
+                        <span class="tag">c++</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dijkstra/">
+                        <span class="tag">dijkstra</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -916,7 +1116,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/http/">
                         <span class="tag">http</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -937,6 +1137,20 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/mysql/">
                         <span class="tag">mysql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/nullptr/">
+                        <span class="tag">nullptr</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ping/">
+                        <span class="tag">ping</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -977,6 +1191,20 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/内存分配/">
+                        <span class="tag">内存分配</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/右值引用/">
+                        <span class="tag">右值引用</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/图解http/">
                         <span class="tag">图解http</span>
                         <span class="tag is-grey">2</span>
@@ -984,8 +1212,22 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/图论/">
+                        <span class="tag">图论</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/思维题/">
                         <span class="tag">思维题</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/抽象类/">
+                        <span class="tag">抽象类</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1061,6 +1303,20 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/继承/">
+                        <span class="tag">继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/虚函数/">
+                        <span class="tag">虚函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/计算机网络/">
                         <span class="tag">计算机网络</span>
                         <span class="tag is-grey">1</span>
@@ -1084,6 +1340,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/进程/">
                         <span class="tag">进程</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/重载/">
+                        <span class="tag">重载</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1119,7 +1382,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/og_image.png" alt="100innovate&#39;blog" height="28">
+                    <img src="/images/og_image.png" alt="初窥http（3）——浅析http报文" height="28">
                 
                 </a>
                 <p class="is-size-7">
