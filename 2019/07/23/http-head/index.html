@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="&amp;emsp;今天一天给18级新生讲算法，但是呢日更还是得维持，所以就晚上更新一个简单一点的内容。今天的内容主要浅要分析http报文 一 请求报文和结构 &amp;emsp;由上图可知，请求报文和响应报文的内容由下面的数据组成。  请求行&amp;emsp;用于表示请求的方法，请求的URI和HTTP版本 状态行&amp;emsp;包含表明响应结果的状态码，原因短语和 HTTP 版本。 首段字段&amp;emsp;包含表示请求和响应">
+    <meta name="description" content="&amp;emsp;今天一天给18级新生讲算法，但是呢日更还是得维持，所以就晚上更新一个简单一点的内容。今天的内容主要浅要分析http报文 一 请求报文和结构  &amp;emsp;由上图可知，请求报文和响应报文的内容由下面的数据组成。  请求行&amp;emsp;用于表示请求的方法，请求的URI和HTTP版本 状态行&amp;emsp;包含表明响应结果的状态码，原因短语和 HTTP 版本。 首段字段&amp;emsp;包含表示请求和响">
 <meta name="keywords" content="http">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初窥http（3）——浅析http报文">
 <meta property="og:url" content="http://blog.100innovate.com/2019/07/23/http-head/index.html">
 <meta property="og:site_name" content="100innovate&#39;blog">
-<meta property="og:description" content="&amp;emsp;今天一天给18级新生讲算法，但是呢日更还是得维持，所以就晚上更新一个简单一点的内容。今天的内容主要浅要分析http报文 一 请求报文和结构 &amp;emsp;由上图可知，请求报文和响应报文的内容由下面的数据组成。  请求行&amp;emsp;用于表示请求的方法，请求的URI和HTTP版本 状态行&amp;emsp;包含表明响应结果的状态码，原因短语和 HTTP 版本。 首段字段&amp;emsp;包含表示请求和响应">
+<meta property="og:description" content="&amp;emsp;今天一天给18级新生讲算法，但是呢日更还是得维持，所以就晚上更新一个简单一点的内容。今天的内容主要浅要分析http报文 一 请求报文和结构  &amp;emsp;由上图可知，请求报文和响应报文的内容由下面的数据组成。  请求行&amp;emsp;用于表示请求的方法，请求的URI和HTTP版本 状态行&amp;emsp;包含表明响应结果的状态码，原因短语和 HTTP 版本。 首段字段&amp;emsp;包含表示请求和响">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-07-23T14:39:05.638Z">
+<meta property="og:updated_time" content="2019-07-23T14:42:21.863Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初窥http（3）——浅析http报文">
-<meta name="twitter:description" content="&amp;emsp;今天一天给18级新生讲算法，但是呢日更还是得维持，所以就晚上更新一个简单一点的内容。今天的内容主要浅要分析http报文 一 请求报文和结构 &amp;emsp;由上图可知，请求报文和响应报文的内容由下面的数据组成。  请求行&amp;emsp;用于表示请求的方法，请求的URI和HTTP版本 状态行&amp;emsp;包含表明响应结果的状态码，原因短语和 HTTP 版本。 首段字段&amp;emsp;包含表示请求和响应">
+<meta name="twitter:description" content="&amp;emsp;今天一天给18级新生讲算法，但是呢日更还是得维持，所以就晚上更新一个简单一点的内容。今天的内容主要浅要分析http报文 一 请求报文和结构  &amp;emsp;由上图可知，请求报文和响应报文的内容由下面的数据组成。  请求行&amp;emsp;用于表示请求的方法，请求的URI和HTTP版本 状态行&amp;emsp;包含表明响应结果的状态码，原因短语和 HTTP 版本。 首段字段&amp;emsp;包含表示请求和响">
 <meta name="twitter:image" content="http://blog.100innovate.com/images/og_image.png">
 
 
@@ -169,7 +169,8 @@
         </h1>
         <div class="content">
             <p>&emsp;今天一天给18级新生讲算法，但是呢日更还是得维持，所以就晚上更新一个简单一点的内容。今天的内容主要浅要分析http报文</p>
-<h1 id="一-请求报文和结构"><a href="#一-请求报文和结构" class="headerlink" title="一 请求报文和结构"></a>一 请求报文和结构</h1><p><img src="http-head/http1.png" alt="http报文图"></p>
+<h1 id="一-请求报文和结构"><a href="#一-请求报文和结构" class="headerlink" title="一 请求报文和结构"></a>一 请求报文和结构</h1><img src="/2019/07/23/http-head/http1.png" title="http报文图">
+
 <p>&emsp;由上图可知，请求报文和响应报文的内容由下面的数据组成。</p>
 <ol>
 <li>请求行<br><br>&emsp;用于表示请求的方法，请求的URI和HTTP版本</li>
