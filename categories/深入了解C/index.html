@@ -152,6 +152,93 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-24T12:39:33.000Z">2019-07-24</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 分钟 读完 (大约 872 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/07/24/cpp-lambda/">深入了解C++（4）——lambda表达式</a>
+            
+        </h1>
+        <div class="content">
+            <p>&emsp;本文主要记录常见的lambda表达式的用法。</p>
+<h1 id="一-lambda表达式简介"><a href="#一-lambda表达式简介" class="headerlink" title="一 lambda表达式简介"></a>一 lambda表达式简介</h1><p>&emsp;lambda表达式是一个函数，但是它是一个匿名函数，也就是没有名称的函数。通常而言这种函数在代码中仅被调用一次，因此直接在函数内部定义它，以此来提高程序的逻辑性和可读性。</p>
+<p>&emsp;通常而言一个lambda函数展现为下面的形式</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[capture](parameters) <span class="hljs-keyword">mutable</span> -&gt;<span class="hljs-keyword">return</span>-type&#123;statement&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>[capture]：捕捉列表。捕捉列表总是出现在Lambda函数的开始处。实际上，[]是Lambda引出符。编译器根据该引出符判断接下来的代码是否是Lambda函数。捕捉列表能够捕捉上下文中的变量以供Lambda函数使用;</li>
+<li>(parameters)：参数列表。与普通函数的参数列表一致。如果不需要参数传递，则可以连同括号“()”一起省略;</li>
+<li>mutable：mutable修饰符,用来说用是否可以修改捕获的变量。默认情况下，Lambda函数总是一个const函数，mutable可以取消其常量性。在使用该修饰符时，参数列表不可省略（即使参数为空）;   在值捕获时，加了mutable修饰符，才可以修改捕获变量。尽管可能在表达式的函数体中修改了捕获变量，但由于是值捕获（复制，拷贝），改变了的捕获变量，不影响捕获的变量；没加mutable修饰符时，不能修改；在引用捕获时，不管加不加mutable修饰符，都可以修改捕获变量，由于是引用捕获，原来的捕获变量也改变了。</li>
+<li>-&gt;return-type：返回类型。用追踪返回类型形式声明函数的返回类型。我们可以在不需要返回值的时候也可以连同符号”-&gt;”一起省略。</li>
+<li><ol>
+<li>如果function body中存在return语句，则该Lambda表达式的返回类型由return语句的返回类型确定；</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>如果function body中没有return语句，则返回值为void类型。</li>
+</ol>
+</li>
+<li>{statement}：函数体。内容与普通函数一样，不过除了可以使用参数之外，还可以使用所有捕获的变量。</li>
+</ul>
+</blockquote>
+<h1 id="二-简单的lambda表达式"><a href="#二-简单的lambda表达式" class="headerlink" title="二 简单的lambda表达式"></a>二 简单的lambda表达式</h1><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">[] &#123;&#125;();<span class="hljs-comment">//[]代表lambda表达式的开始，&#123;&#125;代表函数体，什么都没有，()代表调用函数.</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-comment">//等价于=&gt;</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">	f();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="hljs-comment">//包含返回值的lambda表达式与其调用方式。</span></span><br><span class="line"> <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    [] &#123; <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello, World!"</span>; &#125;();</span><br><span class="line">    <span class="hljs-keyword">auto</span> lam =[]() -&gt; <span class="hljs-keyword">int</span> &#123; <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello, World!"</span>; <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; &#125;;</span><br><span class="line">    <span class="hljs-keyword">auto</span> ret = lam();</span><br><span class="line">    <span class="hljs-keyword">auto</span> lam2 =[]() -&gt; <span class="hljs-built_in">string</span> &#123; <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello, World!"</span>; <span class="hljs-keyword">return</span> <span class="hljs-string">"test"</span>; &#125;;</span><br><span class="line">    <span class="hljs-keyword">auto</span> ret1 = lam2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="三-lambda表达式捕获变量功能"><a href="#三-lambda表达式捕获变量功能" class="headerlink" title="三 lambda表达式捕获变量功能"></a>三 lambda表达式捕获变量功能</h1><blockquote>
+<ul>
+<li>[] 不捕获任何变量<br></li>
+<li>[&amp;] 以引用方式捕获所有变量<br></li>
+<li>[=] 用值的方式捕获所有变量（可能被编译器优化为const &amp;)<br></li>
+<li>[=, &amp;foo] 以引用捕获foo, 但其余变量都靠值捕获<br></li>
+<li>[&amp;, foo] 以值捕获foo, 但其余变量都靠引用捕获<br></li>
+<li>[bar] 以值方式捕获bar; 不捕获其它变量<br></li>
+<li>[this] 捕获所在类的this指针</li>
+</ul>
+</blockquote>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">int</span> a=<span class="hljs-number">1</span>,b=<span class="hljs-number">2</span>,c=<span class="hljs-number">3</span>;</span><br><span class="line"><span class="hljs-keyword">auto</span> lam2  =[&amp;,a]()&#123; <span class="hljs-built_in">cout</span> &lt;&lt; a&lt;&lt;b&lt;&lt;c&lt;&lt;<span class="hljs-built_in">endl</span>;&#125;;<span class="hljs-comment">//b，c以引用捕获，a以值捕获。</span></span><br><span class="line">lam2();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; address&#123;<span class="hljs-string">"111"</span>,<span class="hljs-string">"222"</span>,<span class="hljs-string">",333"</span>,<span class="hljs-string">".org"</span>,<span class="hljs-string">"wwwtest.org"</span>&#125;;</span><br><span class="line">for_each(address.begin(),address.end(),[](<span class="hljs-built_in">string</span>&amp; str)&#123;<span class="hljs-built_in">cout</span>&lt;&lt;str&lt;&lt;<span class="hljs-built_in">endl</span>;&#125;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="四-使用function传递lambda表达式"><a href="#四-使用function传递lambda表达式" class="headerlink" title="四 使用function传递lambda表达式"></a>四 使用function传递lambda表达式</h1><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::function&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> ()&gt; <span class="hljs-keyword">const</span> &amp;f)</span></span>&#123;</span><br><span class="line">    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>&lt;&lt;f()&lt;&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello, World!"</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="hljs-keyword">int</span> num = <span class="hljs-number">101</span>;</span><br><span class="line">    <span class="hljs-keyword">auto</span> a = [&amp;]<span class="hljs-comment">//以引用的方式捕获本函数中的变量</span></span><br><span class="line">             () <span class="hljs-comment">//无参数</span></span><br><span class="line">             -&gt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> &#123;<span class="hljs-comment">//返回值的类型为std::string</span></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::to_string(num);</span><br><span class="line">    &#125;;</span><br><span class="line">    print(a);</span><br><span class="line">    num++;</span><br><span class="line">    print(a);</span><br><span class="line"> </span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-07-20T17:24:49.000Z">2019-07-21</time>
                 
                 <div class="level-item">
@@ -435,7 +522,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        17
+                        18
                     </p>
                 </div>
             </div>
@@ -455,7 +542,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        45
+                        46
                     </p>
                 </div>
             </div>
@@ -542,7 +629,7 @@
                 <span class="level-item">深入了解C++</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/算法基础/">
@@ -572,7 +659,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 13.33px;">TCP/IP</a> <a href="/tags/auto/" style="font-size: 10px;">auto</a> <a href="/tags/c/" style="font-size: 13.33px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 16.67px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nullptr/" style="font-size: 10px;">nullptr</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 13.33px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/右值引用/" style="font-size: 10px;">右值引用</a> <a href="/tags/图解http/" style="font-size: 13.33px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
+        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 13.33px;">TCP/IP</a> <a href="/tags/auto/" style="font-size: 10px;">auto</a> <a href="/tags/c/" style="font-size: 16.67px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 16.67px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nullptr/" style="font-size: 10px;">nullptr</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 13.33px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/右值引用/" style="font-size: 10px;">右值引用</a> <a href="/tags/图解http/" style="font-size: 13.33px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
     </div>
 </div>
 
@@ -586,6 +673,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/24/cpp-lambda/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（4）——lambda表达式">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-24T12:39:33.000Z">2019-07-24</time></div>
+                    <a href="/2019/07/24/cpp-lambda/" class="has-link-black-ter is-size-6">深入了解C++（4）——lambda表达式</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -663,25 +769,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/20/cpp-memory/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（1）——C++内存分配机制">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-19T16:05:00.000Z">2019-07-20</time></div>
-                    <a href="/2019/07/20/cpp-memory/" class="has-link-black-ter is-size-6">深入了解C++（1）——C++内存分配机制</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -700,7 +787,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">17</span>
+                    <span class="level-item tag">18</span>
                 </span>
             </a>
         </li>
@@ -763,7 +850,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/c/">
                         <span class="tag">c++</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -798,6 +885,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/io/">
                         <span class="tag">io</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/lambda/">
+                        <span class="tag">lambda</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1058,6 +1152,25 @@
         
         <article class="media">
             
+            <a href="/2019/07/24/cpp-lambda/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（4）——lambda表达式">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-24T12:39:33.000Z">2019-07-24</time></div>
+                    <a href="/2019/07/24/cpp-lambda/" class="has-link-black-ter is-size-6">深入了解C++（4）——lambda表达式</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/07/23/http-head/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="初窥http（3）——浅析http报文">
@@ -1132,25 +1245,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/20/cpp-memory/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（1）——C++内存分配机制">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-19T16:05:00.000Z">2019-07-20</time></div>
-                    <a href="/2019/07/20/cpp-memory/" class="has-link-black-ter is-size-6">深入了解C++（1）——C++内存分配机制</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1169,7 +1263,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">17</span>
+                    <span class="level-item tag">18</span>
                 </span>
             </a>
         </li>
@@ -1232,7 +1326,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/c/">
                         <span class="tag">c++</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -1267,6 +1361,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/io/">
                         <span class="tag">io</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/lambda/">
+                        <span class="tag">lambda</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>

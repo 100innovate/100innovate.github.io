@@ -2,19 +2,24 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>标签: 数组映射 - 100innovate&#39;blog</title>
+<title>深入了解C++（4）——lambda表达式 - 100innovate&#39;blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="100innovate&#39;blog">
-<meta property="og:url" content="http://blog.100innovate.com/tags/数组映射/index.html">
+    <meta name="description" content="&amp;emsp;本文主要记录常见的lambda表达式的用法。 一 lambda表达式简介&amp;emsp;lambda表达式是一个函数，但是它是一个匿名函数，也就是没有名称的函数。通常而言这种函数在代码中仅被调用一次，因此直接在函数内部定义它，以此来提高程序的逻辑性和可读性。 &amp;emsp;通常而言一个lambda函数展现为下面的形式 1[capture](parameters) mutable -&amp;gt;r">
+<meta name="keywords" content="c++,lambda">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入了解C++（4）——lambda表达式">
+<meta property="og:url" content="http://blog.100innovate.com/2019/07/24/cpp-lambda/index.html">
 <meta property="og:site_name" content="100innovate&#39;blog">
+<meta property="og:description" content="&amp;emsp;本文主要记录常见的lambda表达式的用法。 一 lambda表达式简介&amp;emsp;lambda表达式是一个函数，但是它是一个匿名函数，也就是没有名称的函数。通常而言这种函数在代码中仅被调用一次，因此直接在函数内部定义它，以此来提高程序的逻辑性和可读性。 &amp;emsp;通常而言一个lambda函数展现为下面的形式 1[capture](parameters) mutable -&amp;gt;r">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-07-24T12:54:02.418Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="100innovate&#39;blog">
+<meta name="twitter:title" content="深入了解C++（4）——lambda表达式">
+<meta name="twitter:description" content="&amp;emsp;本文主要记录常见的lambda表达式的用法。 一 lambda表达式简介&amp;emsp;lambda表达式是一个函数，但是它是一个匿名函数，也就是没有名称的函数。通常而言这种函数在代码中仅被调用一次，因此直接在函数内部定义它，以此来提高程序的逻辑性和可读性。 &amp;emsp;通常而言一个lambda函数展现为下面的形式 1[capture](parameters) mutable -&amp;gt;r">
 <meta name="twitter:image" content="http://blog.100innovate.com/images/og_image.png">
 
 
@@ -89,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/og_image.png" alt="100innovate&#39;blog" height="28">
+                <img src="/images/og_image.png" alt="深入了解C++（4）——lambda表达式" height="28">
             
             </a>
         </div>
@@ -135,33 +140,22 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">标签</a></li>
-            <li class="is-active"><a href="#" aria-current="page">数组映射</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    <div class="card">
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-18T12:26:17.000Z">2019-07-18</time>
+                <time class="level-item has-text-grey" datetime="2019-07-24T12:39:33.000Z">2019-07-24</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    4 分钟 读完 (大约 552 个字)
+                    6 分钟 读完 (大约 872 个字)
                 </span>
                 
                 
@@ -170,15 +164,63 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/07/18/LRU-O1/">LRU算法读取淘汰双O（1）算法</a>
+                深入了解C++（4）——lambda表达式
             
         </h1>
         <div class="content">
-            <p>&emsp;再次简介一下这个算法LRU全称是Least Recently Used,即最近最久未使用的意思。算法每一次将最久未使用的块更新出去。但是呢上一篇笔记附上的百度的代码复杂度实在不堪入目，所以该写还是得写，刚好也分享给大家这个百度前几页没有的O(1)算法。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> cache_size = <span class="hljs-number">10</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> memory_size = <span class="hljs-number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">cache_node</span></span></span><br><span class="line"><span class="hljs-class">&#123;</span></span><br><span class="line">    cache_node* l_link;   <span class="hljs-comment">// 栈的链接</span></span><br><span class="line">    cache_node* r_link;</span><br><span class="line">    <span class="hljs-keyword">int</span> cache_id;       <span class="hljs-comment">// cache_id</span></span><br><span class="line">    <span class="hljs-keyword">int</span> cache_val;      <span class="hljs-comment">// chache 映射位置</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(cache_node*&amp;head,cache_node*&amp;tail)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    head=<span class="hljs-keyword">new</span> cache_node(&#123;<span class="hljs-literal">nullptr</span>,<span class="hljs-literal">nullptr</span>,<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>&#125;);</span><br><span class="line">    cache_node *tmp=head;</span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i(<span class="hljs-number">1</span>); i&lt;cache_size; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cache_node *x = <span class="hljs-keyword">new</span> cache_node(&#123;tmp,<span class="hljs-literal">nullptr</span>,<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>&#125;);</span><br><span class="line">        tmp-&gt;r_link=x;</span><br><span class="line">        tmp = x;</span><br><span class="line">    &#125;</span><br><span class="line">    tail = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;cache_node*&gt;memory_to_cache(memory_size,<span class="hljs-literal">nullptr</span>);</span><br><span class="line">    cache_node *head,*tail;</span><br><span class="line">    init(head,tail);</span><br><span class="line">    <span class="hljs-keyword">int</span> n;</span><br><span class="line">    <span class="hljs-built_in">cin</span>&gt;&gt;n;</span><br><span class="line">    <span class="hljs-comment">//n代表输入的数组组数，然后x代表这一次访问的对象，平均每次访问更新需要6次赋值，所以这个不是一个原子操作。假如cpu内部实现真的存在这种模式,内部大概会有许多门电路来使这多次赋值成为一个原子操作。</span></span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i(<span class="hljs-number">0</span>); i&lt;n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> x; </span><br><span class="line">        <span class="hljs-built_in">cin</span>&gt;&gt;x;</span><br><span class="line">        <span class="hljs-keyword">if</span>(memory_to_cache[x]==<span class="hljs-literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-built_in">cout</span>&lt;&lt;tail-&gt;cache_val&lt;&lt;<span class="hljs-string">"被清出"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">            <span class="hljs-built_in">cout</span>&lt;&lt;x&lt;&lt;<span class="hljs-string">"移入栈顶"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">            <span class="hljs-keyword">if</span>(tail-&gt;cache_val!=<span class="hljs-number">-1</span>)</span><br><span class="line">                memory_to_cache[tail-&gt;cache_val]=<span class="hljs-literal">nullptr</span>;</span><br><span class="line">            tail-&gt;l_link-&gt;r_link=<span class="hljs-literal">nullptr</span>;</span><br><span class="line">            tail-&gt;r_link=head;</span><br><span class="line">            head-&gt;l_link=tail;</span><br><span class="line">            tail=tail-&gt;l_link;</span><br><span class="line">            head=head-&gt;l_link;</span><br><span class="line">            head-&gt;l_link=<span class="hljs-literal">nullptr</span>;</span><br><span class="line">            head-&gt;cache_val=x;</span><br><span class="line">            memory_to_cache[x]=head;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(head==memory_to_cache[x])</span><br><span class="line">                <span class="hljs-keyword">continue</span>;</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-built_in">cout</span>&lt;&lt;x&lt;&lt;<span class="hljs-string">"移入栈顶"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;</span><br><span class="line">                memory_to_cache[x]-&gt;l_link-&gt;r_link=memory_to_cache[x]-&gt;r_link;</span><br><span class="line">                <span class="hljs-keyword">if</span>(memory_to_cache[x]-&gt;r_link!=<span class="hljs-literal">nullptr</span>)</span><br><span class="line">                    memory_to_cache[x]-&gt;r_link-&gt;l_link=memory_to_cache[x]-&gt;l_link;</span><br><span class="line">                <span class="hljs-keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    tail=memory_to_cache[x]-&gt;l_link;</span><br><span class="line">                &#125;</span><br><span class="line">                memory_to_cache[x]-&gt;l_link=<span class="hljs-literal">nullptr</span>;</span><br><span class="line">                memory_to_cache[x]-&gt;r_link=head;</span><br><span class="line">                head-&gt;l_link=memory_to_cache[x];</span><br><span class="line">                head=memory_to_cache[x];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <p>&emsp;本文主要记录常见的lambda表达式的用法。</p>
+<h1 id="一-lambda表达式简介"><a href="#一-lambda表达式简介" class="headerlink" title="一 lambda表达式简介"></a>一 lambda表达式简介</h1><p>&emsp;lambda表达式是一个函数，但是它是一个匿名函数，也就是没有名称的函数。通常而言这种函数在代码中仅被调用一次，因此直接在函数内部定义它，以此来提高程序的逻辑性和可读性。</p>
+<p>&emsp;通常而言一个lambda函数展现为下面的形式</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[capture](parameters) <span class="hljs-keyword">mutable</span> -&gt;<span class="hljs-keyword">return</span>-type&#123;statement&#125;</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;完整的代码就是上面附的这一些了，然后由于代码比较简单主要是考察逻辑，所以也不再附更多的注释了。值得注意的是上面的代码的第一层if else中有数行功能相同，其实可以通过调整代码位置使其合并。但是过度合并可能会造成一些可读性缺失，这里就不再做深层次的代码优化了。</p>
+<blockquote>
+<ul>
+<li>[capture]：捕捉列表。捕捉列表总是出现在Lambda函数的开始处。实际上，[]是Lambda引出符。编译器根据该引出符判断接下来的代码是否是Lambda函数。捕捉列表能够捕捉上下文中的变量以供Lambda函数使用;</li>
+<li>(parameters)：参数列表。与普通函数的参数列表一致。如果不需要参数传递，则可以连同括号“()”一起省略;</li>
+<li>mutable：mutable修饰符,用来说用是否可以修改捕获的变量。默认情况下，Lambda函数总是一个const函数，mutable可以取消其常量性。在使用该修饰符时，参数列表不可省略（即使参数为空）;   在值捕获时，加了mutable修饰符，才可以修改捕获变量。尽管可能在表达式的函数体中修改了捕获变量，但由于是值捕获（复制，拷贝），改变了的捕获变量，不影响捕获的变量；没加mutable修饰符时，不能修改；在引用捕获时，不管加不加mutable修饰符，都可以修改捕获变量，由于是引用捕获，原来的捕获变量也改变了。</li>
+<li>-&gt;return-type：返回类型。用追踪返回类型形式声明函数的返回类型。我们可以在不需要返回值的时候也可以连同符号”-&gt;”一起省略。</li>
+<li><ol>
+<li>如果function body中存在return语句，则该Lambda表达式的返回类型由return语句的返回类型确定；</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>如果function body中没有return语句，则返回值为void类型。</li>
+</ol>
+</li>
+<li>{statement}：函数体。内容与普通函数一样，不过除了可以使用参数之外，还可以使用所有捕获的变量。</li>
+</ul>
+</blockquote>
+<h1 id="二-简单的lambda表达式"><a href="#二-简单的lambda表达式" class="headerlink" title="二 简单的lambda表达式"></a>二 简单的lambda表达式</h1><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">[] &#123;&#125;();<span class="hljs-comment">//[]代表lambda表达式的开始，&#123;&#125;代表函数体，什么都没有，()代表调用函数.</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-comment">//等价于=&gt;</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">	f();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="hljs-comment">//包含返回值的lambda表达式与其调用方式。</span></span><br><span class="line"> <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    [] &#123; <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello, World!"</span>; &#125;();</span><br><span class="line">    <span class="hljs-keyword">auto</span> lam =[]() -&gt; <span class="hljs-keyword">int</span> &#123; <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello, World!"</span>; <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; &#125;;</span><br><span class="line">    <span class="hljs-keyword">auto</span> ret = lam();</span><br><span class="line">    <span class="hljs-keyword">auto</span> lam2 =[]() -&gt; <span class="hljs-built_in">string</span> &#123; <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello, World!"</span>; <span class="hljs-keyword">return</span> <span class="hljs-string">"test"</span>; &#125;;</span><br><span class="line">    <span class="hljs-keyword">auto</span> ret1 = lam2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="三-lambda表达式捕获变量功能"><a href="#三-lambda表达式捕获变量功能" class="headerlink" title="三 lambda表达式捕获变量功能"></a>三 lambda表达式捕获变量功能</h1><blockquote>
+<ul>
+<li>[] 不捕获任何变量<br></li>
+<li>[&amp;] 以引用方式捕获所有变量<br></li>
+<li>[=] 用值的方式捕获所有变量（可能被编译器优化为const &amp;)<br></li>
+<li>[=, &amp;foo] 以引用捕获foo, 但其余变量都靠值捕获<br></li>
+<li>[&amp;, foo] 以值捕获foo, 但其余变量都靠引用捕获<br></li>
+<li>[bar] 以值方式捕获bar; 不捕获其它变量<br></li>
+<li>[this] 捕获所在类的this指针</li>
+</ul>
+</blockquote>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">int</span> a=<span class="hljs-number">1</span>,b=<span class="hljs-number">2</span>,c=<span class="hljs-number">3</span>;</span><br><span class="line"><span class="hljs-keyword">auto</span> lam2  =[&amp;,a]()&#123; <span class="hljs-built_in">cout</span> &lt;&lt; a&lt;&lt;b&lt;&lt;c&lt;&lt;<span class="hljs-built_in">endl</span>;&#125;;<span class="hljs-comment">//b，c以引用捕获，a以值捕获。</span></span><br><span class="line">lam2();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; address&#123;<span class="hljs-string">"111"</span>,<span class="hljs-string">"222"</span>,<span class="hljs-string">",333"</span>,<span class="hljs-string">".org"</span>,<span class="hljs-string">"wwwtest.org"</span>&#125;;</span><br><span class="line">for_each(address.begin(),address.end(),[](<span class="hljs-built_in">string</span>&amp; str)&#123;<span class="hljs-built_in">cout</span>&lt;&lt;str&lt;&lt;<span class="hljs-built_in">endl</span>;&#125;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="四-使用function传递lambda表达式"><a href="#四-使用function传递lambda表达式" class="headerlink" title="四 使用function传递lambda表达式"></a>四 使用function传递lambda表达式</h1><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::function&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> ()&gt; <span class="hljs-keyword">const</span> &amp;f)</span></span>&#123;</span><br><span class="line">    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>&lt;&lt;f()&lt;&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello, World!"</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="hljs-keyword">int</span> num = <span class="hljs-number">101</span>;</span><br><span class="line">    <span class="hljs-keyword">auto</span> a = [&amp;]<span class="hljs-comment">//以引用的方式捕获本函数中的变量</span></span><br><span class="line">             () <span class="hljs-comment">//无参数</span></span><br><span class="line">             -&gt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> &#123;<span class="hljs-comment">//返回值的类型为std::string</span></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::to_string(num);</span><br><span class="line">    &#125;;</span><br><span class="line">    print(a);</span><br><span class="line">    num++;</span><br><span class="line">    print(a);</span><br><span class="line"> </span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/c/">c++</a>, <a class="has-link-grey -link" href="/tags/lambda/">lambda</a>
+                </div>
+            </div>
         </div>
         
         
@@ -188,9 +230,50 @@
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/ali.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/23/http-head/">
+                <span class="level-item">初窥http（3）——浅析http报文</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -1334,7 +1417,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/og_image.png" alt="100innovate&#39;blog" height="28">
+                    <img src="/images/og_image.png" alt="深入了解C++（4）——lambda表达式" height="28">
                 
                 </a>
                 <p class="is-size-7">
