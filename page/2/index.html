@@ -141,6 +141,74 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-17T01:53:56.000Z">2019-07-17</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 分钟 读完 (大约 924 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/07/17/system-io/">操作系统——io操作小结</a>
+            
+        </h1>
+        <div class="content">
+            <p>&emsp;这里主要有四个概念，分别是同步io、异步io、阻塞io、非阻塞io。本文主要参照<a href="https://blog.csdn.net/crazy_tengt/article/details/79225913" target="_blank" rel="noopener">tengteng_</a>的博客，简单总结这四个基本概念的含义。</p>
+<h1 id="一-同步"><a href="#一-同步" class="headerlink" title="一 同步"></a>一 同步</h1><blockquote>
+<p>&emsp;所谓同步，就是在发出一个功能调用时，在没有得到结果之前，该调用就不返回。也就是必须一件一件事做,等前一件做完了才能做下一件事。<br><br>&emsp;例如普通B/S模式（同步）：提交请求-&gt;等待服务器处理-&gt;处理完毕返回 这个期间客户端浏览器不能干任何事</p>
+</blockquote>
+<h1 id="二-异步"><a href="#二-异步" class="headerlink" title="二 异步"></a>二 异步</h1><blockquote>
+<p>&emsp;异步的概念和同步相对。当一个异步过程调用发出后，调用者不能立刻得到结果。实际处理这个调用的部件在完成后，通过状态、通知和回调来通知调用者。<br><br>&emsp;例如 ajax请求（异步）: 请求通过事件触发-&gt;服务器处理（这是浏览器仍然可以作其他事情）-&gt;处理完毕</p>
+</blockquote>
+<h1 id="三-阻塞"><a href="#三-阻塞" class="headerlink" title="三 阻塞"></a>三 阻塞</h1><blockquote>
+<p>&emsp;阻塞调用是指调用结果返回之前，当前线程会被挂起（线程进入非可执行状态，在这个状态下，cpu不会给线程分配时间片，即线程暂停运行）。函数只有在得到结果之后才会返回。<br><br>&emsp;有人也许会把阻塞调用和同步调用等同起来，实际上他是不同的。对于同步调用来说，很多时候当前线程还是激活的，只是从逻辑上当前函数没有返回,它还会抢占cpu去执行其他逻辑，也会主动检测io是否准备好。</p>
+</blockquote>
+<h1 id="四-非阻塞"><a href="#四-非阻塞" class="headerlink" title="四 非阻塞"></a>四 非阻塞</h1><blockquote>
+<p>&emsp;非阻塞和阻塞的概念相对应，指在不能立刻得到结果之前，该函数不会阻塞当前线程，而会立刻返回。<br><br>再简单点理解就是：</p>
+<ol>
+<li>同步，就是我调用一个功能，该功能没有结束前，我死等结果。</li>
+<li>异步，就是我调用一个功能，不需要知道该功能结果，该功能有结果后通知我（回调通知）。</li>
+<li>阻塞，就是调用我（函数），我（函数）没有接收完数据或者没有得到结果之前，我不会返回。</li>
+<li>非阻塞，就是调用我（函数），我（函数）立即返回，通过select通知调用者</li>
+</ol>
+</blockquote>
+<h1 id="五-总结"><a href="#五-总结" class="headerlink" title="五 总结"></a>五 总结</h1><blockquote>
+<p>同步IO和异步IO的区别就在于：数据拷贝的时候进程是否阻塞<br><br>阻塞IO和非阻塞IO的区别就在于：应用程序的调用是否立即返回</p>
+</blockquote>
+<p>&emsp;综上所述对此进行一些总结，通过学习生活中的观察我们可以发现，在我们日常生活中写的程序大多数都是同步的，通常来说我们的程序都需要立即执行得到结果。但是我们可以利用多线程或者进程设计一个异步的程序，在程序运行到一定的时候通过创建进程、线程来处理耗时较长的程序。而后在需要运算结果的时候对运算状态进行查询，这样可以使一个进程同时处理多种不同的任务。</p>
+<p>本文引用自<a href="https://blog.csdn.net/crazy_tengt/article/details/79225913" target="_blank" rel="noopener">https://blog.csdn.net/crazy_tengt/article/details/79225913</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-07-16T08:08:05.000Z">2019-07-16</time>
                 
                 <div class="level-item">
@@ -796,7 +864,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        18
+                        19
                     </p>
                 </div>
             </div>
@@ -816,7 +884,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        46
+                        48
                     </p>
                 </div>
             </div>
@@ -895,7 +963,7 @@
                 <span class="level-item">初窥http</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/深入了解C/">
@@ -933,7 +1001,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/TCP-IP/" style="font-size: 13.33px;">TCP/IP</a> <a href="/tags/auto/" style="font-size: 10px;">auto</a> <a href="/tags/c/" style="font-size: 16.67px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 16.67px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nullptr/" style="font-size: 10px;">nullptr</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 13.33px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/右值引用/" style="font-size: 10px;">右值引用</a> <a href="/tags/图解http/" style="font-size: 13.33px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
+        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/ISO/" style="font-size: 10px;">ISO</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/OSI/" style="font-size: 10px;">OSI</a> <a href="/tags/TCP-IP/" style="font-size: 16.67px;">TCP/IP</a> <a href="/tags/auto/" style="font-size: 10px;">auto</a> <a href="/tags/c/" style="font-size: 16.67px;">c++</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 16.67px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nullptr/" style="font-size: 10px;">nullptr</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 13.33px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/右值引用/" style="font-size: 10px;">右值引用</a> <a href="/tags/图解http/" style="font-size: 13.33px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
     </div>
 </div>
 
@@ -947,6 +1015,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/25/internet-OSI-TCP/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="初窥http（3）——简要了解OSI七层模型&amp;TCP/IP 四层模型">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-25T13:12:31.000Z">2019-07-25</time></div>
+                    <a href="/2019/07/25/internet-OSI-TCP/" class="has-link-black-ter is-size-6">初窥http（3）——简要了解OSI七层模型&amp;TCP/IP 四层模型</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/初窥http/">初窥http</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1024,25 +1111,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/20/cpp-virtualfunction/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（2）——虚函数与虚函数底层实现">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-20T14:28:34.000Z">2019-07-20</time></div>
-                    <a href="/2019/07/20/cpp-virtualfunction/" class="has-link-black-ter is-size-6">深入了解C++（2）——虚函数与虚函数底层实现</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1061,7 +1129,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">18</span>
+                    <span class="level-item tag">19</span>
                 </span>
             </a>
         </li>
@@ -1101,6 +1169,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/ISO/">
+                        <span class="tag">ISO</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/LRU算法/">
                         <span class="tag">LRU算法</span>
                         <span class="tag is-grey">1</span>
@@ -1108,9 +1183,16 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/OSI/">
+                        <span class="tag">OSI</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/TCP-IP/">
                         <span class="tag">TCP/IP</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -1426,6 +1508,25 @@
         
         <article class="media">
             
+            <a href="/2019/07/25/internet-OSI-TCP/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="初窥http（3）——简要了解OSI七层模型&amp;TCP/IP 四层模型">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-25T13:12:31.000Z">2019-07-25</time></div>
+                    <a href="/2019/07/25/internet-OSI-TCP/" class="has-link-black-ter is-size-6">初窥http（3）——简要了解OSI七层模型&amp;TCP/IP 四层模型</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/初窥http/">初窥http</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/07/24/cpp-lambda/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（4）——lambda表达式">
@@ -1500,25 +1601,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/20/cpp-virtualfunction/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（2）——虚函数与虚函数底层实现">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-20T14:28:34.000Z">2019-07-20</time></div>
-                    <a href="/2019/07/20/cpp-virtualfunction/" class="has-link-black-ter is-size-6">深入了解C++（2）——虚函数与虚函数底层实现</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1537,7 +1619,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">18</span>
+                    <span class="level-item tag">19</span>
                 </span>
             </a>
         </li>
@@ -1577,6 +1659,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/ISO/">
+                        <span class="tag">ISO</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/LRU算法/">
                         <span class="tag">LRU算法</span>
                         <span class="tag is-grey">1</span>
@@ -1584,9 +1673,16 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/OSI/">
+                        <span class="tag">OSI</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/TCP-IP/">
                         <span class="tag">TCP/IP</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 

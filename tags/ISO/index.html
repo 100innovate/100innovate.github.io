@@ -2,14 +2,14 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>标签: 思维题 - 100innovate&#39;blog</title>
+<title>标签: ISO - 100innovate&#39;blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="100innovate&#39;blog">
-<meta property="og:url" content="http://blog.100innovate.com/tags/思维题/index.html">
+<meta property="og:url" content="http://blog.100innovate.com/tags/ISO/index.html">
 <meta property="og:site_name" content="100innovate&#39;blog">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.100innovate.com/images/og_image.png">
@@ -139,7 +139,7 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
             <li><a href="/tags">标签</a></li>
-            <li class="is-active"><a href="#" aria-current="page">思维题</a></li>
+            <li class="is-active"><a href="#" aria-current="page">ISO</a></li>
         </ul>
         </nav>
     </div>
@@ -151,17 +151,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-18T05:56:51.000Z">2019-07-18</time>
+                <time class="level-item has-text-grey" datetime="2019-07-25T13:12:31.000Z">2019-07-25</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/面试基础/">面试基础</a>
+                <a class="has-link-grey -link" href="/categories/初窥http/">初窥http</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    20 分钟 读完 (大约 3073 个字)
+                    几秒 读完 (大约 7 个字)
                 </span>
                 
                 
@@ -170,82 +170,11 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/07/18/i-need-offer/">头条三面凉经分析</a>
+                <a class="has-link-black-ter" href="/2019/07/25/internet-OSI-TCP/">初窥http（3）——简要了解OSI七层模型&amp;TCP/IP 四层模型</a>
             
         </h1>
         <div class="content">
-            <p>&emsp;非常惨淡的倒在了北京头条的三面上，首先觉得这个提前批的城市选择策略可能有误，太多人投递导致难度激增。第二个就是对操作系统算法的理解有天坑。这里需要弥补一下算法知识和一些深层的概念知识。</p>
-<h1 id="一-进程与线程在操作系统内核中的体现"><a href="#一-进程与线程在操作系统内核中的体现" class="headerlink" title="一 进程与线程在操作系统内核中的体现"></a>一 进程与线程在操作系统内核中的体现</h1><p>&emsp;这个问题首先问的是进程和线程是什么样子的，由于前面已经对这个问题进行过总结，所以在此不再进行复述。</p>
-<p>&emsp;然后说实话看到这个问题简直是惊呆了，课程里面确实没有详细学习过linux系统。基于操作系统调度的基本单位是进程，所以当时直接答出来线程应该在内核中没有体现。但是时候查阅资料发现这个问题回答的实在不规范。下面贴出标准答案的回复。</p>
-<p>&emsp;首先需要肯定的是进程和线程在操作系统内核中确实概念相似。在linux系统中，进程和线程或者其他调度单元都是利用 task_struct 这个结构体表示。</p>
-<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">task_struct</span> &#123;</span></span><br><span class="line">...</span><br><span class="line">    <span class="hljs-keyword">pid_t</span> pid;  <span class="hljs-comment">//标识不同的进程和线程</span></span><br><span class="line">    <span class="hljs-keyword">pid_t</span> tgid; <span class="hljs-comment">//用于标识线程组id，在同一进程中所有线程都具有同一tgid</span></span><br><span class="line">...</span><br><span class="line">    <span class="hljs-class"><span class="hljs-keyword">struct</span> *<span class="hljs-title">group_leader</span>;</span>   <span class="hljs-comment">//线程组中主线程的指针。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>&emsp;进程还是线程的创建都是由父进程/父线程调用系统调用接口实现的。创建的主要工作实际上就是创建task_strcut结构体，并将该对象添加至工作队列中去。而线程和进程在创建时，通过CLONE_THREAD flag的不同，而选择不同的方式共享父进程/父线程的资源，从而造成在用户空间所看到的进程和线程的不同。<br><br>引用自<a href="https://blog.csdn.net/qq_28351465/article/details/88950311" target="_blank" rel="noopener">Zpeg</a></p>
-</blockquote>
-<p>&emsp;然后更加深入的去看待这个问题，无论以任何方式创建进程或者线程，在linux系统中最终都是去调用do_fork()函数。这个函数的原型是：</p>
-<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">do_fork</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> clone_flags,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> stack_start,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> stack_size,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">    <span class="hljs-keyword">int</span> __user *parent_tidptr,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">    <span class="hljs-keyword">int</span> __user *child_tidptr)</span></span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<ul>
-<li>clone_flags是一个标志集合，用来指定控制复制过程的一些属性。最低字节指定了在子进程终止时被发给父进程的信号号码。其余的高位字节保存了各种常数。</li>
-<li>stack_start是用户状态下栈的起始地址。</li>
-<li>stack_size是用户状态下栈的大小。</li>
-<li>arent_tidptr和child_tidptr是指向用户空间中地址的两个指针，分别指向父子进程的PID。NPTL（Native Posix Threads Library）库的线程实现需要这两个参数。</li>
-</ul>
-</blockquote>
-<p>&emsp;线程跟进程的区别主要就在于do_fork函数首先执行的copy_process中，当上层以pthread_create接口call到kernel时，clone_flag是有CLONE_PTHREAD标识</p>
-<p>但CLONE_PTHREAD标识只在最后一个步骤（设置各个ID、进程关系）时体现：（current为当前进程/线程的task_struct结构体 ，p为新创建的结构体对象）</p>
-<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span> (clone_flags &amp; CLONE_THREAD) &#123;</span><br><span class="line">    p-&gt;group_leader = current-&gt;group_leader;</span><br><span class="line">    p-&gt;tgid = current-&gt;tgid;</span><br><span class="line">&#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">    p-&gt;group_leader = p;</span><br><span class="line">    p-&gt;tgid = p-&gt;pid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> clone_flags = (CLONE_VM | CLONE_FS | CLONE_FILES | CLONE_SYSVSEM</span><br><span class="line">	   | CLONE_SIGHAND | CLONE_THREAD</span><br><span class="line">	   | CLONE_SETTLS | CLONE_PARENT_SETTID</span><br><span class="line">	   | CLONE_CHILD_CLEARTID</span><br><span class="line">	   | <span class="hljs-number">0</span>);</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;通过判断clone_flags中标记，即可控制子线程会与父线程共享虚拟地址空间、文件、信号等。</p>
-<p>&emsp;本段的内容主要参考了<a href="https://blog.csdn.net/qq_28351465/article/details/88950311" target="_blank" rel="noopener">Zpeg</a>的博客，对博客中的部分内容进行精简，透过这里可以简要了解整体的流程。面对面试官的问题可以简要做如下回答：对于系统内核来说，进程和线程没有显著区别，它们在系统中都是一个task_struct结构体，他们的的主要差距是在主进程或者主线程进行系统调用的时候调用了do_fork()函数，然后do_fork函数中执行copy_process。在copy_process中有一个clone_flags，在创建线程的时候clone_flag是据有CLONE_PTHREAD标识的。</p>
-<h1 id="二-数据结构-b-树与跳表"><a href="#二-数据结构-b-树与跳表" class="headerlink" title="二 数据结构 b+树与跳表"></a>二 数据结构 b+树与跳表</h1><p>&emsp;b+树的最大优势是可以利用叶子节点相互链接的特性来进行区间查询。这个特性无法被普通排序二叉树前序遍历使用链表链接替代。因为普通排序二叉树使用链表链接时更新下一跳的系统消耗可能过大。</p>
-<p>&emsp;跳表在非尾部进行插入删除时更新索引开销较大。这里与排序二叉树链表链接时更新下一跳类似。</p>
-<p>&emsp;关于这两个数据结构更多的内容不再进行展开描述。具体可以参考各大搜索引擎的介绍（推荐google）</p>
-<h1 id="三-深度学习lstm如何解决梯度爆炸"><a href="#三-深度学习lstm如何解决梯度爆炸" class="headerlink" title="三 深度学习lstm如何解决梯度爆炸"></a>三 深度学习lstm如何解决梯度爆炸</h1><p>&emsp;这个问题我很吃惊，毕竟确实是本科生，制作深度学习模型的时候通常都是进行调库调试等操作。所以这里暂时不对这个模块进行扩展。来日方长，如果日后从事算法研究再战。</p>
-<h1 id="四-socket编程epoll模型的具体实现"><a href="#四-socket编程epoll模型的具体实现" class="headerlink" title="四 socket编程epoll模型的具体实现"></a>四 socket编程epoll模型的具体实现</h1><p>&emsp;针对select模型和epoll模型，前段时间已经有过了解，select模型是通过轮询来获取活跃的连接的。但是仅知道epoll模型不会轮询所以效率高，但是并不了解epoll模型内部具体实现，这里对epoll模型内部实现机制进行一点介绍。</p>
-<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">epoll_create</span><span class="hljs-params">(<span class="hljs-keyword">int</span> size)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;首先我们需要关注的是epoll的创建函数，参照<a href="https://blog.csdn.net/RUN32875094/article/details/79371818" target="_blank" rel="noopener">晚风_清扬</a>的博客对该函数进行下面的描述。</p>
-<blockquote>
-<p>epoll_ create时，内核除了帮我们在epoll文件系统里建了新的文件结点，将该节点返回给用户。并在内核cache里建立一个红黑树用于存储以后epoll_ctl传来的需要监听文件fd外，这些fd会以红黑树节点的形式保存在内核cache里，以便支持快速的查找、插入、删除操作。</p>
-</blockquote>
-<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-keyword">int</span> <span class="hljs-title">epoll_ctl</span><span class="hljs-params">(<span class="hljs-keyword">int</span> epfd, intop, <span class="hljs-keyword">int</span> fd, struct epoll_event *event)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>内核还会再建立一个list链表，用于存储事件就绪的fd。内核将就绪事件会拷贝到传入参数的events中的用户空间。就绪队列的事件数组events需要自己创建，并作为参数传入这样才可以在epoll_wait返回时接收需要处理的描述符集合。<br><br><strong><em>当epoll_wait调用时，仅仅观察这个list链表里有没有数据即可。</em></strong></p>
-</blockquote>
-<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">epoll_wait</span><span class="hljs-params">(<span class="hljs-keyword">int</span> epfd,struct epoll_event *events,<span class="hljs-keyword">int</span> maxevents, <span class="hljs-keyword">int</span> timeout)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>所以epoll模型的整体工作流程如下：</p>
-<ol>
-<li>执行epoll_create时，创建了红黑树</li>
-<li>执行epoll_ctl时，创建就绪list链表，如果增加fd添加到红黑树上，然后向内核注册有事件到来时的回调函数，当设备上的中断事件来临时这个回调函数会向list链表中插入就绪的fd。</li>
-<li>执行epoll_wait时立刻返回准备就绪链表里的数据即可</li>
-</ol>
-<p>&emsp;这里真的是吃了一个没有学过网络编程的亏，所有的内容几乎都是面试前突击的，但是通过这样重重面试对这些模型内部细节逐步有了一个清晰的认识。</p>
-<h1 id="五-linux-copy-on-write特性"><a href="#五-linux-copy-on-write特性" class="headerlink" title="五 linux copy-on-write特性"></a>五 linux copy-on-write特性</h1><p>&emsp;其实很想跟面试官说，我真的真的真的没有系统的学习过linux操作系统，但是确实我学没学过跟你需要什么样的人才没有啥关系，只能吃一个哑巴亏回去赶紧补着点。</p>
-<p>&emsp;copy-on-write 简单来说就是写时拷贝技术，该技术的主要目的时减少fork时复制主进程内存内容的时间开销。linux系统调用fork函数时，当进程未对内存内容进行修改的时候，此时将直接共享主进程的内存，此时子进程仅拥有对内存进行只读的权限。当需要对内存内容进行修改的时候，操作系统会先将内存copy一份，然后再进行写操作。</p>
-<blockquote>
-<p>在页根本不会被写入的情况下—举例来说，fork()后立即调用exec()—它们就无需复制了。fork()的实际开销就是复制父进程的页表以及给子进程创建惟一的进程描述符。</p>
-</blockquote>
-<h1 id="六-连续抛硬币问题"><a href="#六-连续抛硬币问题" class="headerlink" title="六 连续抛硬币问题"></a>六 连续抛硬币问题</h1><blockquote>
-<p>问题描述:<br><br>连续抛硬币，问出现正反反 和反反正的概率谁的更大概率是多少。</p>
-</blockquote>
-<p>&emsp;面试的时候脑子有点糊，但是最后还是做出来了。分析过程大致如下：</p>
-<p>&emsp;首先考虑下面四种情况：</p>
-<blockquote>
-<p>1/4    NN<br><br>1/4    NF<br><br>1/4    FN<br><br>1/4    FF<br></p>
-</blockquote>
-<p>&emsp;我们可以快速的发现，如果出现了正，后续只可能出现正反反胜利的情况。所以反反正胜利的概率仅存在于前两次抛出反的情况。然后对于情况反反，只要出现一次正，则反反正胜利，所以正反反胜利的概率则是 1-1/4 = 3/4。 反反正的概率是1/4。</p>
-<h1 id="七-LRU最近替换算法-O（1）"><a href="#七-LRU最近替换算法-O（1）" class="headerlink" title="七 LRU最近替换算法 O（1）"></a>七 LRU最近替换算法 O（1）</h1><p>&emsp;看到这个问题实在是脑壳疼。操作系统课程上对这个内容学习的欠缺导致现在尴尬的局面。这个问题的解决非常非常的简单，利用一个映射数组和链表即可完成o（1）的更新和O（1）的访问。当然也可以利用hash_map和链表。个人推测cpu如果采用这种更新策略，应该使用的是映射数组的方式，这种方式更为稳定。这里需要 内存大小/页大小 的映射空间，在内存过大的时候可能并不是特别实用，所以推测现代cpu应该抛弃了这种方法，但是LRU算法仍然作为最经典的缓存算法被大家使用。</p>
-<p>&emsp;因为心情郁闷这里就不对这个算法重新进行实现，摘选一个接近正确的代码放在下面:</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;</span><br><span class="line"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> LL;</span><br><span class="line"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> maxn=<span class="hljs-number">500005</span>;</span><br><span class="line"><span class="hljs-keyword">int</span> n,m,x,cnt,stk[<span class="hljs-number">110</span>],pos[maxn];</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">cin</span>&gt;&gt;n&gt;&gt;m)&#123;</span><br><span class="line">        cnt=<span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-built_in">memset</span>(pos,<span class="hljs-number">0</span>,<span class="hljs-keyword">sizeof</span>(pos));<span class="hljs-comment">//标记页面在栈中的位置</span></span><br><span class="line">        <span class="hljs-keyword">while</span>(m--)&#123;</span><br><span class="line">            <span class="hljs-built_in">cin</span>&gt;&gt;x;</span><br><span class="line">            <span class="hljs-keyword">if</span>(pos[x])&#123;<span class="hljs-comment">//栈中已出现x，将x提到栈顶，剩下的页面往下移</span></span><br><span class="line">                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=pos[x];i&lt;cnt;++i)stk[i]=stk[i+<span class="hljs-number">1</span>],pos[stk[i]]=i;</span><br><span class="line">                <span class="hljs-comment">//!!!这个代码不是特别对的地方就是这里，这里不能使用for循环，采用链表可以提升效率。</span></span><br><span class="line">                stk[cnt]=x,pos[x]=cnt;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">else</span>&#123;<span class="hljs-comment">//x未出现</span></span><br><span class="line">                <span class="hljs-keyword">if</span>(cnt!=n)stk[++cnt]=x,pos[x]=cnt;<span class="hljs-comment">//栈未满则直接添加</span></span><br><span class="line">                <span class="hljs-keyword">else</span>&#123;<span class="hljs-comment">//栈满，移去最久未使用的页面，将x放栈顶</span></span><br><span class="line">                    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;n;++i)stk[i]=stk[i+<span class="hljs-number">1</span>],pos[stk[i]]=i;</span><br><span class="line">                <span class="hljs-comment">//！！！与上述同理。堆栈需要手动实现一个链表！！！！</span></span><br><span class="line">                    stk[n]=x,pos[x]=n;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=cnt;++i)<span class="hljs-built_in">cout</span>&lt;&lt;stk[i]&lt;&lt;(i==cnt?<span class="hljs-string">'\n'</span>:<span class="hljs-string">' '</span>);<span class="hljs-comment">//输出当前栈中的页面号</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;然后关于这次心态崩坏的头条三面就总结到这里了，希望能够尽快顺顺利利的获得一个保研offer或者薪水客观的校招offer。加油！！！！！！</p>
+            <p>&emsp;先开一个坑。</p>
 
         </div>
         
