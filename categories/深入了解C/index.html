@@ -162,7 +162,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    几秒 读完 (大约 6 个字)
+                    4 分钟 读完 (大约 607 个字)
                 </span>
                 
                 
@@ -171,11 +171,23 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/07/26/cpp-thread/">深入了解C++（5）—— 多线程编程</a>
+                <a class="has-link-black-ter" href="/2019/07/26/cpp-thread/">深入了解C++（5）—— C++11 std::thread多线程编程</a>
             
         </h1>
         <div class="content">
-            <p>&emsp;开坑待填。</p>
+            <p>&emsp;按理来说学习多线程编程应该从深入浅的来学，但是由于学习的内容实在是有一些偏差，所以最后还是决定从stl标准库开始，学习C++多线程编程。</p>
+<h1 id="一-std-thread函数浅析"><a href="#一-std-thread函数浅析" class="headerlink" title="一 std::thread函数浅析"></a>一 std::thread函数浅析</h1><p>&emsp;相比pthread，C++11提供了一个调用非常简单的多线程库std::thread。std::thread的构造函数方便得出人意料，这得感谢std::bind这个神奇的函数。在std::thread的构造函数里，你可以直接传递一个函数和这个函数的参数列表给这个线程。你甚至可以传递一个类成员函数。如果你这么做了，参数列表的第二个参数（第一个参数是被传递的成员函数）会被作为该类成员函数所作用的实例。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 假设buy是一个可调用的函数对象，它即可能是函数指针，也可能是函数对象</span></span><br><span class="line"><span class="hljs-built_in">std</span>::<span class="hljs-function">thread <span class="hljs-title">Annie</span><span class="hljs-params">(buy)</span></span>;</span><br><span class="line"><span class="hljs-comment">// Annie会去执行buy()</span></span><br><span class="line"><span class="hljs-built_in">std</span>::<span class="hljs-function">thread <span class="hljs-title">Bob</span><span class="hljs-params">(buy, book, food)</span></span>;</span><br><span class="line"><span class="hljs-comment">// Bob会去执行buy(book, food)</span></span><br><span class="line"> </span><br><span class="line"><span class="hljs-comment">// 假设buy是Consumer的一个可调用的成员函数</span></span><br><span class="line">Consumer Clara;</span><br><span class="line"><span class="hljs-built_in">std</span>::<span class="hljs-function">thread <span class="hljs-title">action</span><span class="hljs-params">(buy, Clara, phone)</span></span>;</span><br><span class="line"><span class="hljs-comment">// Clara会去执行Consumer.buy(phone)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pthread_create(&amp;thread, &amp;attr, f, <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">void</span> *&gt;(&amp;args));</span><br><span class="line"><span class="hljs-comment">// 其中f是函数，args是所有参数打包成的结构体。因为pthread_create的第四个参数类型是void*，所以需要强制转型</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;简单的mutex互斥锁实例</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="hljs-built_in">std</span>::mutex mut;</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span>&#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">int</span> temp;</span><br><span class="line">    A()&#123;</span><br><span class="line">        temp=<span class="hljs-number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> count=<span class="hljs-number">10</span>;</span><br><span class="line">        <span class="hljs-keyword">while</span>(count&gt;<span class="hljs-number">0</span>)&#123;</span><br><span class="line">            mut.lock();</span><br><span class="line">            temp++;</span><br><span class="line">            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"thread_"</span>&lt;&lt;num&lt;&lt;<span class="hljs-string">"...temp="</span>&lt;&lt;temp&lt;&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;</span><br><span class="line">            mut.unlock();</span><br><span class="line">            count--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_run</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">            <span class="hljs-built_in">std</span>::<span class="hljs-function">thread <span class="hljs-title">t1</span><span class="hljs-params">(&amp;A::fun,<span class="hljs-keyword">this</span>,<span class="hljs-number">1</span>)</span></span>;   </span><br><span class="line">            <span class="hljs-built_in">std</span>::<span class="hljs-function">thread <span class="hljs-title">t2</span><span class="hljs-params">(&amp;A::fun,<span class="hljs-keyword">this</span>,<span class="hljs-number">2</span>)</span></span>;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    A a;</span><br><span class="line">    a.thread_run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="二-volatile-关键词"><a href="#二-volatile-关键词" class="headerlink" title="二 volatile 关键词"></a>二 volatile 关键词</h1><p>&emsp;在C++中使用volatile关键词可以防止编译器做出错误的优化。当一个线程对一个关键字进行多次读取时，编译器可能会把变量放入寄存器中，而不会每次都从内存中读取，这样如果变量在其他地方修改，会发生脏读取错误。</p>
+<h1 id="三-基于std-thread实现的生产者消费者模型。"><a href="#三-基于std-thread实现的生产者消费者模型。" class="headerlink" title="三 基于std::thread实现的生产者消费者模型。"></a>三 基于std::thread实现的生产者消费者模型。</h1><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;condition_variable&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;future&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;queue&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 注意某些调用可能会抛出std::system_error，需要对其进行处理。</span></span><br><span class="line"><span class="hljs-built_in">std</span>::mutex mutex;</span><br><span class="line"><span class="hljs-built_in">std</span>::condition_variable condvar;</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; msgQueue;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">producer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x = start; x &lt; end; x++) &#123;</span><br><span class="line">        <span class="hljs-built_in">std</span>::this_thread::sleep_for(<span class="hljs-built_in">std</span>::chrono::milliseconds(<span class="hljs-number">200</span>));</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-built_in">std</span>::lock_guard&lt;<span class="hljs-built_in">std</span>::mutex&gt; guard(mutex);</span><br><span class="line">            msgQueue.push(x);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Produce message %d\n"</span>, x);</span><br><span class="line">        condvar.notify_all();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">consumer</span><span class="hljs-params">(<span class="hljs-keyword">int</span> demand)</span></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;</span><br><span class="line">        <span class="hljs-built_in">std</span>::unique_lock&lt;<span class="hljs-built_in">std</span>::mutex&gt; ulock(mutex);</span><br><span class="line">        condvar.wait(ulock, []&#123; <span class="hljs-keyword">return</span> msgQueue.size() &gt; <span class="hljs-number">0</span>;&#125;);</span><br><span class="line">        <span class="hljs-comment">// wait的第二个参数使得显式的double check不再必要</span></span><br><span class="line">        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Consume message %d\n"</span>, msgQueue.front());</span><br><span class="line">        msgQueue.pop();</span><br><span class="line">        --demand;</span><br><span class="line">        <span class="hljs-keyword">if</span> (!demand) <span class="hljs-keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    <span class="hljs-built_in">std</span>::<span class="hljs-function">thread <span class="hljs-title">producer1</span><span class="hljs-params">(producer, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>)</span></span>;</span><br><span class="line">    <span class="hljs-built_in">std</span>::<span class="hljs-function">thread <span class="hljs-title">producer2</span><span class="hljs-params">(producer, <span class="hljs-number">10</span>, <span class="hljs-number">20</span>)</span></span>;</span><br><span class="line">    <span class="hljs-built_in">std</span>::<span class="hljs-function">thread <span class="hljs-title">producer3</span><span class="hljs-params">(producer, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>)</span></span>;</span><br><span class="line">    <span class="hljs-built_in">std</span>::<span class="hljs-function">thread <span class="hljs-title">consumer1</span><span class="hljs-params">(consumer, <span class="hljs-number">20</span>)</span></span>;</span><br><span class="line">    <span class="hljs-built_in">std</span>::<span class="hljs-function">thread <span class="hljs-title">consumer2</span><span class="hljs-params">(consumer, <span class="hljs-number">10</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    producer1.join();</span><br><span class="line">    producer2.join();</span><br><span class="line">    producer3.join();</span><br><span class="line">    consumer1.join();</span><br><span class="line">    consumer2.join();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;本文仅简单介绍std::thread的基本操作，更加复杂的操作以及更多的功能将在日后进一步研读。</p>
 
         </div>
         
@@ -587,7 +599,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        50
+                        52
                     </p>
                 </div>
             </div>
@@ -704,7 +716,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/ISO/" style="font-size: 10px;">ISO</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/OSI/" style="font-size: 10px;">OSI</a> <a href="/tags/TCP-IP/" style="font-size: 16.67px;">TCP/IP</a> <a href="/tags/auto/" style="font-size: 10px;">auto</a> <a href="/tags/c/" style="font-size: 16.67px;">c++</a> <a href="/tags/cpp/" style="font-size: 10px;">cpp</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 16.67px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nullptr/" style="font-size: 10px;">nullptr</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/今日头条/" style="font-size: 13.33px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/右值引用/" style="font-size: 10px;">右值引用</a> <a href="/tags/图解http/" style="font-size: 13.33px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
+        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/ISO/" style="font-size: 10px;">ISO</a> <a href="/tags/LRU算法/" style="font-size: 10px;">LRU算法</a> <a href="/tags/OSI/" style="font-size: 10px;">OSI</a> <a href="/tags/TCP-IP/" style="font-size: 16.67px;">TCP/IP</a> <a href="/tags/auto/" style="font-size: 10px;">auto</a> <a href="/tags/c/" style="font-size: 16.67px;">c++</a> <a href="/tags/cpp/" style="font-size: 10px;">cpp</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/epoll/" style="font-size: 10px;">epoll</a> <a href="/tags/http/" style="font-size: 16.67px;">http</a> <a href="/tags/https/" style="font-size: 10px;">https</a> <a href="/tags/io/" style="font-size: 10px;">io</a> <a href="/tags/lambda/" style="font-size: 10px;">lambda</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nullptr/" style="font-size: 10px;">nullptr</a> <a href="/tags/ping/" style="font-size: 10px;">ping</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/今日头条/" style="font-size: 13.33px;">今日头条</a> <a href="/tags/内存分配/" style="font-size: 10px;">内存分配</a> <a href="/tags/右值引用/" style="font-size: 10px;">右值引用</a> <a href="/tags/图解http/" style="font-size: 13.33px;">图解http</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/思维题/" style="font-size: 10px;">思维题</a> <a href="/tags/抽象类/" style="font-size: 10px;">抽象类</a> <a href="/tags/操作系统/" style="font-size: 20px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数组映射/" style="font-size: 10px;">数组映射</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/线段数组/" style="font-size: 10px;">线段数组</a> <a href="/tags/线段树/" style="font-size: 10px;">线段树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚函数/" style="font-size: 10px;">虚函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/调度算法/" style="font-size: 10px;">调度算法</a> <a href="/tags/跳表/" style="font-size: 10px;">跳表</a> <a href="/tags/进程/" style="font-size: 10px;">进程</a> <a href="/tags/重载/" style="font-size: 10px;">重载</a> <a href="/tags/非对称加密/" style="font-size: 10px;">非对称加密</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
     </div>
 </div>
 
@@ -723,14 +735,14 @@
             
             <a href="/2019/07/26/cpp-thread/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（5）—— 多线程编程">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（5）—— C++11 std::thread多线程编程">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-26T13:21:39.000Z">2019-07-26</time></div>
-                    <a href="/2019/07/26/cpp-thread/" class="has-link-black-ter is-size-6">深入了解C++（5）—— 多线程编程</a>
+                    <a href="/2019/07/26/cpp-thread/" class="has-link-black-ter is-size-6">深入了解C++（5）—— C++11 std::thread多线程编程</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
                     </p>
@@ -1007,6 +1019,20 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/ssl/">
                         <span class="tag">ssl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/stl/">
+                        <span class="tag">stl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/thread/">
+                        <span class="tag">thread</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1227,14 +1253,14 @@
             
             <a href="/2019/07/26/cpp-thread/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（5）—— 多线程编程">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（5）—— C++11 std::thread多线程编程">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-26T13:21:39.000Z">2019-07-26</time></div>
-                    <a href="/2019/07/26/cpp-thread/" class="has-link-black-ter is-size-6">深入了解C++（5）—— 多线程编程</a>
+                    <a href="/2019/07/26/cpp-thread/" class="has-link-black-ter is-size-6">深入了解C++（5）—— C++11 std::thread多线程编程</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
                     </p>
@@ -1511,6 +1537,20 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/ssl/">
                         <span class="tag">ssl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/stl/">
+                        <span class="tag">stl</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/thread/">
+                        <span class="tag">thread</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
