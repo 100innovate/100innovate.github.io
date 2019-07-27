@@ -161,7 +161,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    几秒 读完 (大约 7 个字)
+                    8 分钟 读完 (大约 1165 个字)
                 </span>
                 
                 
@@ -174,7 +174,113 @@
             
         </h1>
         <div class="content">
-            <p>&emsp;先开一个坑。</p>
+            <h1 id="一-OSI七层网络模型"><a href="#一-OSI七层网络模型" class="headerlink" title="一 OSI七层网络模型"></a>一 OSI七层网络模型</h1><p>&emsp;OSI七层协议模型主要是：应用层（Application）、表示层（Presentation）、会话层（Session）、传输层（Transport）、网络层（Network）、数据链路层（Data Link）、物理层（Physical）。下面利用一张图片简要介绍各层的作用。</p>
+<p><img src="/2019/07/25/internet-OSI-TCP/705728-20160424234824085-667046040.png" alt="OSI七层网络示意图"></p>
+<h1 id="二-TCP-IP四层网络模型"><a href="#二-TCP-IP四层网络模型" class="headerlink" title="二 TCP/IP四层网络模型"></a>二 TCP/IP四层网络模型</h1><p>&emsp;TCP/IP模型主要讲OSI模型中部分概念合并，概念合并后如下表。</p>
+<table>
+    <tr>
+        <td>OSI七层网络</td> 
+        <td>TCP/IP四层网络</td> 
+        <td>对应网络协议</td>
+    </tr>
+    <tr>
+        <td>应用层（Application）</td>  
+        <td rowspan="3">应用层</td>
+        <td>HTTP、TFTP, FTP, NFS, WAIS、SMTP</td> 
+    </tr>
+    <tr>
+        <td>表示层（Presentation）</td>  
+        <td>Telnet, Rlogin, SNMP, Gopher</td>
+    </tr>
+    <tr>
+        <td>会话层（Session）</td>
+        <td>SMTP, DNS</td>
+    </tr>
+    <tr>
+        <td>传输层（Transport）</td>
+        <td>传输层</td>
+        <td>TCP, UDP</td>
+    </tr>
+    <tr>
+        <td>网络层（Network）</td>
+        <td>网络层</td>
+        <td>IP, ICMP, ARP, RARP, AKP, UUCP</td>
+    </tr>
+    <tr>
+        <td>数据链路层（Data Link）</td>
+        <td rowspan="2">数据链路层</td>
+        <td>FDDI, Ethernet, Arpanet, PDN, SLIP, PPP</td>
+    </tr>
+    <tr>
+        <td>物理层（Physical）</td>
+        <td>IEEE 802.1A, IEEE 802.2到IEEE 802.11</td>
+    </tr>
+</table>
+
+<blockquote>
+<ol>
+<li>OSI引入了服务、接口、协议、分层的概念，TCP/IP借鉴了OSI的这些概念建立TCP/IP模型。</li>
+<li>OSI先有模型，后有协议，先有标准，后进行实践；而TCP/IP则相反，先有协议和应用再提出了模型，且是参照的OSI模型。</li>
+<li>OSI是一种理论下的模型，而TCP/IP已被广泛使用，成为网络互联事实上的标准。</li>
+</ol>
+</blockquote>
+<h1 id="三-常见协议的简单介绍"><a href="#三-常见协议的简单介绍" class="headerlink" title="三 常见协议的简单介绍"></a>三 常见协议的简单介绍</h1><ol>
+<li>应用层</li>
+</ol>
+<ul>
+<li>DHCP(动态主机分配协议)</li>
+<li>DNS (域名解析）</li>
+<li>FTP（File Transfer Protocol）文件传输协议</li>
+<li>Gopher （英文原义：The Internet Gopher Protocol 中文释义：（RFC-1436）网际Gopher协议）</li>
+<li>HTTP （Hypertext Transfer Protocol）超文本传输协议</li>
+<li>IMAP4 (Internet Message Access Protocol 4) 即 Internet信息访问协议的第4版本</li>
+<li>IRC （Internet Relay Chat ）网络聊天协议</li>
+<li>NNTP （Network News Transport Protocol）RFC-977）网络新闻传输协议</li>
+<li>XMPP 可扩展消息处理现场协议</li>
+<li>POP3 (Post Office Protocol 3)即邮局协议的第3个版本</li>
+<li>SIP 信令控制协议</li>
+<li>SMTP （Simple Mail Transfer Protocol）即简单邮件传输协议</li>
+<li>SNMP (Simple Network Management Protocol,简单网络管理协议)</li>
+<li>SSH （Secure Shell）安全外壳协议</li>
+<li>SSL: 安全套接字层协议；</li>
+<li>TELNET 远程登录协议</li>
+<li>RPC （Remote Procedure Call Protocol）（RFC-1831）远程过程调用协议</li>
+<li>RTCP （RTP Control Protocol）RTP 控制协议</li>
+<li>RTSP （Real Time Streaming Protocol）实时流传输协议</li>
+<li>TLS （Transport Layer Security Protocol）传输层安全协议</li>
+<li>SDP( Session Description Protocol）会话描述协议</li>
+<li>SOAP （Simple Object Access Protocol）简单对象访问协议</li>
+<li>GTP 通用数据传输平台</li>
+<li>STUN （Simple Traversal of UDP over NATs，NAT 的UDP简单穿越）是一种网络协议</li>
+<li>NTP （Network Time Protocol）网络校时协议</li>
+</ul>
+<ol start="2">
+<li>传输层</li>
+</ol>
+<ul>
+<li>TCP（Transmission Control Protocol）传输控制协议</li>
+<li>UDP (User Datagram Protocol）用户数据报协议</li>
+<li>DCCP （Datagram Congestion Control Protocol）数据报拥塞控制协议</li>
+<li>SCTP（STREAM CONTROL TRANSMISSION PROTOCOL）流控制传输协议</li>
+<li>RTP(Real-time Transport Protocol或简写RTP）实时传送协议</li>
+<li>RSVP （Resource ReSer Vation Protocol）资源预留协议</li>
+<li>PPTP ( Point to Point Tunneling Protocol）点对点隧道协议</li>
+</ul>
+<ol start="3">
+<li>网络层</li>
+</ol>
+<ul>
+<li>IP(IPv4 · IPv6) Internet Protocol（网络之间互连的协议）</li>
+<li>ARP : Address Resolution Protocol即地址解析协议，实现通过IP地址得知其物理地址。</li>
+<li>RARP :Reverse Address Resolution Protocol 反向地址转换协议允许局域网的物理机器从网关服务器的 ARP 表或者缓存上请求其 IP 地址。</li>
+<li>ICMP :（Internet Control Message Protocol）Internet控制报文协议。它是TCP/IP协议族的一个子协议，用于在IP主机、路由器之间传递控制消息。</li>
+<li>IGMP :Internet 组管理协议（IGMP）是因特网协议家族中的一个组播协议，用于IP 主机向任一个直接相邻的路由器报告他们的组成员情况。</li>
+<li>RIP : 路由信息协议（RIP）是一种在网关与主机之间交换路由选择信息的标准。</li>
+<li>OSPF : (Open Shortest Path First开放式最短路径优先).</li>
+<li>BGP :（Border Gateway Protocol ）边界网关协议，用来连接Internet上独立系统的路由选择协议</li>
+<li>IS-IS:（Intermediate System to Intermediate System Routing Protocol）中间系统到中间系统的路由选择协议.</li>
+<li>IPsec:“Internet 协议安全性”是一种开放标准的框架结构，通过使用加密的安全服务以确保在 Internet 协议 (IP) 网络上进行保密而安全的通讯。</li>
+</ul>
 
         </div>
         
