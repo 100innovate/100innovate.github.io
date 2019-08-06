@@ -141,6 +141,46 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-08-06T13:42:57.000Z">2019-08-06</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 0 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/08/06/64-system-01/">64-system-01</a>
+            
+        </h1>
+        <div class="content">
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-07-29T11:33:30.000Z">2019-07-29</time>
                 
                 
@@ -820,83 +860,6 @@
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-19T16:05:00.000Z">2019-07-20</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    7 分钟 读完 (大约 989 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/07/20/cpp-memory/">深入了解C++（1）——C++内存分配机制</a>
-            
-        </h1>
-        <div class="content">
-            <p>&emsp;常常被人问到，会不会写C++，曾经以为了解对面对象编程，了解qt等开源的库之后，就可以称之为会写C++了。但是深入了解之后就会发现，C++其实并不是这么简单。作为本专题的第一篇记录，将从内存分配机制开始深入的剖析C++。</p>
-<h1 id="一-C-内存分配方式"><a href="#一-C-内存分配方式" class="headerlink" title="一 C++ 内存分配方式"></a>一 C++ 内存分配方式</h1><p>&emsp;在C++中内存被分为五个区分别是：堆、栈、自由存储区、全局/静态存储区、常量存储区。</p>
-<blockquote>
-<ul>
-<li>栈：是分配给函数局部变量的存储单元，函数结束后，该变量的存储单元自动释放，效率高，分配的空间有限。</li>
-<li>堆：由new创建，由delete释放的动态内存单元。如果用户不释放该内存，程序结束时，系统会自动回收。</li>
-<li>自由存储区：由malloc创建，由free释放的动态内存单元，与堆类似。</li>
-<li>全局（静态）存储去：全局变量和静态变量占一块内存空间。</li>
-<li>常量存储区：存储常量，内容不允许更改。<br><br>引用自<a href="https://blog.csdn.net/ladybai/article/details/51234300" target="_blank" rel="noopener">ladybai</a></li>
-</ul>
-</blockquote>
-<p>&emsp;一般而言对于程序员，我们只需要去关注堆和栈的概念。相比堆，栈大量减少了内存的碎片问题，并且计算机在系统底层提供专门的指令执行，而new的机制相比更为复杂所以分配效率相较于栈更慢。</p>
-<h1 id="二-内存分配失败"><a href="#二-内存分配失败" class="headerlink" title="二 内存分配失败"></a>二 内存分配失败</h1><p>&emsp;根据许多血一般的教训，下列的代码在动态分配内存的时候至关重要。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">object* c = <span class="hljs-keyword">new</span> object();</span><br><span class="line"><span class="hljs-comment">//在较新的标准中，使用 new（nothrow） 才会出现分配失败时返回nullptr </span></span><br><span class="line"><span class="hljs-keyword">if</span>(c==<span class="hljs-literal">nullptr</span>)&#123;</span><br><span class="line">    <span class="hljs-comment">//错误处理机制</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;但是其实在较新的C++标准中，出现内存分配失败时会抛出</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">std</span>::bad_alloc</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;但是针对这个我们主要需要意识到一个问题，内存的分配可能失败。</p>
-<h1 id="三-new-operator-new-placement-new"><a href="#三-new-operator-new-placement-new" class="headerlink" title="三 new/operator new/placement new"></a>三 new/operator new/placement new</h1><p>&emsp;为了防止反复的释放内存，C++除了最基本的new操作之外还提供了placement new的操作。下面简单介绍这三种不同的new操作</p>
-<blockquote>
-<ul>
-<li>运算符 new = 先调用函数 operator new 分配空间 + 然后调用构造函数。</li>
-<li>对于operator new 函数内部，他是通过再调用malloc函数，进行空间分配的（当然也可以重写一个自己的空间分配器）。</li>
-<li>placement new 指的是，不进行分配空间，而是在指定的空间上面进行调用构造函数。当然，在析构的时候，也只能显示的调用析构函数。（因为并不是真正的释放空间）<br><br>引用自<a href="https://www.jianshu.com/p/5921001f7ad4" target="_blank" rel="noopener">爱秋刀鱼的猫</a></li>
-</ul>
-</blockquote>
-<p>&emsp;下面简单给出new的代码。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">object* a = <span class="hljs-keyword">new</span> object(); </span><br><span class="line"><span class="hljs-keyword">char</span>* chunk = <span class="hljs-keyword">new</span>(nothrow) <span class="hljs-keyword">char</span>[<span class="hljs-number">10</span>];</span><br><span class="line">object* b = <span class="hljs-keyword">new</span> (chunk) object();</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;那么其实来说就是上面的两种new，然后operator new的含义应该是仅分配内存但是不初始化函数。</p>
-<p>&emsp;针对大多数场景，我们使用普通的new可以完成绝大多数任务。但是极少数情况，我们可能需要反复利用一块极大的内存空间，此时利用placement new可以减少内存空间的申请释放所消耗的时间。</p>
-<h1 id="四-总结"><a href="#四-总结" class="headerlink" title="四 总结"></a>四 总结</h1><p>&emsp;本篇主要简要介绍了C++内存分配的机制，并且了解了针对大块内存反复申请释放采用placement new的操作。本模块将持续更新，介绍更多关于C++更为深入的内容。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -961,7 +924,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        22
+                        23
                     </p>
                 </div>
             </div>
@@ -1115,6 +1078,25 @@
         
         <article class="media">
             
+            <a href="/2019/08/06/64-system-01/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="64-system-01">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-06T13:42:57.000Z">2019-08-06</time></div>
+                    <a href="/2019/08/06/64-system-01/" class="has-link-black-ter is-size-6">64-system-01</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/07/29/头条C-后端面经/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="头条C++后端面经">
@@ -1189,25 +1171,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/24/cpp-lambda/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（4）——lambda表达式">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-24T12:39:33.000Z">2019-07-24</time></div>
-                    <a href="/2019/07/24/cpp-lambda/" class="has-link-black-ter is-size-6">深入了解C++（4）——lambda表达式</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1219,6 +1182,17 @@
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2019/07/">
@@ -1640,6 +1614,25 @@
         
         <article class="media">
             
+            <a href="/2019/08/06/64-system-01/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="64-system-01">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-08-06T13:42:57.000Z">2019-08-06</time></div>
+                    <a href="/2019/08/06/64-system-01/" class="has-link-black-ter is-size-6">64-system-01</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/07/29/头条C-后端面经/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="头条C++后端面经">
@@ -1714,25 +1707,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/07/24/cpp-lambda/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="深入了解C++（4）——lambda表达式">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-24T12:39:33.000Z">2019-07-24</time></div>
-                    <a href="/2019/07/24/cpp-lambda/" class="has-link-black-ter is-size-6">深入了解C++（4）——lambda表达式</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/深入了解C/">深入了解C++</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1744,6 +1718,17 @@
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2019/07/">
